@@ -110,13 +110,15 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
 
   this.listResults = function (data) {
     results.length = 0;
-    for (var i = data.items.length - 1; i >= 0; i--) {
+    //console.log(data.length);
+
+    for (var i = data.length - 1; i >= 0; i--) {
       results.push({
-        id: data.items[i].id.videoId,
-        title: data.items[i].snippet.title,
-        description: data.items[i].snippet.description,
-        thumbnail: data.items[i].snippet.thumbnails.default.url,
-        author: data.items[i].snippet.channelTitle
+        id: data[i].yid,
+        title: data[i].title,
+        description: data[i].description,
+        /*thumbnail: data[i].thumbnail,*/
+        author: data[i].author
       });
     }
     return results;
@@ -208,19 +210,18 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService)
       console.log(this.query);
       $http.get('ajax/getVideo.php', {
         params: {
-          type: 'video',
           maxResults: '8',
-          part: 'id,snippet',
-          fields: 'items/id,items/snippet/title,items/snippet/description,items/snippet/thumbnails/default,items/snippet/channelTitle',
           q: this.query
         }
       })
       .success( function (data) {
+        //console.log(data);
         VideosService.listResults(data);
-        $log.info(data);
+        //$log.info(data);
       })
       .error( function () {
-        $log.info('Search error');
+        console.log("error");
+        //$log.info('Search error');
       });
     }
     //https://www.googleapis.com/youtube/v3/search?&maxResults=8&part=id%2Csnippet&q=test&type=video
