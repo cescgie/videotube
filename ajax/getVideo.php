@@ -1,10 +1,10 @@
 <?php
 require_once('../libs/db.php');
 
-$key = $_GET['q'];
+$key = strtolower($_GET['q']);
 $limit = $_GET['maxResults'];
 
-$query="SELECT * FROM yapi WHERE title LIKE '%$key%' LIMIT $limit ";
+$query="SELECT * FROM yapi WHERE LOWER(title) LIKE LOWER('%$key%') LIMIT $limit ";
 
 $result = $mysqli->query($query) or die($mysqli->error.__LINE__);
 

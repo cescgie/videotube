@@ -117,7 +117,7 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
         id: data[i].yid,
         title: data[i].title,
         description: data[i].description,
-        /*thumbnail: data[i].thumbnail,*/
+        thumbnail: data[i].thumbnail,
         author: data[i].author
       });
     }
@@ -210,7 +210,7 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService)
       console.log(this.query);
       $http.get('ajax/getVideo.php', {
         params: {
-          maxResults: '8',
+          maxResults: '10',
           q: this.query
         }
       })
