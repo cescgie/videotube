@@ -217,14 +217,13 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService)
       .success( function (data) {
         //console.log(data);
         VideosService.listResults(data);
-        //$log.info(data);
+        $log.info(data);
       })
       .error( function () {
         console.log("error");
-        //$log.info('Search error');
+        $log.info('Search error');
       });
     }
-    //https://www.googleapis.com/youtube/v3/search?&maxResults=8&part=id%2Csnippet&q=test&type=video
     $scope.tabulate = function (state) {
       $scope.playlist = state;
     }

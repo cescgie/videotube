@@ -3,9 +3,8 @@ require_once('../libs/Storage.php');
 
 $db = new Storage();
 
-$data['getVideo'] = $db->select("SELECT meta_value FROM wp_postmeta WHERE meta_key = '_tern_wp_youtube_video' LIMIT 1101");
+$data['getVideo'] = $db->select("SELECT meta_value FROM wp_postmeta WHERE meta_key = '_tern_wp_youtube_video' LIMIT 100");
 
-//print_r($data['getDatum']);
 if(!sizeof($data['getVideo'])){
   echo
   '<div class="alert alert-info">No Data.</div>';
@@ -27,17 +26,17 @@ if(!sizeof($data['getVideo'])){
 		      $page = $result['content'];
 		      if($result==TRUE){
 		        $str = $page;
-		        $preg2=preg_match_all('#<title>(.*?)</title>#', $str, $parts2);
-		        $preg3=preg_match_all('/<meta property="og:image" content="(.*)">/',$str,$parts3);
-		        $preg4=preg_match_all('/<meta property="og:description" content="(.*)">/',$str,$parts4);
-		        $preg5=preg_match_all('/<link itemprop="url" href="(.*)">/',$str,$parts5);
+		        $title=preg_match_all('/<meta itemprop="name" content="(.*)">/', $str, $parts2);
+		        $thumbnail=preg_match_all('/<meta property="og:image" content="(.*)">/',$str,$parts3);
+		        $description=preg_match_all('/<meta property="og:description" content="(.*)">/',$str,$parts4);
+		        $author=preg_match_all('/<link itemprop="url" href="(.*)">/',$str,$parts5);
 		        $daten['yid'] = $yid;
 		        $daten['url'] = $url;
 		        $daten['title'] = $parts2[1][0];
 		        $daten['thumbnail'] = $parts3[1][0];
 		        $daten['description'] = $parts4[1][0];
-		        $daten['author'] = $parts5[1][2];
-		        $db->insert('yapi',$daten);
+            $daten['author'] = str_replace("http://www.youtube.com/user/","",$parts5[1][1]);
+            $db->insert('yapi',$daten);
 		      }
 		    }
 		  }
