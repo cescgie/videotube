@@ -46,7 +46,9 @@
           <p class="item-play" data-ng-click="launch(video.id, video.title)">play</p>
           <p class="item-delete" data-ng-click="delete(upcoming, video.id)">delete</p>
           <p class="item-title">{{video.title}}</p>
+          <input class="item-id" type="hidden" name="name" value="{{video.id}}">
         </li>
+          <a href="javascript:save()">Save</a>
       </ol>
       <ol id="history" class="sortable" data-ng-hide="playlist">
         <li data-ng-repeat="video in history">
@@ -60,9 +62,26 @@
         <a ng-class="{on:!playlist}" data-ng-click="tabulate(false)">History</a>
       </p>
     </div>
-
     <a id="update_button_id" data-ng-click="updateVideo()" type="button">Update ideo</a>
-
+    <script type="text/javascript">
+      function save(){
+        var item = [];
+        $('#upcoming li p.item-title').each(function (i, e) {
+            item.push($(e).text());
+        });
+        var item2 = [];
+        $('#upcoming li input.item-id').each(function (i, e) {
+            item2.push($(e).val());
+        });
+        var strfy = [];
+        for (var i = 0; i < item.length; i++) {
+          var js = {id:item2[i],title:item[i]};
+          var jsons= JSON.stringify(js);
+          strfy.push(jsons);
+        }
+        console.log(JSON.stringify(strfy));
+      }
+    </script>
     <script type="text/javascript" src="libs/angular.min.js"></script>
     <script type="text/javascript" src="app.js"></script>
   </body>
