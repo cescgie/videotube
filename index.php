@@ -35,13 +35,13 @@
       <p id="current">{{ youtube.videoTitle }}</p>
       <ol id="upcoming" data-ng-show="playlist">
         <li data-ng-repeat="video in upcoming">
-          <p class="item-delete" data-ng-click="delete('upcoming', video.id)">delete</p>
+          <p class="item-delete" data-ng-click="delete(upcoming, video.id)">delete</p>
           <p class="item-title" data-ng-click="launch(video.id, video.title)">{{video.title}}</p>
         </li>
       </ol>
       <ol id="history" data-ng-hide="playlist">
         <li data-ng-repeat="video in history">
-          <p class="item-delete" data-ng-click="delete('history', video.id)">delete</p>
+          <p class="item-delete" data-ng-click="delete(history, video.id)">delete</p>
           <p class="item-title" data-ng-click="queue(video.id, video.title)">{{video.title}}</p>
         </li>
       </ol>
@@ -51,7 +51,7 @@
       </p>
     </div>
 
-    <a id="update_button_id" data-ng-click="updateVideo()" type="button">Update video</a>
+    <a id="update_button_id" data-ng-click="updateVideo()" type="button">Update ideo</a>
 
     <script type="text/javascript" src="libs/angular.min.js"></script>
     <script type="text/javascript" src="app.js"></script>
