@@ -50,6 +50,9 @@
         <a ng-class="{on:!playlist}" data-ng-click="tabulate(false)">History</a>
       </p>
     </div>
+
+    <a id="update_button_id" data-ng-click="updateVideo()" type="button">Update video</a>
+
     <script type="text/javascript" src="libs/angular.min.js"></script>
     <script type="text/javascript" src="app.js"></script>
   </body>

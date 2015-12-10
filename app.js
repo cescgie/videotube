@@ -179,6 +179,15 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService)
     });
   };
 
+  $scope.updateVideo = function () {
+    console.log("updating video loading...");
+    $('#update_button_id').text('Updating video...')
+    $http.post("ajax/updateVideo.php").success(function(data){
+      $('#update_button_id').text('Update success!')
+      console.log("success update video");
+    });
+  };
+
   init();
 
   function init() {

@@ -3,7 +3,7 @@ require_once('../libs/Storage.php');
 
 $db = new Storage();
 
-$data['getVideo'] = $db->select("SELECT meta_value FROM wp_postmeta WHERE meta_key = '_tern_wp_youtube_video' LIMIT 100");
+$data['getVideo'] = $db->select("SELECT meta_value FROM wp_postmeta WHERE meta_key = '_tern_wp_youtube_video' LIMIT 150");
 
 if(!sizeof($data['getVideo'])){
   echo
