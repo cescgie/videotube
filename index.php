@@ -7,6 +7,14 @@
     <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="libs/style.css" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script>
+      $(function() {
+        $( ".sortable" ).sortable();
+        $( ".sortable" ).disableSelection();
+      });
+    </script>
   </head>
   <body data-ng-controller="VideosController">
     <header>
@@ -33,13 +41,13 @@
     </div>
     <div id="playlist">
       <p id="current">{{ youtube.videoTitle }}</p>
-      <ol id="upcoming" data-ng-show="playlist">
+      <ol id="upcoming" class="sortable" data-ng-show="playlist">
         <li data-ng-repeat="video in upcoming">
           <p class="item-delete" data-ng-click="delete(upcoming, video.id)">delete</p>
           <p class="item-title" data-ng-click="launch(video.id, video.title)">{{video.title}}</p>
         </li>
       </ol>
-      <ol id="history" data-ng-hide="playlist">
+      <ol id="history" class="sortable" data-ng-hide="playlist">
         <li data-ng-repeat="video in history">
           <p class="item-delete" data-ng-click="delete(history, video.id)">delete</p>
           <p class="item-title" data-ng-click="queue(video.id, video.title)">{{video.title}}</p>

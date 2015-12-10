@@ -110,7 +110,6 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
 
   this.listResults = function (data) {
     results.length = 0;
-    //console.log(data.length);
 
     for (var i = data.length - 1; i >= 0; i--) {
       results.push({
