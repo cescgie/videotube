@@ -79,7 +79,16 @@
           var jsons= JSON.stringify(js);
           strfy.push(jsons);
         }
-        console.log(JSON.stringify(strfy));
+        var playlist = JSON.stringify(strfy);
+        console.log(playlist);
+        $.ajax({
+          type: "GET",
+          url: "ajax/savePlaylist.php?daten="+playlist,
+          dataType: "html",
+          success: function(response){
+              console.log("success");
+          }
+        });
       }
     </script>
     <script type="text/javascript" src="libs/angular.min.js"></script>
