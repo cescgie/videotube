@@ -37,20 +37,22 @@
       </div>
     </div>
     <div id="player">
-      <div id="placeholder"></div>
+      <div id="placeholder" ></div>
     </div>
     <div id="playlist">
-      <p id="current">{{ youtube.videoTitle }}</p>
+      <p id="current" style="position:relative">{{ youtube.videoTitle }}</p>
       <ol id="upcoming" class="sortable" data-ng-show="playlist">
         <li data-ng-repeat="video in upcoming">
+          <p class="item-play" data-ng-click="launch(video.id, video.title)">play</p>
           <p class="item-delete" data-ng-click="delete(upcoming, video.id)">delete</p>
-          <p class="item-title" data-ng-click="launch(video.id, video.title)">{{video.title}}</p>
+          <p class="item-title">{{video.title}}</p>
         </li>
       </ol>
       <ol id="history" class="sortable" data-ng-hide="playlist">
         <li data-ng-repeat="video in history">
+          <p class="item-play" data-ng-click="launch(video.id, video.title)">play</p>
           <p class="item-delete" data-ng-click="delete(history, video.id)">delete</p>
-          <p class="item-title" data-ng-click="queue(video.id, video.title)">{{video.title}}</p>
+          <p class="item-title">{{video.title}}</p>
         </li>
       </ol>
       <p id="tabs">
