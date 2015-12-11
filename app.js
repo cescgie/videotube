@@ -267,4 +267,13 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService)
       $scope.playlist = state;
     }
 
+    $scope.dragPlaylist = function (data){
+      $scope.youtube = VideosService.getYoutube();
+      $scope.results = VideosService.getResults();
+      $scope.history = VideosService.getHistory();
+      $scope.upcoming = data;
+      $scope.playlist = true;
+      console.log("sortiert");
+    }
+
 });

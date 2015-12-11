@@ -9,14 +9,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <script>
-      $(function() {
-        $( ".sortable" ).sortable();
-        $( ".sortable" ).disableSelection();
-      });
-    </script>
+
   </head>
-  <body data-ng-controller="VideosController">
+  <body  id="myctrl" data-ng-controller="VideosController">
     <header>
       <h1>Video<strong>Tube</strong></h1>
       <form id="search" data-ng-submit="search()">
@@ -53,7 +48,7 @@
         <li data-ng-repeat="video in history">
           <p class="item-play" data-ng-click="launch(video.id, video.title)">play</p>
           <p class="item-delete" data-ng-click="delete(history, video.id)">delete</p>
-          <p class="item-title">{{video.title}}</p>
+          <p class="item-title" data-ng-click="queue(video.id, video.title)">{{video.title}}</p>
         </li>
       </ol>
       <p id="tabs">
@@ -68,6 +63,34 @@
       </li>
     </ol>
     <!--<a id="update_button_id" data-ng-click="updateVideo()" type="button">Update Video</a>-->
+
+    <script>
+      $(function() {
+        $( ".sortable" ).sortable({
+          stop: function() {
+            var item = [];
+            $('#upcoming li p.item-title').each(function (i, e) {
+                item.push($(e).text());
+            });
+            var item2 = [];
+            $('#upcoming li input.item-id').each(function (i, e) {
+                item2.push($(e).val());
+            });
+            var strfy = [];
+            for (var i = 0; i < item.length; i++) {
+              var js = {id:item2[i],title:item[i]};
+              //var jsons= JSON.stringify(js);
+              strfy.push(js);
+            }
+            //var playlist = JSON.stringify(strfy);
+            console.log(strfy);
+            angular.element($("#myctrl")).scope().dragPlaylist(strfy);
+          }
+        });
+      });
+    </script>
+
+
     <script type="text/javascript">
       function save(){
         var item = [];

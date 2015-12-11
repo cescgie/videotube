@@ -1,11 +1,14 @@
 <?php
 require_once('../libs/db.php');
 
-$key = strtolower($_GET['q']);
 $limit = $_GET['maxResults'];
 
-$query="SELECT * FROM yapi WHERE LOWER(title) LIKE LOWER('%$key%') LIMIT $limit ";
-
+if(isset($_GET['q'])){
+	$key = strtolower($_GET['q']);
+	$query="SELECT * FROM yapi WHERE LOWER(title) LIKE LOWER('%$key%') AND title IS NOT NULL OR title != '' LIMIT $limit ";
+}else{
+	$query="SELECT * FROM yapi WHERE title IS NOT NULL OR title != '' LIMIT $limit ";
+}
 $result = $mysqli->query($query) or die($mysqli->error.__LINE__);
 
 $arr = array();
