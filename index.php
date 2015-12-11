@@ -48,7 +48,6 @@
           <p class="item-title" id="item-title-{{video.id}}">{{video.title}}</p>
           <input class="item-id" type="hidden" name="name" value="{{video.id}}">
         </li>
-          <a href="javascript:save()">Save</a>
       </ol>
       <ol id="history" class="sortable" data-ng-hide="playlist">
         <li data-ng-repeat="video in history">
@@ -62,7 +61,12 @@
         <a ng-class="{on:!playlist}" data-ng-click="tabulate(false)">History</a>
       </p>
     </div>
-    <a id="update_button_id" data-ng-click="initPlaylist('hamburg')" type="button">Get Playlist</a>
+    <a href="javascript:save()">Save</a>
+    <ol>
+      <li data-ng-repeat="playlist in listplaylist">
+        <a data-ng-click="initPlaylist(playlist.name)">{{ playlist.name }}</a>
+      </li>
+    </ol>
     <!--<a id="update_button_id" data-ng-click="updateVideo()" type="button">Update Video</a>-->
     <script type="text/javascript">
       function save(){

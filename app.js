@@ -188,11 +188,12 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService)
   };
 
   $scope.initPlaylist = function (name){
-    console.log(name);
+    console.log("initPlaylist");
     $scope.youtube = VideosService.getYoutube();
     $scope.results = VideosService.getResults();
     $scope.history = VideosService.getHistory();
     $scope.playlist = true;
+    //init playlist
     $http.get('ajax/getPlaylist.php', {
       params: {
         name : name
@@ -212,6 +213,15 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService)
       $scope.upcoming = VideosService.getUpcoming();
       $scope.history = VideosService.getHistory();
       $scope.playlist = true;
+      //get Playlist
+      $http.get('ajax/getListPlaylist.php')
+      .success( function (data) {
+        console.log(data);
+        $scope.listplaylist = data;
+      })
+      .error( function () {
+        console.log("error");
+      });
   }
 
   $scope.launch = function (id, title) {
