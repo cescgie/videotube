@@ -187,6 +187,23 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService)
     });
   };
 
+  $scope.initPlaylist = function (name){
+    console.log(name);
+    $scope.youtube = VideosService.getYoutube();
+    $scope.results = VideosService.getResults();
+    $scope.history = VideosService.getHistory();
+    $scope.playlist = true;
+    $http.get('ajax/getPlaylist.php', {
+      params: {
+        name : name
+      }
+    })
+    .success( function (data) {
+      console.log("success get List");
+      $scope.upcoming = data;
+    });
+  }
+
   init();
 
   function init() {
@@ -200,7 +217,11 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService)
   $scope.launch = function (id, title) {
       VideosService.launchPlayer(id, title);
       VideosService.archiveVideo(id, title);
-      VideosService.deleteVideo($scope.upcoming, id);
+      //VideosService.deleteVideo($scope.upcoming, id);
+      $('.item-title').css("background","");
+      $('.item-title').css("color","");
+      $('#item-title-'+id).css("background","#1171A2");
+      $('#item-title-'+id).css("color","#fff");
       $log.info('Launched id:' + id + ' and title:' + title);
     };
 

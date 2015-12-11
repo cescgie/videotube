@@ -45,7 +45,7 @@
         <li data-ng-repeat="video in upcoming">
           <p class="item-play" data-ng-click="launch(video.id, video.title)">play</p>
           <p class="item-delete" data-ng-click="delete(upcoming, video.id)">delete</p>
-          <p class="item-title">{{video.title}}</p>
+          <p class="item-title" id="item-title-{{video.id}}">{{video.title}}</p>
           <input class="item-id" type="hidden" name="name" value="{{video.id}}">
         </li>
           <a href="javascript:save()">Save</a>
@@ -62,7 +62,8 @@
         <a ng-class="{on:!playlist}" data-ng-click="tabulate(false)">History</a>
       </p>
     </div>
-    <a id="update_button_id" data-ng-click="updateVideo()" type="button">Update ideo</a>
+    <a id="update_button_id" data-ng-click="initPlaylist('hamburg')" type="button">Get Playlist</a>
+    <!--<a id="update_button_id" data-ng-click="updateVideo()" type="button">Update Video</a>-->
     <script type="text/javascript">
       function save(){
         var item = [];
@@ -76,14 +77,15 @@
         var strfy = [];
         for (var i = 0; i < item.length; i++) {
           var js = {id:item2[i],title:item[i]};
-          var jsons= JSON.stringify(js);
-          strfy.push(jsons);
+          //var jsons= JSON.stringify(js);
+          strfy.push(js);
         }
         var playlist = JSON.stringify(strfy);
         console.log(playlist);
         $.ajax({
           type: "GET",
-          url: "ajax/savePlaylist.php?daten="+playlist,
+          url: "ajax/savePlaylist.php",
+          data: { daten : playlist },
           dataType: "html",
           success: function(response){
               console.log("success");
