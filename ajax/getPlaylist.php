@@ -14,6 +14,5 @@ if($result->num_rows > 0) {
 		$arr[] = $row;
 	}
 }
-
 print_r($arr[0]['lists']);
 ?>

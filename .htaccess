@@ -1,0 +1,7 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+
+RewriteRule ^playlist/([0-9a-zA-Z]+) playlist.php?name=$1 [NC,L]
+
+</IfModule>

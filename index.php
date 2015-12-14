@@ -5,18 +5,17 @@
     <title>VideoTube</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="libs/style.css" type="text/css">
+    <link rel="stylesheet" href="/libs/style.css" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
   </head>
-  <body  id="myctrl" data-ng-controller="VideosController">
+  <body id="myctrl" data-ng-controller="VideosController">
     <header>
       <h1>Video<strong>Tube</strong></h1>
       <form id="search" data-ng-submit="search()">
         <input id="query" name="q" type="text" placeholder="Search for a YouTube video" data-ng-model="query">
-        <input id="submit" type="image" src="img/search.png" alt="Search">
+        <input id="submit" type="image" src="/img/search.png" alt="Search">
       </form>
       <nav>
         <a id="play">{{ youtube.state }}</a>
@@ -25,7 +24,7 @@
     </header>
     <!-- Left Video -->
     <div id="results"></div>
-    
+
     <div id="player">
       <div id="placeholder" ></div>
     </div>
@@ -51,12 +50,28 @@
         <a ng-class="{on:!playlist}" data-ng-click="tabulate(false)">History</a>
       </p>
     </div>
+
     <a href="javascript:save()">Save</a>
     <ol>
       <li data-ng-repeat="playlist in listplaylist">
         <a data-ng-click="initPlaylist(playlist.name)">{{ playlist.name }}</a>
       </li>
     </ol>
+
+    <script type="text/javascript" src="/libs/angular.min.js"></script>
+    <script type="text/javascript" src="/app.js"></script>
+
+    <?php if(isset($_GET['name'])):?>
+      <script type="text/javascript">
+      $(document).ready(function() {
+          //var name = <?php echo json_encode($_GET["name"]); ?>;
+          //console.log("testo "+name);
+          //angular.element($("#myctrl")).scope().init();
+          //angular.element($("#myctrl")).scope().initPlaylist(name);*/
+        });
+      </script>
+    <?php endif; ?>
+
     <!--<a id="update_button_id" data-ng-click="updateVideo()" type="button">Update Video</a>-->
     <script type="text/javascript">
     $(function() {
@@ -148,7 +163,5 @@
         }
       }
     </script>
-    <script type="text/javascript" src="libs/angular.min.js"></script>
-    <script type="text/javascript" src="app.js"></script>
   </body>
 </html>

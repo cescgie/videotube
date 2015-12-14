@@ -42,10 +42,12 @@ foreach ($result as $keys => $value) {
      strfy.push({"id":video_yid,"title":video_title});
      //var playlist = JSON.stringify(strfy);
      //console.log(playlist);
+     //$("#playlist").load("/ #playlist");
      var scope = angular.element($("#upcoming")).scope();
-      scope.$apply(function(){
-          console.log("appli");
+     scope.$apply(function(){
+          //$scope.youtube = VideosService.getYoutube();
+          //$scope.results = VideosService.getResults();
           scope.upcoming = strfy;
-      });
+     });
    }
  </script>

@@ -1,4 +1,4 @@
-var app = angular.module('JukeTubeApp', []);
+var app = angular.module('playlistApp', []);
 
 
 app.run(function () {
@@ -29,17 +29,8 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
     state: 'stopped'
   };
   var results = [];
-  var upcoming = [
-    {id: 'O3UBOOZw-FE', title: 'KOLLEGAH - Alpha (Official HD Video)'},
-    {id: 'HbtGDZf9Ts8', title: 'KOLLEGAH - King (Official HD Video)'},
-    {id: 'yqhsqnNYR4k', title: 'KOLLEGAH - Universalgenie (Official HD Video)'},
-    {id: 'FpOOXSd9IxY', title: 'KOLLEGAH - Du bist Boss (Official HD Video)'},
-    {id: 'nyrcAPJSRJc', title: 'Kollegah - Mondfinsternis (Official HD Video)'},
-    {id: '7tdZx0gMAR0', title: 'Kollegah feat. Sahin - Du (Official HD Video)'}
-  ];
-  var history = [
-    {id: 'JMcbCoCWtd4', title: 'Kollegah feat. Favorite - Discospeed (Official Video)'}
-  ];
+  var upcoming = [];
+  var history = [];
 
   $window.onYouTubeIframeAPIReady = function () {
     $log.info('Youtube API is ready');
@@ -169,7 +160,6 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
 app.controller('VideosController', function ($scope, $http, $log, VideosService) {
 
   //updateVideo();
-
   function updateVideo(){
     console.log("updating video loading...");
     $http.post("ajax/updateVideo.php").success(function(data){
@@ -210,19 +200,15 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService)
   function init() {
       $scope.youtube = VideosService.getYoutube();
       $scope.results = VideosService.getResults();
-      $scope.upcoming = VideosService.getUpcoming();
+      $scope.upcoming = getVideo();
       $scope.history = VideosService.getHistory();
       $scope.playlist = true;
       console.log($scope.youtube);
-      //get Playlist
-      $http.get('ajax/getListPlaylist.php')
-      .success( function (data) {
-        console.log('success get listplaylist');
-        $scope.listplaylist = data;
-      })
-      .error( function () {
-        console.log("error");
-      });
+      console.log('init ok');
+  }
+
+  function getVideo(){
+    console.log("geting Video");
   }
 
   $scope.launch = function (id, title) {
@@ -275,16 +261,5 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService)
       $scope.upcoming = data;
       $scope.playlist = true;
       console.log("sortiert");
-    }
-
-    $scope.getListPlaylist = function (){
-      $http.get('ajax/getListPlaylist.php')
-      .success( function (data) {
-        console.log(data);
-        $scope.listplaylist = data;
-      })
-      .error( function () {
-        console.log("error");
-      });
     }
 });
