@@ -1,5 +1,11 @@
 <?php
+require_once('../libs/Storage.php');
 
-$daten = $_GET['daten'];
-echo "daten : ".$daten;
+$db = new Storage();
+
+$_GET['daten'] = urldecode(stripslashes($_GET['daten']));
+$daten['lists'] = $_GET['daten'];
+$daten['name'] = $_GET['name'];
+$db->insert('playlist',$daten);
+
 ?>

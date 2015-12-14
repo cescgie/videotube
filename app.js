@@ -277,4 +277,15 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService)
       console.log("sortiert");
     }
 
+    $scope.getListPlaylist = function (){
+      $http.get('ajax/getListPlaylist.php')
+      .success( function (data) {
+        console.log(data);
+        $scope.listplaylist = data;
+      })
+      .error( function () {
+        console.log("error");
+      });
+    }
+
 });

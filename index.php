@@ -109,15 +109,24 @@
         }
         var playlist = JSON.stringify(strfy);
         console.log(playlist);
-        $.ajax({
-          type: "GET",
-          url: "ajax/savePlaylist.php",
-          data: { daten : playlist },
-          dataType: "html",
-          success: function(response){
-              console.log("success");
-          }
-        });
+
+        var playlist_name = prompt("Give a name for your new playlist", "");
+        if (playlist_name != null && playlist_name != "" ) {
+            $.ajax({
+              type: "GET",
+              url: "ajax/savePlaylist.php",
+              data: { daten : playlist,
+                      name: playlist_name},
+              dataType: "html",
+              success: function(response){
+                  //console.log(response);
+                  console.log("Playlist "+playlist_name+" saved!");
+                  angular.element($("#myctrl")).scope().getListPlaylist();
+              }
+            });
+        } else {
+            console.log("Cancel!");
+        }
       }
     </script>
     <script type="text/javascript" src="libs/angular.min.js"></script>
