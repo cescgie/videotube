@@ -200,6 +200,7 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService)
       }
     })
     .success( function (data) {
+      console.log(data);
       console.log("success get List");
       $scope.upcoming = data;
     });

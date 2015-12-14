@@ -15,11 +15,5 @@ if($result->num_rows > 0) {
 	}
 }
 
-# JSON-encode the response
-foreach ($result as $key => $value) {
-  //$value['lists'] =  json_decode($value['lists']);
-  print_r($value['lists']);
-}
-//echo $json_response = json_encode($arr);
-
+print_r($arr[0]['lists']);
 ?>
