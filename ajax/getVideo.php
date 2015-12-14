@@ -5,7 +5,7 @@ $limit = $_GET['maxResults'];
 
 if(isset($_GET['q'])){
 	$key = strtolower($_GET['q']);
-	$query="SELECT * FROM yapi WHERE LOWER(title) LIKE LOWER('%$key%') AND title IS NOT NULL OR title != '' LIMIT $limit ";
+	$query="SELECT * FROM yapi WHERE LOWER(title) LIKE LOWER('%$key%') LIMIT $limit ";
 }else{
 	$query="SELECT * FROM yapi WHERE title IS NOT NULL OR title != '' LIMIT $limit ";
 }

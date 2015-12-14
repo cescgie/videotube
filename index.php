@@ -23,14 +23,9 @@
         <a id="pause">Pause</a>
       </nav>
     </header>
-    <div id="results">
-      <div class="video" data-ng-repeat="video in results" data-ng-click="queue(video.id, video.title)">
-        <img class="video-image" data-ng-src="{{ video.thumbnail }}">
-        <p class="video-title">{{ video.title }}</p>
-        <p class="video-author">{{ video.author }}</p>
-        <p class="video-description">{{ video.description }}</p>
-      </div>
-    </div>
+    <!-- Left Video -->
+    <div id="results"></div>
+    
     <div id="player">
       <div id="placeholder" ></div>
     </div>
@@ -63,6 +58,30 @@
       </li>
     </ol>
     <!--<a id="update_button_id" data-ng-click="updateVideo()" type="button">Update Video</a>-->
+    <script type="text/javascript">
+    $(function() {
+      $("form input").keypress(function (e) {
+          if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+              $('button[type=submit] .default').click();
+              console.log($('#query').val());
+              $.ajax({    //create an ajax request to load_page.php
+                type: "GET",
+                url: "ajax/getLeftVideo.php",
+                data: {q:$('#query').val()},
+                dataType: "html",   //expect html to be returned
+                success: function(response){
+                    //console.log(response);
+                    $('#results').html(response);
+                    console.log("success");
+                }
+              });
+              return false;
+          } else {
+              return true;
+          }
+      });
+    });
+    </script>
 
     <script>
       $(function() {
