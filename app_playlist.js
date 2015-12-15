@@ -16,6 +16,8 @@ app.config( function ($httpProvider) {
 // Service
 app.service('VideosService', ['$window', '$rootScope', '$log', function ($window, $rootScope, $log) {
 
+  var playlist_upcome = thedata;
+
   var service = this;
 
   var youtube = {
@@ -29,14 +31,37 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
     state: 'stopped'
   };
   var results = [];
-  var upcoming = [];
-  var history = [];
+
+  var upcoming = getplaylistupcome();
+
+  function getplaylistupcome() {
+    var name = playlist_upcome;
+    return $.ajax({
+          url: '/ajax/getPlaylist.php',
+          data:{name:name},
+          dataType: 'json',
+          success: function(data) {
+            console.log("getplaylistupcome");
+            console.log(data);
+            upcoming = data;
+          },
+          error: function() {
+            console.log('Error occured');
+        }
+      });
+  }
+
+  var history = [
+    {id: 'JMcbCoCWtd4', title: 'Kollegah feat. Favorite - Discospeed (Official Video)'}
+  ];
+
 
   $window.onYouTubeIframeAPIReady = function () {
     $log.info('Youtube API is ready');
     youtube.ready = true;
     service.bindPlayer('placeholder');
     service.loadPlayer();
+    //service.getplaylist(playlist_upcome);
     $rootScope.$apply();
   };
 
@@ -157,7 +182,7 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
 
 }]);
 
-app.controller('VideosController', function ($scope, $http, $log, VideosService) {
+app.controller('PlaylistController', function ($scope, $http, $log, VideosService) {
 
   //updateVideo();
   function updateVideo(){
@@ -200,7 +225,9 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService)
   function init() {
       $scope.youtube = VideosService.getYoutube();
       $scope.results = VideosService.getResults();
-      $scope.upcoming = getVideo();
+      $scope.upcoming = VideosService.getUpcoming();
+      console.log("init...");
+      console.log($scope.upcoming);
       $scope.history = VideosService.getHistory();
       $scope.playlist = true;
       console.log($scope.youtube);

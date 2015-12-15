@@ -1,7 +1,6 @@
 <?php
 if(isset($_GET['name'])){
   $key = $_GET['name'];
-  echo $key;
 }
 ?>
 <!DOCTYPE html>
@@ -16,7 +15,7 @@ if(isset($_GET['name'])){
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   </head>
-  <body id="playlistctrl" data-ng-controller="VideosController" data-ng-init="something('<?php echo $key; ?>')">
+  <body id="playlistctrl" data-ng-controller="PlaylistController" data-ng-init="something('<?php echo $key; ?>')">
     <header>
       <h1><a href="/" style="color:white;">Video<strong>Tube</strong></a></h1>
     </header>
@@ -43,7 +42,13 @@ if(isset($_GET['name'])){
     </div>
 
     <script type="text/javascript" src="/libs/angular.min.js"></script>
+    <script type="text/javascript">
+      console.log("Init key");
+      var thedata = "<?php echo $key;?>";
+      //console.log("key : "+thedata);
+    </script>
     <script type="text/javascript" src="/app_playlist.js"></script>
+
 
     <script>
       $(function() {
