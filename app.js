@@ -194,7 +194,7 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
     $scope.history = VideosService.getHistory();
     $scope.playlist = true;
     //init playlist
-    $http.get('ajax/operatePlaylist.php', {
+    $http.get('ajax/getPlaylist.php', {
       params: {
         name : name
       }
