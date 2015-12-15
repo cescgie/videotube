@@ -50,28 +50,17 @@
         <a ng-class="{on:!playlist}" data-ng-click="tabulate(false)">History</a>
       </p>
     </div>
-
-    <a href="javascript:save()">Save</a>
-    <ol>
-      <li data-ng-repeat="playlist in listplaylist">
-        <a data-ng-click="initPlaylist(playlist.name)">{{ playlist.name }}</a>
-        <a class="remove_playlist" data-ng-click='confirm_delete(playlist.name,playlist.id)'>x</a>
-      </li>
-    </ol>
-
+    <div id="playlisting">
+      <a href="javascript:save()">Save</a>
+      <ol>
+        <li data-ng-repeat="playlist in listplaylist">
+          <a href="/playlist/{{ playlist.name }}">{{ playlist.name }}</a>
+          <a class="remove_playlist" data-ng-click='confirm_delete(playlist.name,playlist.id)'>x</a>
+        </li>
+      </ol>
+    </div>
     <script type="text/javascript" src="/libs/angular.min.js"></script>
     <script type="text/javascript" src="/app.js"></script>
-
-    <?php if(isset($_GET['name'])):?>
-      <script type="text/javascript">
-      $(document).ready(function() {
-          //var name = <?php echo json_encode($_GET["name"]); ?>;
-          //console.log("testo "+name);
-          //angular.element($("#myctrl")).scope().init();
-          //angular.element($("#myctrl")).scope().initPlaylist(name);*/
-        });
-      </script>
-    <?php endif; ?>
 
     <!--<a id="update_button_id" data-ng-click="updateVideo()" type="button">Update Video</a>-->
     <script type="text/javascript">

@@ -20,8 +20,6 @@ if(isset($_GET['name'])){
       <h1><a href="/" style="color:white;">Video<strong>Tube</strong></a></h1>
     </header>
     <!-- Left Video -->
-    <div id="results"></div>
-
     <div id="player">
       <div id="placeholder" ></div>
     </div>
@@ -41,6 +39,8 @@ if(isset($_GET['name'])){
       </p>
     </div>
 
+    <a href="/">See playlist</a>
+
     <script type="text/javascript" src="/libs/angular.min.js"></script>
     <script type="text/javascript">
       console.log("Init key");
@@ -48,7 +48,6 @@ if(isset($_GET['name'])){
       //console.log("key : "+thedata);
     </script>
     <script type="text/javascript" src="/app_playlist.js"></script>
-
 
     <script>
       $(function() {

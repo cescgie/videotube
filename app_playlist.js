@@ -226,11 +226,8 @@ app.controller('PlaylistController', function ($scope, $http, $log, VideosServic
       $scope.youtube = VideosService.getYoutube();
       $scope.results = VideosService.getResults();
       $scope.upcoming = VideosService.getUpcoming();
-      console.log("init...");
-      console.log($scope.upcoming);
       $scope.history = VideosService.getHistory();
       $scope.playlist = true;
-      console.log($scope.youtube);
       console.log('init ok');
   }
 
