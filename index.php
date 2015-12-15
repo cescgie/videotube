@@ -151,7 +151,8 @@
               type: "GET",
               url: "ajax/operatePlaylist.php",
               data: { daten : playlist,
-                      name: playlist_name},
+                      name: playlist_name,
+                      action: 'create'},
               dataType: "html",
               success: function(response){
                   //console.log(response);

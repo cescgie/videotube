@@ -292,7 +292,8 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
       console.log("Remove playlist "+name);
       $http.get('ajax/operatePlaylist.php', {
         params: {
-          playlist_id: id
+          playlist_id: id,
+          action:'delete'
         }
       })
       .success( function (data) {
