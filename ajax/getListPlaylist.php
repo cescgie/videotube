@@ -2,7 +2,7 @@
 require_once('../libs/db.php');
 
 
-$query="SELECT name FROM playlist";
+$query="SELECT id,name FROM playlist";
 
 $result = $mysqli->query($query) or die($mysqli->error.__LINE__);
 

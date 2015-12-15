@@ -97,6 +97,7 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
         youtube.player.destroy();
       }
       youtube.player = service.createPlayer();
+      console.log("loadPlayer");
     }
   };
 
@@ -166,7 +167,7 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
 
 }]);
 
-app.controller('VideosController', function ($scope, $http, $log, VideosService) {
+app.controller('VideosController', function ($scope, $http, $log, VideosService, $rootScope) {
 
   //updateVideo();
 
@@ -193,7 +194,7 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService)
     $scope.history = VideosService.getHistory();
     $scope.playlist = true;
     //init playlist
-    $http.get('ajax/getPlaylist.php', {
+    $http.get('ajax/operatePlaylist.php', {
       params: {
         name : name
       }
@@ -274,7 +275,6 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService)
       $scope.history = VideosService.getHistory();
       $scope.upcoming = data;
       $scope.playlist = true;
-      console.log("sortiert");
     }
 
     $scope.getListPlaylist = function (){
@@ -286,5 +286,29 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService)
       .error( function () {
         console.log("error");
       });
+    }
+
+    function removePlaylist(name,id){
+      console.log("Remove playlist "+name);
+      $http.get('ajax/operatePlaylist.php', {
+        params: {
+          playlist_id: id
+        }
+      })
+      .success( function (data) {
+        console.log(data);
+        angular.element($("#myctrl")).scope().getListPlaylist();
+      })
+      .error( function () {
+        console.log("error");
+      });
+    }
+
+    $scope.confirm_delete = function(name,id){
+      if (confirm("Are you sure to delete this playlist?") == true) {
+        removePlaylist(name,id);
+      } else {
+        console.log("cancel");
+      }
     }
 });

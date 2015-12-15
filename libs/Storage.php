@@ -70,12 +70,7 @@ class Storage {
 	}
 
 	public function delete($table, $where, $limit = 1) {
-		return $this->exec("DELETE FROM $table WHERE $where LIMIT $limit");
+    $stmt = $this->connection->prepare("DELETE FROM $table WHERE $where LIMIT $limit");
+		return $stmt->execute();;
 	}
-
-  public function getDb() {
-      if ($this->connection instanceof PDO) {
-           return $this->connection;
-      }
-    }
 }

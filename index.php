@@ -55,6 +55,7 @@
     <ol>
       <li data-ng-repeat="playlist in listplaylist">
         <a data-ng-click="initPlaylist(playlist.name)">{{ playlist.name }}</a>
+        <a class="remove_playlist" data-ng-click='confirm_delete(playlist.name,playlist.id)'>x</a>
       </li>
     </ol>
 
@@ -148,7 +149,7 @@
         if (playlist_name != null && playlist_name != "" ) {
             $.ajax({
               type: "GET",
-              url: "ajax/savePlaylist.php",
+              url: "ajax/operatePlaylist.php",
               data: { daten : playlist,
                       name: playlist_name},
               dataType: "html",

@@ -66,3 +66,11 @@ footer a:hover{ color: #444;}
 :-moz-placeholder{ color: #df1f1f;}
 ::-moz-placeholder{ color: #df1f1f;}
 :-ms-input-placeholder{ color: #df1f1f;}
+
+.remove_playlist:hover:before{
+  content:'Remove playlist';
+  position: absolute;
+  left:120px;
+  color:red;
+  font-size:15px;
+}
