@@ -214,7 +214,7 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
       $scope.upcoming = VideosService.getUpcoming();
       $scope.history = VideosService.getHistory();
       $scope.playlist = true;
-      console.log($scope.youtube);
+      //console.log($scope.youtube);
       //get Playlist
       $http.get('ajax/getListPlaylist.php')
       .success( function (data) {

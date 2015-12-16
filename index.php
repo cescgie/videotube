@@ -19,7 +19,6 @@
       </form>
       <nav>
         <a id="play">{{ youtube.state }}</a>
-        <a id="pause">Pause</a>
       </nav>
     </header>
     <!-- Left Video -->
