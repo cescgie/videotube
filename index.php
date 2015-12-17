@@ -192,7 +192,7 @@
                   action: action},
           dataType: "html",
           success: function(response){
-              angular.element($("#myctrl")).scope().getListPlaylist();
+              //angular.element($("#myctrl")).scope().getListPlaylist();
               alert("Playlist '"+playlist_name+"' saved!");
           }
         });

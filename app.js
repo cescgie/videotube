@@ -37,9 +37,14 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
     {id: 'nyrcAPJSRJc', title: 'Kollegah - Mondfinsternis (Official HD Video)'},
     {id: '7tdZx0gMAR0', title: 'Kollegah feat. Sahin - Du (Official HD Video)'}
   ];
-  var history = [
-    {id: 'JMcbCoCWtd4', title: 'Kollegah feat. Favorite - Discospeed (Official Video)'}
-  ];
+  var history;
+  if(key!=0){
+    history = [];
+  }else{
+    history = [
+      {id: 'JMcbCoCWtd4', title: 'Kollegah feat. Favorite - Discospeed (Official Video)'}
+    ];
+  }
 
   $window.onYouTubeIframeAPIReady = function () {
     $log.info('Youtube API is ready');
