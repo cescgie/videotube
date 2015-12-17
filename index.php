@@ -1,3 +1,8 @@
+<?php if(isset($_GET['playlist_name'])){
+  $key=$_GET['playlist_name'];
+}else{
+  $key=0;
+}?>
 <!DOCTYPE html>
 <html data-ng-app="JukeTubeApp">
   <head>
@@ -50,7 +55,11 @@
       </p>
     </div>
     <div id="playlisting">
-      <a href="javascript:save()">Save</a>
+      <?php if(isset($_GET['playlist_name'])){?>
+      <a href="javascript:save('<?php echo $key;?>')">Update</a>
+      <?php }else{?>
+      <a href="javascript:save('<?php echo $key;?>')">Save</a>
+      <?php }?>
       <ol>
         <li data-ng-repeat="playlist in listplaylist">
           <a href="/playlist/{{ playlist.name }}">{{ playlist.name }}</a>
@@ -58,9 +67,13 @@
         </li>
       </ol>
     </div>
-    <script type="text/javascript" src="/libs/angular.min.js"></script>
-    <script type="text/javascript" src="/app.js"></script>
-
+    <script type="text/javascript" src="libs/angular.min.js"></script>
+    <script type="text/javascript">
+      console.log("Init key");
+      var key = "<?php echo $key;?>";
+      console.log("key : "+key);
+    </script>
+    <script type="text/javascript" src="app.js"></script>
     <!--<a id="update_button_id" data-ng-click="updateVideo()" type="button">Update Video</a>-->
     <script type="text/javascript">
     $(function() {
@@ -115,7 +128,8 @@
 
 
     <script type="text/javascript">
-      function save(){
+      function save(key){
+        console.log('key to update : '+key);
         var item = [];
         $('#upcoming li p.item-title').each(function (i, e) {
             item.push($(e).text());
@@ -131,26 +145,55 @@
           strfy.push(js);
         }
         var playlist = JSON.stringify(strfy);
-        console.log(playlist);
-
-        var playlist_name = prompt("Give a name for your new playlist", "");
-        if (playlist_name != null && playlist_name != "" ) {
+        //console.log(playlist);
+        if(key!=0){
+          if (confirm("Are you sure to update playlist '"+key+"'?") == true) {
+            var playlist_name = key;
+            var action = 'update';
+            console.log("updating : "+playlist_name);
+            operatePlaylist(playlist,playlist_name,action);
+          }else{
+            alert('Cancel update');
+          }
+        }else{
+          var playlist_name = prompt("Give a name for your new playlist", "");
+          if (playlist_name != null && playlist_name != "" ) {
             $.ajax({
               type: "GET",
               url: "ajax/operatePlaylist.php",
-              data: { daten : playlist,
-                      name: playlist_name,
-                      action: 'create'},
+              data: { name : playlist_name,
+                      action: 'check_name'},
               dataType: "html",
-              success: function(response){
-                  //console.log(response);
-                  console.log("Playlist "+playlist_name+" saved!");
-                  angular.element($("#myctrl")).scope().getListPlaylist();
+              success: function(data){
+                  console.log("check_name : "+playlist_name+" result: "+data);
+                  if(data==1){
+                    alert("Playlist with name '"+playlist_name+"' already exists!");
+                  }else{
+                    var action = 'create';
+                    console.log("create playlist");
+                    operatePlaylist(playlist,playlist_name,action);
+                  }
               }
             });
-        } else {
-            console.log("Cancel!");
+          }else{
+            alert("Give a name for new playlist!");
+          }
         }
+      }
+
+      function operatePlaylist(playlist,playlist_name,action){
+        $.ajax({
+          type: "GET",
+          url: "ajax/operatePlaylist.php",
+          data: { daten : playlist,
+                  name: playlist_name,
+                  action: action},
+          dataType: "html",
+          success: function(response){
+              angular.element($("#myctrl")).scope().getListPlaylist();
+              alert("Playlist '"+playlist_name+"' saved!");
+          }
+        });
       }
     </script>
   </body>

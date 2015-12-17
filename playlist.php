@@ -40,13 +40,13 @@ if(isset($_GET['name'])){
       </p>
     </div>
 
-    <a href="/">See playlist</a>
+    <a href="/">See other playlists</a><br><br>
+    <a href="/?playlist_name=<?php echo $key;?>">Edit playlist <?php echo $key;?></a>
 
     <script type="text/javascript" src="/libs/angular.min.js"></script>
     <script type="text/javascript">
       console.log("Init key");
       var thedata = "<?php echo $key;?>";
-      //console.log("key : "+thedata);
     </script>
     <script type="text/javascript" src="/app_playlist.js"></script>
   </body>

@@ -211,11 +211,29 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
   function init() {
       $scope.youtube = VideosService.getYoutube();
       $scope.results = VideosService.getResults();
-      $scope.upcoming = VideosService.getUpcoming();
       $scope.history = VideosService.getHistory();
       $scope.playlist = true;
-      //console.log($scope.youtube);
-      //get Playlist
+      /*
+      * if key!=0 means to edit playlist
+      */
+      if(key!=0){
+        var playlist_name = key;
+        console.log("playlist_name : "+playlist_name);
+        //init playlist
+        $http.get('ajax/getPlaylist.php', {
+          params: {
+            name : playlist_name
+          }
+        })
+        .success( function (data) {
+          console.log("success get List");
+          $scope.upcoming = data;
+        });
+      }else{
+        console.log("key undefined");
+        $scope.upcoming = VideosService.getUpcoming();
+      }
+      //get list of playlists
       $http.get('ajax/getListPlaylist.php')
       .success( function (data) {
         console.log('success get listplaylist');
