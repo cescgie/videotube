@@ -67,11 +67,17 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
 
   function onYoutubeReady (event) {
     $log.info('YouTube Player is ready');
-    youtube.player.cueVideoById(history[0].id);
-    youtube.videoId = history[0].id;
-    youtube.videoTitle = history[0].title;
+    youtube.player.cueVideoById(upcoming[0].id);
+    youtube.videoId = upcoming[0].id;
+    youtube.videoTitle = upcoming[0].title;
+    //change background color
+    $('.item-title').css("background","");
+    $('.item-title').css("color","");
+    $('#item-title-'+youtube.videoId).css("background","#1171A2");
+    $('#item-title-'+youtube.videoId).css("color","#fff");
   }
 
+  var index = 1;
   function onYoutubeStateChange (event) {
     if (event.data == YT.PlayerState.PLAYING) {
       youtube.state = 'playing';
@@ -79,9 +85,14 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
       youtube.state = 'paused';
     } else if (event.data == YT.PlayerState.ENDED) {
       youtube.state = 'ended';
-      service.launchPlayer(upcoming[0].id, upcoming[0].title);
-      service.archiveVideo(upcoming[0].id, upcoming[0].title);
-      service.deleteVideo(upcoming, upcoming[0].id);
+      service.launchPlayer(upcoming[index].id, upcoming[index].title);
+      service.archiveVideo(upcoming[index].id, upcoming[index].title);
+      //change background color
+      $('.item-title').css("background","");
+      $('.item-title').css("color","");
+      $('#item-title-'+upcoming[index].id).css("background","#1171A2");
+      $('#item-title-'+upcoming[index].id).css("color","#fff");
+      index = index + 1;
     }
     $rootScope.$apply();
   }

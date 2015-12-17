@@ -34,8 +34,9 @@ if(isset($_GET['name'])){
         </li>
       </ol>
       <p id="tabs">
-        <a ng-class="{on:playlist}" data-ng-click="tabulate(true)">Upcoming</a>
-        <a ng-class="{on:!playlist}" data-ng-click="tabulate(false)">History</a>
+        Upcoming
+        <!--<a ng-class="{on:playlist}" data-ng-click="tabulate(true)">Upcoming</a>
+        <a ng-class="{on:!playlist}" data-ng-click="tabulate(false)">History</a>-->
       </p>
     </div>
 
@@ -48,31 +49,5 @@ if(isset($_GET['name'])){
       //console.log("key : "+thedata);
     </script>
     <script type="text/javascript" src="/app_playlist.js"></script>
-
-    <script>
-      $(function() {
-        $( ".sortable" ).sortable({
-          stop: function() {
-            var item = [];
-            $('#upcoming li p.item-title').each(function (i, e) {
-                item.push($(e).text());
-            });
-            var item2 = [];
-            $('#upcoming li input.item-id').each(function (i, e) {
-                item2.push($(e).val());
-            });
-            var strfy = [];
-            for (var i = 0; i < item.length; i++) {
-              var js = {id:item2[i],title:item[i]};
-              //var jsons= JSON.stringify(js);
-              strfy.push(js);
-            }
-            //var playlist = JSON.stringify(strfy);
-            console.log(strfy);
-            angular.element($("#myctrl")).scope().dragPlaylist(strfy);
-          }
-        });
-      });
-    </script>
   </body>
 </html>
