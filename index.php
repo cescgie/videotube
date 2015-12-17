@@ -57,7 +57,8 @@
     <div id="playlisting">
       <?php if(isset($_GET['playlist_name'])){?>
       <a href="javascript:save('<?php echo $key;?>')">Update</a><br><br>
-      <a href="/">All Playlists</a><br><br>
+      <a href="/playlist/<?php echo $key;?>">Run playlist "<?php echo $key;?>"</a><br><br>
+      <a href="/">All playlists</a><br><br>
       <?php }else{?>
       <a href="javascript:save('<?php echo $key;?>')">Save</a>
       <ol>

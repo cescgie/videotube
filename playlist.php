@@ -41,7 +41,7 @@ if(isset($_GET['name'])){
     </div>
 
     <a href="/">See other playlists</a><br><br>
-    <a href="/?playlist_name=<?php echo $key;?>">Edit playlist <?php echo $key;?></a>
+    <a href="/?playlist_name=<?php echo $key;?>">Edit playlist "<?php echo $key;?>"</a>
 
     <script type="text/javascript" src="/libs/angular.min.js"></script>
     <script type="text/javascript">
