@@ -56,16 +56,17 @@
     </div>
     <div id="playlisting">
       <?php if(isset($_GET['playlist_name'])){?>
-      <a href="javascript:save('<?php echo $key;?>')">Update</a>
+      <a href="javascript:save('<?php echo $key;?>')">Update</a><br><br>
+      <a href="/">All Playlists</a><br><br>
       <?php }else{?>
       <a href="javascript:save('<?php echo $key;?>')">Save</a>
-      <?php }?>
       <ol>
         <li data-ng-repeat="playlist in listplaylist">
           <a href="/playlist/{{ playlist.name }}">{{ playlist.name }}</a>
           <a class="remove_playlist" data-ng-click='confirm_delete(playlist.name,playlist.id)'>x</a>
         </li>
       </ol>
+      <?php }?>
     </div>
     <script type="text/javascript" src="libs/angular.min.js"></script>
     <script type="text/javascript">
