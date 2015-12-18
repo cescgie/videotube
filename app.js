@@ -29,20 +29,40 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
     state: 'stopped'
   };
   var results = [];
-  var upcoming = [
-    {id: 'O3UBOOZw-FE', title: 'KOLLEGAH - Alpha (Official HD Video)'},
-    {id: 'HbtGDZf9Ts8', title: 'KOLLEGAH - King (Official HD Video)'},
-    {id: 'yqhsqnNYR4k', title: 'KOLLEGAH - Universalgenie (Official HD Video)'},
-    {id: 'FpOOXSd9IxY', title: 'KOLLEGAH - Du bist Boss (Official HD Video)'},
-    {id: 'nyrcAPJSRJc', title: 'Kollegah - Mondfinsternis (Official HD Video)'},
-    {id: '7tdZx0gMAR0', title: 'Kollegah feat. Sahin - Du (Official HD Video)'}
-  ];
+  var upcoming;
   var history;
+
+  function getplaylistupcome() {
+    var playlist_name = key;
+    return $.ajax({
+          url: '/ajax/getPlaylist.php',
+          data:{name:playlist_name},
+          dataType: 'json',
+          success: function(data) {
+            console.log("getplaylistupcome");
+            console.log(data);
+            upcoming = data;
+          },
+          error: function() {
+            console.log('Error occured');
+        }
+    });
+  }
+
   if(key!=0){
     history = [];
+    upcoming = getplaylistupcome();
   }else{
     history = [
       {id: 'JMcbCoCWtd4', title: 'Kollegah feat. Favorite - Discospeed (Official Video)'}
+    ];
+    upcoming = [
+      {id: 'O3UBOOZw-FE', title: 'KOLLEGAH - Alpha (Official HD Video)'},
+      {id: 'HbtGDZf9Ts8', title: 'KOLLEGAH - King (Official HD Video)'},
+      {id: 'yqhsqnNYR4k', title: 'KOLLEGAH - Universalgenie (Official HD Video)'},
+      {id: 'FpOOXSd9IxY', title: 'KOLLEGAH - Du bist Boss (Official HD Video)'},
+      {id: 'nyrcAPJSRJc', title: 'Kollegah - Mondfinsternis (Official HD Video)'},
+      {id: '7tdZx0gMAR0', title: 'Kollegah feat. Sahin - Du (Official HD Video)'}
     ];
   }
 
@@ -51,6 +71,7 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
     youtube.ready = true;
     service.bindPlayer('placeholder');
     service.loadPlayer();
+    console.log("keyku : "+key);
     $rootScope.$apply();
   };
 
@@ -75,11 +96,14 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
       youtube.state = 'ended';
       service.launchPlayer(upcoming[index].id, upcoming[index].title);
       service.archiveVideo(upcoming[index].id, upcoming[index].title);
+      console.log("onYoutubeStateChange");
+      var playlist = JSON.stringify(upcoming);
+      console.log(playlist);
       //change background color
       $('.item-title').css("background","");
       $('.item-title').css("color","");
-      $('#item-title-'+upcoming[index].id).css("background","#1171A2");
-      $('#item-title-'+upcoming[index].id).css("color","#fff");
+      $('#item-title-'+upcoming[index].$$hashKey).css("background","#1171A2");
+      $('#item-title-'+upcoming[index].$$hashKey).css("color","#fff");
       index = index + 1;
     }
     $rootScope.$apply();
@@ -180,6 +204,15 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
     return history;
   };
 
+  this.updateUpcoming = function(data){
+    upcoming = data;
+    console.log("this.updateUpcoming");
+    //console.log(upcoming);
+    var playlist = JSON.stringify(data);
+    console.log(playlist);
+    return upcoming;
+  }
+
 }]);
 
 app.controller('VideosController', function ($scope, $http, $log, VideosService, $rootScope) {
@@ -227,27 +260,8 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
       $scope.youtube = VideosService.getYoutube();
       $scope.results = VideosService.getResults();
       $scope.history = VideosService.getHistory();
+      $scope.upcoming = VideosService.getUpcoming();
       $scope.playlist = true;
-      /*
-      * if key!=0 means to edit playlist
-      */
-      if(key!=0){
-        var playlist_name = key;
-        console.log("playlist_name : "+playlist_name);
-        //init playlist
-        $http.get('ajax/getPlaylist.php', {
-          params: {
-            name : playlist_name
-          }
-        })
-        .success( function (data) {
-          console.log("success get List");
-          $scope.upcoming = data;
-        });
-      }else{
-        console.log("key undefined");
-        $scope.upcoming = VideosService.getUpcoming();
-      }
       //get list of playlists
       $http.get('ajax/getListPlaylist.php')
       .success( function (data) {
@@ -259,14 +273,14 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
       });
   }
 
-  $scope.launch = function (id, title) {
+  $scope.launch = function (id, title, hashKey) {
       VideosService.launchPlayer(id, title);
       VideosService.archiveVideo(id, title);
       //VideosService.deleteVideo($scope.upcoming, id);
       $('.item-title').css("background","");
       $('.item-title').css("color","");
-      $('#item-title-'+id).css("background","#1171A2");
-      $('#item-title-'+id).css("color","#fff");
+      $('#item-title-'+hashKey).css("background","#1171A2");
+      $('#item-title-'+hashKey).css("color","#fff");
       $log.info('Launched id:' + id + ' and title:' + title);
     };
 
@@ -303,11 +317,10 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
     }
 
     $scope.dragPlaylist = function (data){
-      $scope.youtube = VideosService.getYoutube();
-      $scope.results = VideosService.getResults();
-      $scope.history = VideosService.getHistory();
-      $scope.upcoming = data;
-      $scope.playlist = true;
+      //console.log("$scope.dragPlaylist");
+      var playlist = JSON.stringify(data);
+      //console.log(playlist);
+      VideosService.updateUpcoming(data);
     }
 
     $scope.getListPlaylist = function (){

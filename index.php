@@ -17,7 +17,7 @@
   </head>
   <body id="myctrl" data-ng-controller="VideosController">
     <header>
-      <h1>Video<strong>Tube</strong></h1>
+      <h1><a href="/" style="color:white;">Video<strong>Tube</strong></a></h1>
       <form id="search" data-ng-submit="search()">
         <input id="query" name="q" type="text" placeholder="Search for a YouTube video" data-ng-model="query">
         <input id="submit" type="image" src="/img/search.png" alt="Search">
@@ -36,9 +36,9 @@
       <p id="current" style="position:relative">{{ youtube.videoTitle }}</p>
       <ol id="upcoming" class="sortable" data-ng-show="playlist">
         <li data-ng-repeat="video in upcoming">
-          <p class="item-play" data-ng-click="launch(video.id, video.title)">play</p>
+          <p class="item-play" data-ng-click="launch(video.id, video.title, video.$$hashKey)">play</p>
           <p class="item-delete" data-ng-click="delete(upcoming, video.id)">delete</p>
-          <p class="item-title" id="item-title-{{video.id}}">{{video.title}}</p>
+          <p class="item-title" id="item-title-{{video.$$hashKey}}">{{video.title}}</p>
           <input class="item-id" type="hidden" name="name" value="{{video.id}}">
         </li>
       </ol>
@@ -57,17 +57,15 @@
     <div id="playlisting">
       <?php if(isset($_GET['playlist_name'])){?>
       <a href="javascript:save('<?php echo $key;?>')">Update</a><br><br>
-      <a href="/playlist/<?php echo $key;?>">Run playlist "<?php echo $key;?>"</a><br><br>
-      <a href="/">All playlists</a><br><br>
       <?php }else{?>
-      <a href="javascript:save('<?php echo $key;?>')">Save</a>
+      <a href="javascript:save('<?php echo $key;?>')">Save</a><br><br>
+      <?php }?>
       <ol>
         <li data-ng-repeat="playlist in listplaylist">
-          <a href="/playlist/{{ playlist.name }}">{{ playlist.name }}</a>
+          <a href="index.php?playlist_name={{ playlist.name }}">{{ playlist.name }}</a>
           <a class="remove_playlist" data-ng-click='confirm_delete(playlist.name,playlist.id)'>x</a>
         </li>
       </ol>
-      <?php }?>
     </div>
     <script type="text/javascript" src="libs/angular.min.js"></script>
     <script type="text/javascript">
@@ -120,8 +118,8 @@
               //var jsons= JSON.stringify(js);
               strfy.push(js);
             }
-            //var playlist = JSON.stringify(strfy);
-            console.log(strfy);
+            var playlist = JSON.stringify(strfy);
+            //console.log(playlist);
             angular.element($("#myctrl")).scope().dragPlaylist(strfy);
           }
         });
