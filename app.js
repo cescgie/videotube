@@ -101,15 +101,17 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
       //next video
       var index = (playdex[0].idx)+1;
       console.log("next video index : "+index);
-      //var idx = $('.item-idx-'+currentLaunch).attr('idx');
+      //add new class to currentLaunch for change background
+      $('#item-title-'+upcoming[index].id).addClass("item-"+index);
+      //Launch Video
       service.launchPlayer(upcoming[index].id, upcoming[index].title);
       service.archiveVideo(upcoming[index].id, upcoming[index].title);
       console.log("onYoutubeStateChange success");
       //change background color
       $('.item-title').css("background","");
       $('.item-title').css("color","");
-      $('#item-title-'+upcoming[index].id).css("background","#1171A2");
-      $('#item-title-'+upcoming[index].id).css("color","#fff");
+      $('.item-'+index).css("background","#1171A2");
+      $('.item-'+index).css("color","#fff");
     }
     $rootScope.$apply();
   }
