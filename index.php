@@ -14,6 +14,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script type="text/javascript" src="libs/angular.min.js"></script>
+    <script type="text/javascript">
+      console.log("Init key");
+      var key = "<?php echo $key;?>";
+      console.log("key : "+key);
+    </script>
+    <script type="text/javascript" src="app.js"></script>
   </head>
   <body id="myctrl" data-ng-controller="VideosController">
     <header>
@@ -36,11 +43,11 @@
       <p id="current" style="position:relative">{{ youtube.videoTitle }}</p>
       <ol id="upcoming" class="sortable" data-ng-show="playlist">
         <li data-ng-repeat="video in upcoming">
-          <p class="item-play" data-ng-click="launch(video.id, video.title, video.$$hashKey, $index + 1)">play</p>
+          <p class="item-play" data-ng-click="launch(video.id, video.title)">play</p>
           <p class="item-delete" data-ng-click="delete(upcoming, video.id)">delete</p>
-          <p class="item-title" id="item-title-{{video.$$hashKey}}-{{video.idx}}">{{video.title}}</p>
+          <p class="item-title" id="item-title-{{video.id}}">{{video.title}}</p>
           <input class="item-id" type="hidden" name="id" value="{{video.id}}">
-          <input class="item-idx-{{video.id}}" type="hidden" name="idx" ng-attr-id="{{$index + 1}}" idx="{{$index + 1}}" value="{{$index + 1}}">
+          <input class="item-idx-{{video.id}}" type="hidden" name="idx" idx="{{$index + 1}}" value="{{$index + 1}}">
         </li>
       </ol>
       <ol id="history" class="sortable" data-ng-hide="playlist">
@@ -68,13 +75,7 @@
         </li>
       </ol>
     </div>
-    <script type="text/javascript" src="libs/angular.min.js"></script>
-    <script type="text/javascript">
-      console.log("Init key");
-      var key = "<?php echo $key;?>";
-      console.log("key : "+key);
-    </script>
-    <script type="text/javascript" src="app.js"></script>
+
     <!--<a id="update_button_id" data-ng-click="updateVideo()" type="button">Update Video</a>-->
     <script type="text/javascript">
     $(function() {

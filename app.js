@@ -114,8 +114,8 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
       //change background color
       $('.item-title').css("background","");
       $('.item-title').css("color","");
-      $('#item-title-'+upcoming[index].$$hashKey).css("background","#1171A2");
-      $('#item-title-'+upcoming[index].$$hashKey).css("color","#fff");
+      $('#item-title-'+upcoming[index].id).css("background","#1171A2");
+      $('#item-title-'+upcoming[index].id).css("color","#fff");
     }
     $rootScope.$apply();
   }
@@ -303,9 +303,8 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
       });
   }
 
-  $scope.launch = function (id, title, hashKey, idx) {
+  $scope.launch = function (id, title) {
       //get current upcoming
-      console.log("idx : "+idx);
       var data = getCurrentUpcoming();
       VideosService.updateUpcoming(data);
       VideosService.launchPlayer(id, title);
@@ -316,8 +315,8 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
       //VideosService.deleteVideo($scope.upcoming, id);
       $('.item-title').css("background","");
       $('.item-title').css("color","");
-      $('#item-title-'+hashKey).css("background","#1171A2");
-      $('#item-title-'+hashKey).css("color","#fff");
+      $('#item-title-'+id).css("background","#1171A2");
+      $('#item-title-'+id).css("color","#fff");
 
       $log.info('Launched id:' + id + ' and title:' + title);
     };
