@@ -1,5 +1,6 @@
 var app = angular.module('JukeTubeApp', []);
 
+var yidcurrentLaunch;
 
 app.run(function () {
   var tag = document.createElement('script');
@@ -14,7 +15,7 @@ app.config( function ($httpProvider) {
 });
 
 // Service
-app.service('VideosService', ['$window', '$rootScope', '$log', function ($window, $rootScope, $log) {
+app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', function ($window, $rootScope, $log, filterFilter) {
 
   var service = this;
 
@@ -31,6 +32,7 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
   var results = [];
   var upcoming;
   var history;
+  var currentidx;
 
   function getplaylistupcome() {
     var playlist_name = key;
@@ -86,7 +88,6 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
     $('#item-title-'+youtube.videoId).css("background","#1171A2");
     $('#item-title-'+youtube.videoId).css("color","#fff");
   }
-  var index = 1;
   function onYoutubeStateChange (event) {
     if (event.data == YT.PlayerState.PLAYING) {
       youtube.state = 'playing';
@@ -94,17 +95,27 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
       youtube.state = 'paused';
     } else if (event.data == YT.PlayerState.ENDED) {
       youtube.state = 'ended';
+      //get youtube id currentLaunch
+      yidcurrentLaunch = history[0].id;
+      console.log("currentLaunch from onYoutubeStateChange : "+yidcurrentLaunch);
+      //update upcoming
+      upcoming = getCurrentUpcoming();
+      //get specific object from yidcurrentLaunch
+      var playdex = filterFilter(upcoming , {id: yidcurrentLaunch});
+      //get idx from yidcurrentlaunch
+      console.log("getCurrentIdx : "+playdex[0].idx);
+      //next video
+      var index = (playdex[0].idx)+1;
+      console.log("next video index : "+index);
+      //var idx = $('.item-idx-'+currentLaunch).attr('idx');
       service.launchPlayer(upcoming[index].id, upcoming[index].title);
       service.archiveVideo(upcoming[index].id, upcoming[index].title);
-      console.log("onYoutubeStateChange");
-      var playlist = JSON.stringify(upcoming);
-      console.log(playlist);
+      console.log("onYoutubeStateChange success");
       //change background color
       $('.item-title').css("background","");
       $('.item-title').css("color","");
       $('#item-title-'+upcoming[index].$$hashKey).css("background","#1171A2");
       $('#item-title-'+upcoming[index].$$hashKey).css("color","#fff");
-      index = index + 1;
     }
     $rootScope.$apply();
   }
@@ -207,10 +218,29 @@ app.service('VideosService', ['$window', '$rootScope', '$log', function ($window
   this.updateUpcoming = function(data){
     upcoming = data;
     console.log("this.updateUpcoming");
-    //console.log(upcoming);
     var playlist = JSON.stringify(data);
-    console.log(playlist);
     return upcoming;
+  }
+
+  function getCurrentUpcoming(){
+    var item = [];
+    $('#upcoming li p.item-title').each(function (i, e) {
+        item.push($(e).text());
+    });
+    var item2 = [];
+    $('#upcoming li input.item-id').each(function (i, e) {
+        item2.push($(e).val());
+    });
+    var item3 = [];
+    $('#upcoming li input.item-idx').each(function (i, e) {
+        item3.push($(e).val());
+    });
+    var strfy = [];
+    for (var i = 0; i < item.length; i++) {
+      var js = {id:item2[i],title:item[i],idx:i};
+      strfy.push(js);
+    }
+    return strfy;
   }
 
 }]);
@@ -273,14 +303,22 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
       });
   }
 
-  $scope.launch = function (id, title, hashKey) {
+  $scope.launch = function (id, title, hashKey, idx) {
+      //get current upcoming
+      console.log("idx : "+idx);
+      var data = getCurrentUpcoming();
+      VideosService.updateUpcoming(data);
       VideosService.launchPlayer(id, title);
       VideosService.archiveVideo(id, title);
+
+      yidcurrentLaunch = id;
+      console.log("currentLaunch : "+yidcurrentLaunch);
       //VideosService.deleteVideo($scope.upcoming, id);
       $('.item-title').css("background","");
       $('.item-title').css("color","");
       $('#item-title-'+hashKey).css("background","#1171A2");
       $('#item-title-'+hashKey).css("color","#fff");
+
       $log.info('Launched id:' + id + ' and title:' + title);
     };
 
@@ -357,5 +395,26 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
       } else {
         console.log("cancel");
       }
+    }
+
+    function getCurrentUpcoming(){
+      var item = [];
+      $('#upcoming li p.item-title').each(function (i, e) {
+          item.push($(e).text());
+      });
+      var item2 = [];
+      $('#upcoming li input.item-id').each(function (i, e) {
+          item2.push($(e).val());
+      });
+      var item3 = [];
+      $('#upcoming li input.item-idx').each(function (i, e) {
+          item3.push($(e).val());
+      });
+      var strfy = [];
+      for (var i = 0; i < item.length; i++) {
+        var js = {id:item2[i],title:item[i],idx:i};
+        strfy.push(js);
+      }
+      return strfy;
     }
 });

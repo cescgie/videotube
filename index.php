@@ -36,10 +36,11 @@
       <p id="current" style="position:relative">{{ youtube.videoTitle }}</p>
       <ol id="upcoming" class="sortable" data-ng-show="playlist">
         <li data-ng-repeat="video in upcoming">
-          <p class="item-play" data-ng-click="launch(video.id, video.title, video.$$hashKey)">play</p>
+          <p class="item-play" data-ng-click="launch(video.id, video.title, video.$$hashKey, $index + 1)">play</p>
           <p class="item-delete" data-ng-click="delete(upcoming, video.id)">delete</p>
-          <p class="item-title" id="item-title-{{video.$$hashKey}}">{{video.title}}</p>
-          <input class="item-id" type="hidden" name="name" value="{{video.id}}">
+          <p class="item-title" id="item-title-{{video.$$hashKey}}-{{video.idx}}">{{video.title}}</p>
+          <input class="item-id" type="hidden" name="id" value="{{video.id}}">
+          <input class="item-idx-{{video.id}}" type="hidden" name="idx" ng-attr-id="{{$index + 1}}" idx="{{$index + 1}}" value="{{$index + 1}}">
         </li>
       </ol>
       <ol id="history" class="sortable" data-ng-hide="playlist">
@@ -112,14 +113,18 @@
             $('#upcoming li input.item-id').each(function (i, e) {
                 item2.push($(e).val());
             });
+            var item3 = [];
+            $('#upcoming li input.item-idx').each(function (i, e) {
+                item3.push($(e).val());
+            });
             var strfy = [];
             for (var i = 0; i < item.length; i++) {
-              var js = {id:item2[i],title:item[i]};
+              var js = {id:item2[i],title:item[i],idx:i};
               //var jsons= JSON.stringify(js);
               strfy.push(js);
             }
             var playlist = JSON.stringify(strfy);
-            //console.log(playlist);
+            console.log(playlist);
             angular.element($("#myctrl")).scope().dragPlaylist(strfy);
           }
         });
