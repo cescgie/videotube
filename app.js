@@ -1,7 +1,5 @@
 var app = angular.module('JukeTubeApp', []);
 
-var yidcurrentLaunch;
-
 app.run(function () {
   var tag = document.createElement('script');
   tag.src = "http://www.youtube.com/iframe_api";
@@ -31,7 +29,7 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
   };
   var results = [];
   var upcoming;
-  var history;
+  var history = [];
   var currentidx;
 
   function getplaylistupcome() {
@@ -52,12 +50,8 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
   }
 
   if(key!=0){
-    history = [];
     upcoming = getplaylistupcome();
   }else{
-    history = [
-      {id: 'JMcbCoCWtd4', title: 'Kollegah feat. Favorite - Discospeed (Official Video)'}
-    ];
     upcoming = [
       {id: 'O3UBOOZw-FE', title: 'KOLLEGAH - Alpha (Official HD Video)'},
       {id: 'HbtGDZf9Ts8', title: 'KOLLEGAH - King (Official HD Video)'},
@@ -96,7 +90,7 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
     } else if (event.data == YT.PlayerState.ENDED) {
       youtube.state = 'ended';
       //get youtube id currentLaunch
-      yidcurrentLaunch = history[0].id;
+      var yidcurrentLaunch = history[0].id;
       console.log("currentLaunch from onYoutubeStateChange : "+yidcurrentLaunch);
       //update upcoming
       upcoming = getCurrentUpcoming();
@@ -310,7 +304,7 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
       VideosService.launchPlayer(id, title);
       VideosService.archiveVideo(id, title);
 
-      yidcurrentLaunch = id;
+      var yidcurrentLaunch = id;
       console.log("currentLaunch : "+yidcurrentLaunch);
       //VideosService.deleteVideo($scope.upcoming, id);
       $('.item-title').css("background","");
