@@ -44,7 +44,7 @@
       <ol id="upcoming" class="sortable" data-ng-show="playlist">
         <li data-ng-repeat="video in upcoming">
           <p class="item-play" data-ng-click="launch(video.id, video.title)">play</p>
-          <p class="item-delete" data-ng-click="delete(upcoming, video.id)">delete</p>
+          <p class="item-delete" data-ng-click="delete(video.id)">delete</p>
           <p class="item-title" id="item-title-{{video.id}}">{{video.title}}</p>
           <input class="item-id" type="hidden" name="id" value="{{video.id}}">
           <input class="item-idx-{{video.id}}" type="hidden" name="idx" idx="{{$index + 1}}" value="{{$index + 1}}">

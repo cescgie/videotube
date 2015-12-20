@@ -241,7 +241,7 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
 
 }]);
 
-app.controller('VideosController', function ($scope, $http, $log, VideosService, $rootScope) {
+app.controller('VideosController', function ($scope, $http, $log, VideosService, $rootScope, filterFilter) {
 
   //updateVideo();
 
@@ -319,12 +319,22 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
 
     $scope.queue = function (id, title) {
       VideosService.queueVideo(id, title);
-      VideosService.deleteVideo($scope.history, id);
+      //VideosService.deleteVideo($scope.history, id);
       $log.info('Queued id:' + id + ' and title:' + title);
     };
 
-    $scope.delete = function (list, id) {
-      VideosService.deleteVideo(list, id);
+    $scope.delete = function (yid) {
+      var upcoming = getCurrentUpcoming();
+      //get specific object from yid
+      var playdex = filterFilter(upcoming , {id: yid});
+      //get idx from yid
+      console.log("getCurrentIdxToRemove : "+playdex[0].idx);
+      //remove referenced id
+      upcoming.splice(playdex[0].idx, 1);
+      //update playlist on ui
+      $scope.upcoming = upcoming;
+      //update latest upcoming
+      VideosService.updateUpcoming(upcoming);
     };
 
     $scope.search = function () {
