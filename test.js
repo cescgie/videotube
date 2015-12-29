@@ -1,4 +1,4 @@
-var app = angular.module('JukeTubeApp', []);
+var app = angular.module('JukeTubeAppTest', []);
 
 app.run(function () {
   var tag = document.createElement('script');
@@ -241,7 +241,7 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
 
 }]);
 
-app.controller('VideosController', function ($scope, $http, $log, VideosService, $rootScope, filterFilter) {
+app.controller('VideosControllerTest', function ($scope, $http, $log, VideosService, $rootScope, filterFilter) {
 
   //updateVideo();
 
