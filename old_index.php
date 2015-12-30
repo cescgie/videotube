@@ -8,73 +8,75 @@
   <head>
     <meta charset="utf-8">
     <title>VideoTube</title>
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <!--Import Google Icon Font-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Own style -->
-    <link rel="stylesheet" href="/libs/test.css" type="text/css">
-    <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="libs/materialize/css/materialize.min.css"  media="screen,projection"/>
-    <!-- Jquery -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/libs/style.css" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <!-- AngularJs-->
     <script type="text/javascript" src="libs/angular.min.js"></script>
-    <!-- Materialize -->
-    <script type="text/javascript" src="libs/materialize/js/materialize.min.js"></script>
-    <!-- get key for playlist -->
     <script type="text/javascript">
       console.log("Init key");
       var key = "<?php echo $key;?>";
       console.log("key : "+key);
     </script>
-    <!-- App -->
     <script type="text/javascript" src="app.js"></script>
-
   </head>
   <body id="myctrl" data-ng-controller="VideosController">
-    <a href="/test.php" style="color:black;"><h1 class="center-align">Video<strong>Tube</strong></h1></a>
-    <nav>
-      <div class="nav-wrapper">
-        <form>
-          <div class="input-field">
-            <input id="query" name="q" type="search" placeholder="Search for a YouTube video" data-ng-model="query" required>
-            <label for="search"><i class="material-icons">search</i></label>
-            <i class="material-icons">close</i>
-          </div>
-        </form>
-      </div>
-    </nav>
-    <div class="">
-      <a id="play"><p class="center-align">{{ youtube.state }}</p></a>
-    </div>
-    <div class="row">
-      <div class="col s12 l6 m6">
-        <!-- Left Video -->
-        <div id="results"></div>
-      </div>
-      <div class="col s12 l6 m6">
-        <div id="player">
-          <div id="placeholder" class="video-container"></div>
-        </div>
-        <div id="playlist">
-          <p id="current" style="position:relative">{{ youtube.videoTitle }}</p>
-          <ol id="upcoming" class="sortable" data-ng-show="playlist">
-            <li data-ng-repeat="video in upcoming">
-              <p class="item-play" data-ng-click="launch(video.id, video.title)">play</p>
-              <p class="item-delete" data-ng-click="delete(video.id)">delete</p>
-              <p class="item-title" id="item-title-{{video.id}}">{{video.title}}</p>
-              <input class="item-id" type="hidden" name="id" value="{{video.id}}">
-              <input class="item-idx-{{video.id}}" type="hidden" name="idx" idx="idx-{{video.id}}" value="{{$index + 1}}">
-            </li>
-          </ol>
-        </div>
+    <header>
+      <h1><a href="/" style="color:white;">Video<strong>Tube</strong></a></h1>
+      <form id="search" data-ng-submit="search()">
+        <input id="query" name="q" type="text" placeholder="Search for a YouTube video" data-ng-model="query">
+        <input id="submit" type="image" src="/img/search.png" alt="Search">
+      </form>
+      <nav>
+        <a id="play">{{ youtube.state }}</a>
+      </nav>
+    </header>
+    <!-- Left Video -->
+    <div id="results"></div>
 
-      </div>
+    <div id="player">
+      <div id="placeholder" ></div>
+    </div>
+    <div id="playlist">
+      <p id="current" style="position:relative">{{ youtube.videoTitle }}</p>
+      <ol id="upcoming" class="sortable" data-ng-show="playlist">
+        <li data-ng-repeat="video in upcoming">
+          <p class="item-play" data-ng-click="launch(video.id, video.title)">play</p>
+          <p class="item-delete" data-ng-click="delete(video.id)">delete</p>
+          <p class="item-title" id="item-title-{{video.id}}">{{video.title}}</p>
+          <input class="item-id" type="hidden" name="id" value="{{video.id}}">
+          <input class="item-idx-{{video.id}}" type="hidden" name="idx" idx="idx-{{video.id}}" value="{{$index + 1}}">
+        </li>
+      </ol>
+      <ol id="history" class="sortable" data-ng-hide="playlist">
+        <li data-ng-repeat="video in history">
+          <p class="item-play" data-ng-click="launch(video.id, video.title)">play</p>
+          <p class="item-delete" data-ng-click="delete(history, video.id)">delete</p>
+          <p class="item-title" data-ng-click="queue(video.id, video.title)">{{video.title}}</p>
+        </li>
+      </ol>
+      <p id="tabs">
+        <a ng-class="{on:playlist}" data-ng-click="tabulate(true)">Upcoming</a>
+        <a ng-class="{on:!playlist}" data-ng-click="tabulate(false)">History</a>
+      </p>
+    </div>
+    <div id="playlisting">
+      <?php if(isset($_GET['playlist_name'])){?>
+      <a href="javascript:save('<?php echo $key;?>')">Update</a><br><br>
+      <?php }else{?>
+      <a href="javascript:save('<?php echo $key;?>')">Save</a><br><br>
+      <?php }?>
+      <ol>
+        <li data-ng-repeat="playlist in listplaylist">
+          <a href="index.php?playlist_name={{ playlist.name }}">{{ playlist.name }}</a>
+          <a class="remove_playlist" data-ng-click='confirm_delete(playlist.name,playlist.id)'>x</a>
+        </li>
+      </ol>
     </div>
 
+    <!--<a id="update_button_id" data-ng-click="updateVideo()" type="button">Update Video</a>-->
     <script type="text/javascript">
     $(function() {
       $("form input").keypress(function (e) {
