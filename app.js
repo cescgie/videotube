@@ -320,6 +320,11 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
       $('#item-title-'+id).css("color","#fff");
 
       $log.info('Launched id:' + id + ' and title:' + title);
+      
+      //collapse results if launch a video on screen max-width:600px
+      if ($(window).width() < 600) {
+          $('#col_results').hide();
+      }
     };
 
     $scope.queue = function (id, title) {
