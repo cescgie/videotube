@@ -85,10 +85,15 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
   function onYoutubeStateChange (event) {
     if (event.data == YT.PlayerState.PLAYING) {
       youtube.state = 'playing';
+      console.log('playing');
+      $('#progressing').addClass('indeterminate');
     } else if (event.data == YT.PlayerState.PAUSED) {
       youtube.state = 'paused';
+      console.log('paused');
+      $('#progressing').removeClass('indeterminate');
     } else if (event.data == YT.PlayerState.ENDED) {
       youtube.state = 'ended';
+      $('#progressing').removeClass('indeterminate');
       //get youtube id currentLaunch
       var yidcurrentLaunch = history[0].id;
       console.log("currentLaunch from onYoutubeStateChange : "+yidcurrentLaunch);

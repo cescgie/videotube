@@ -43,9 +43,10 @@
           </form>
         </div>
       </nav>
-      <div class="">
-        <a id="play"><p class="center-align">{{ youtube.state }}</p></a>
-      </div>      <!-- Left Video -->
+      <div class="progress center-align">
+         <div id="progressing" class=""></div>
+     </div>
+      <p class="center-align">{{ youtube.state }}</p>
       <div class="row">
         <div id="col_results" class="col s12 l6 m6">
           <div id="results"></div>

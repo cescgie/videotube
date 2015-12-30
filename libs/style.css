@@ -130,3 +130,9 @@ iframe#placeholder{
     max-height: 400px;
   }
 }
+.progress{
+  background-color: #ffebee !important;
+}
+.indeterminate{
+  background-color: #ef9a9a !important;
+}
