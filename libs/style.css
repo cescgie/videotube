@@ -136,3 +136,7 @@ iframe#placeholder{
 .indeterminate{
   background-color: #ef9a9a !important;
 }
+
+.btn, .btn-large{
+  background-color: #ee6e73 !important;
+}

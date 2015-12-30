@@ -20,6 +20,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="libs/materialize/js/materialize.min.js"></script>
     <!-- Angular -->
     <script type="text/javascript" src="libs/angular.min.js"></script>
     <script type="text/javascript">
@@ -36,7 +38,7 @@
         <div class="nav-wrapper">
           <form>
             <div class="input-field">
-              <input id="query" name="q" type="search" placeholder="Search for a YouTube video" data-ng-model="query" required>
+              <input id="query" name="q" type="search" placeholder="Video suchen" data-ng-model="query" required>
               <label for="search"><i class="material-icons">search</i></label>
               <i id="close_result" class="material-icons">closes</i>
             </div>
@@ -67,27 +69,54 @@
               </li>
             </ol>
           </div>
+
+          <?php if(isset($_GET['playlist_name'])){?>
+            <a class="waves-effect waves-light btn" href="javascript:save('<?php echo $key;?>')">Playlist aktualisieren</a><br><br>
+          <?php }else{?>
+            <a class="waves-effect waves-light btn" href="javascript:save('<?php echo $key;?>')">Playlist speichern</a><br><br>
+          <?php }?>
         </div>
       </div>
-      <div class="container">
-        <div class="row">
-          <div class="col s12 m12 l12">
-            <div id="playlisting">
-              <?php if(isset($_GET['playlist_name'])){?>
-              <a href="javascript:save('<?php echo $key;?>')">Update</a><br><br>
-              <?php }else{?>
-              <a href="javascript:save('<?php echo $key;?>')">Save</a><br><br>
-              <?php }?>
-              <ol>
-                <li data-ng-repeat="playlist in listplaylist">
-                  <a href="index.php?playlist_name={{ playlist.name }}">{{ playlist.name }}</a>
-                  <a class="remove_playlist" data-ng-click='confirm_delete(playlist.name,playlist.id)'>x</a>
-                </li>
-              </ol>
-            </div>
-          </div>
-        </div>
+      <div class="valign-wrapper">
+        <!-- Modal Trigger -->
+       <a class="waves-effect waves-light btn modal-trigger" href="#modal1" style="margin-right:10px;">Playlists anzeigen</a>
+
+       <!-- Modal Structure -->
+       <div id="modal1" class="modal bottom-sheet">
+         <div class="modal-content">
+           <div class="container">
+             <h4>Playlists</h4>
+             <div class="row">
+               <div class="col s12 m12 l12">
+                 <div id="playlisting">
+                   <table class="striped">
+                    <thead>
+                      <tr>
+                        <th data-field="name">Name</th>
+                        <th data-field="option">Option</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr data-ng-repeat="playlist in listplaylist">
+                        <td><a href="index.php?playlist_name={{ playlist.name }}">{{ playlist.name }}</a></td>
+                        <td><a class="remove_playlist" data-ng-click='confirm_delete(playlist.name,playlist.id)'>x</a></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
       </div>
+     <script type="text/javascript">
+        $(document).ready(function(){
+          // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+          $('.modal-trigger').leanModal();
+        });
+     </script>
+
     <script type="text/javascript">
       $(document).on('click','#close_result',function(){
         $('#results').empty();
