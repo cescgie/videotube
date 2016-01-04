@@ -98,7 +98,7 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
       var yidcurrentLaunch = history[0].id;
       console.log("currentLaunch from onYoutubeStateChange : "+yidcurrentLaunch);
       //update upcoming
-      upcoming = getCurrentUpcoming();
+      upcoming = service.getCurrentUpcoming();
       //get specific object from yidcurrentLaunch
       var playdex = filterFilter(upcoming , {id: yidcurrentLaunch});
       //get idx from yidcurrentlaunch
@@ -223,7 +223,7 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
     return upcoming;
   }
 
-  function getCurrentUpcoming(){
+  this.getCurrentUpcoming = function(){
     var item = [];
     $('#upcoming li p.item-title').each(function (i, e) {
         item.push($(e).text());
@@ -306,8 +306,8 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
 
   $scope.launch = function (id, title) {
       //get current upcoming
-      var data = getCurrentUpcoming();
-      VideosService.updateUpcoming(data);
+      //var data = getCurrentUpcoming();
+      //VideosService.updateUpcoming(data);
       VideosService.launchPlayer(id, title);
       VideosService.archiveVideo(id, title);
 
@@ -320,7 +320,7 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
       $('#item-title-'+id).css("color","#fff");
 
       $log.info('Launched id:' + id + ' and title:' + title);
-      
+
       //collapse results if launch a video on screen max-width:600px
       if ($(window).width() < 600) {
           $('#col_results').hide();
@@ -328,13 +328,17 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
     };
 
     $scope.queue = function (id, title) {
-      VideosService.queueVideo(id, title);
+      var upcoming = VideosService.queueVideo(id, title);
       //VideosService.deleteVideo($scope.history, id);
       $log.info('Queued id:' + id + ' and title:' + title);
+      //update playlist on ui
+      $scope.upcoming = upcoming;
+      //update latest upcoming
+      VideosService.updateUpcoming(upcoming);
     };
 
     $scope.delete = function (yid) {
-      var upcoming = getCurrentUpcoming();
+      var upcoming = VideosService.getCurrentUpcoming();
       //get specific object from yid
       var playdex = filterFilter(upcoming , {id: yid});
       //get idx from yid
@@ -356,7 +360,7 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
       console.log(this.query);
       $http.get('ajax/getVideo.php', {
         params: {
-          maxResults: '10',
+          maxResults: '25',
           q: this.query
         }
       })
@@ -415,26 +419,5 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
       } else {
         console.log("cancel");
       }
-    }
-
-    function getCurrentUpcoming(){
-      var item = [];
-      $('#upcoming li p.item-title').each(function (i, e) {
-          item.push($(e).text());
-      });
-      var item2 = [];
-      $('#upcoming li input.item-id').each(function (i, e) {
-          item2.push($(e).val());
-      });
-      var item3 = [];
-      $('#upcoming li input.item-idx').each(function (i, e) {
-          item3.push($(e).val());
-      });
-      var strfy = [];
-      for (var i = 0; i < item.length; i++) {
-        var js = {id:item2[i],title:item[i],idx:i};
-        strfy.push(js);
-      }
-      return strfy;
     }
 });

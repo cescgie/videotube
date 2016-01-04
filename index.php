@@ -39,7 +39,7 @@
           <form>
             <div class="input-field">
               <input id="query" name="q" type="search" placeholder="Video suchen" data-ng-model="query" required>
-              <label for="search"><i class="material-icons">search</i></label>
+              <label for="search"><i id="search_icon" class="material-icons">search</i></label>
               <i id="close_result" class="material-icons">closes</i>
             </div>
           </form>
@@ -124,6 +124,34 @@
           $('#col_results').hide();
         }
       });
+    </script>
+    <script type="text/javascript">
+    $(function() {
+      $(document).on('click','#search_icon',function(){
+          var q =  $('#query').val();
+          console.log("q : "+q);
+          $('#col_results').show();
+          $.ajax({    //create an ajax request to load_page.php
+            type: "GET",
+            url: "ajax/getLeftVideo.php",
+            data: {q:q},
+            dataType: "html",   //expect html to be returned
+            success: function(response){
+                $('#col_results').show();
+                $('#results').html(response);
+                console.log("success");
+            }
+          });
+      });
+      $("form input").keypress(function (e) {
+        if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+          $('#col_results').show();
+          return false;
+        }else{
+          return true;
+        }
+      });
+    });
     </script>
     <script type="text/javascript">
     $(function() {
