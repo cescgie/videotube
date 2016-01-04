@@ -68,6 +68,7 @@ iframe#placeholder{
 .item-delete:hover{ background: #ac0809; color: white;}
 .item-play{ color: #ac0809; float: left; text-align: center; padding: 10px 0; width: 80px;}
 .item-play:hover{ background: #ac0809; color: white;}
+.item-dex{ color: #ac0809; float: left; text-align: center; padding: 10px 0; width: 40px;}
 
 ::-webkit-input-placeholder{ color: #df1f1f;}
 :-moz-placeholder{ color: #df1f1f;}
