@@ -244,6 +244,23 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
     return strfy;
   }
 
+  this.getFirstLeftVideo = function(){
+    if ($(window).width() < 600) {
+      $('#col_results').hide();
+    }else{
+      $('#col_results').show();
+    }
+    $.ajax({
+      type: "GET",
+      url: "ajax/getLeftVideo.php",
+      dataType: "html",
+      success: function(response){
+          $('#mehr-videos-button').css("display","block");
+          $('#results').html(response);
+          console.log("success");
+      }
+    });
+  }
 }]);
 
 app.controller('VideosController', function ($scope, $http, $log, VideosService, $rootScope, filterFilter) {
@@ -269,7 +286,7 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
   $scope.initPlaylist = function (name){
     console.log("initPlaylist");
     $scope.youtube = VideosService.getYoutube();
-    $scope.results = VideosService.getResults();
+    $scope.results = VideosService.getFirstLeftVideo();
     $scope.history = VideosService.getHistory();
     $scope.playlist = true;
     //init playlist
@@ -288,8 +305,9 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
   init();
 
   function init() {
+      console.log('init');
       $scope.youtube = VideosService.getYoutube();
-      $scope.results = VideosService.getResults();
+      $scope.results = VideosService.getFirstLeftVideo();
       $scope.history = VideosService.getHistory();
       $scope.upcoming = VideosService.getUpcoming();
       $scope.playlist = true;

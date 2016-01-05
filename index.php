@@ -32,7 +32,7 @@
     <script type="text/javascript" src="app.js"></script>
   </head>
   <body id="myctrl" data-ng-controller="VideosController">
-      <a href="index.php" style="color:black;"><h1 class="center-align">Video<strong>Tube</strong></h1></a>
+      <h1 class="center-align"><a href="index.php" style="color:black;">Video<strong style="color:#ee6e73">Tube</strong></a></h1>
       </nav>
       <nav>
         <div class="nav-wrapper">

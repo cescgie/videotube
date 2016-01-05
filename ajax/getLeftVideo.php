@@ -3,10 +3,13 @@ require_once('../libs/Storage.php');
 
 $db = new Storage();
 $q = '%';
-if(isset($_GET['q']) ){
+if(isset($_GET['q']) && $_GET['q'] != ''){
   $key = $_GET['q'];
+  $result = $db->select("SELECT * FROM yapi WHERE title IS NOT NULL AND title != '' AND LOWER(title) LIKE LOWER('%$key%') LIMIT 25");
+}else{
+  $key = '%';
+  $result = $db->select("SELECT * FROM yapi WHERE title IS NOT NULL AND title != '' ORDER BY id DESC LIMIT 25");
 }
-$result = $db->select("SELECT * FROM yapi WHERE title IS NOT NULL AND title != '' AND LOWER(title) LIKE LOWER('%$key%') LIMIT 25");
 $i = 1;
 foreach ($result as $keys => $value) {
   echo
