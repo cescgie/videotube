@@ -52,6 +52,18 @@
       <div class="row">
         <div id="col_results" class="col s12 l6 m6">
           <div id="results"></div>
+          <a class="mehr-videos-button waves-effect waves-light btn" id="mehr-videos-button" href="javascript:loadMore();" style="display:none;">mehr Videos</a>
+          <div id="mehr-videos-spin" class="preloader-wrapper small active center-align" style="display:none;">
+            <div class="spinner-layer spinner-red-only ">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div><div class="gap-patch">
+                <div class="circle"></div>
+              </div><div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
         </div>
         <div id="col_player" class="col s12 l6 m6">
           <div id="player">
@@ -111,5 +123,31 @@
        </div>
       </div>
     <script type="text/javascript" src="libs/control.js"></script>
+    <script type="text/javascript">
+    function loadMore(){
+      var lastIndex = $('.video:last').attr('more_id');
+      var key = $('.video:last').attr('key');
+      console.log('load : '+lastIndex);
+      console.log('key : '+key);
+      $.ajax({
+      		 type: "POST",
+      		 url : "ajax/getLoadMore.php",
+      		 data: {
+      						 last_id: lastIndex,
+                   key:key
+      					 },
+           beforeSend: function(){
+             $('#mehr-videos-button').css("display","none");
+             $('#mehr-videos-spin').css('display','block');
+           },
+           success: function(data){
+             console.log('success');
+             $('#results').append(data);
+             $('#mehr-videos-button').css("display","block");
+             $('#mehr-videos-spin').css('display','none');
+           }
+        });
+    }
+    </script>
   </body>
 </html>

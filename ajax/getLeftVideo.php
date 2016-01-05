@@ -6,11 +6,11 @@ $q = '%';
 if(isset($_GET['q']) ){
   $key = $_GET['q'];
 }
-$result = $db->select("SELECT * FROM yapi WHERE title IS NOT NULL AND title != '' AND LOWER(title) LIKE LOWER('%$key%') LIMIT 25 ");
+$result = $db->select("SELECT * FROM yapi WHERE title IS NOT NULL AND title != '' AND LOWER(title) LIKE LOWER('%$key%') LIMIT 25");
 $i = 1;
 foreach ($result as $keys => $value) {
   echo
-   '<div id="leftVideo'.$i.'" class="video" onclick="video_click('.$i.')" video_yid="'.$value["yid"].'" video_title="'.$value["title"].'">
+   '<div id="leftVideo'.$i.'" more_id="'.$i.'" key="'.$key.'" class="video" onclick="video_click('.$i.')" video_yid="'.$value["yid"].'" video_title="'.$value["title"].'">
     <img class="video-image" src="'.$value['thumbnail'].'">
     <p class="video-title">'.$value['title'].'</p>
     <p class="video-author">'.$value['author'].'</p>

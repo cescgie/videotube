@@ -27,6 +27,7 @@
         dataType: "html",   //expect html to be returned
         success: function(response){
             $('#col_results').show();
+            $('#mehr-videos-button').css("display","block");
             $('#results').html(response);
             console.log("success");
         }
@@ -46,6 +47,7 @@
           data: {q:$('#query').val()},
           dataType: "html",   //expect html to be returned
           success: function(response){
+              $('#mehr-videos-button').css("display","block");
               $('#results').html(response);
               console.log("success");
           }
