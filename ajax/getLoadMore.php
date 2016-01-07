@@ -9,7 +9,7 @@ if(isset($_POST['key']) && isset($_POST['last_id']) ){
   $key = $_POST['key'];
   $last_id = $_POST['last_id'];
 }
-$result = $db->select("SELECT * FROM yapi WHERE title IS NOT NULL AND title != '' AND LOWER(title) LIKE LOWER('%$key%') LIMIT 20 OFFSET $last_id");
+$result = $db->select("SELECT * FROM yapi WHERE title IS NOT NULL AND title != '' AND LOWER(title) LIKE LOWER('%$key%') OR REPLACE(title, ' ', '') LIKE LOWER('%$key%') LIMIT 20 OFFSET $last_id");
 
 $i = $last_id;
 foreach ($result as $keys => $value) {
