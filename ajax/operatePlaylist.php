@@ -39,6 +39,13 @@ if(isset($_GET['action'])){
     }else{
       echo 0;
     }
+  }elseif ($_GET['action'] == 'update_viewer') {
+    # code...
+    $id = $_GET['id'];
+    $viewers = $db->select("SELECT * FROM yapi WHERE yid='$id' ");
+    $viewer['viewers'] = $viewers[0]['viewers']+1;
+    $db->update('yapi',$viewer,'yid="'.$id.'"');
+    echo $viewers[0]['viewers'];
   }
 }
 ?>

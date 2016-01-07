@@ -81,14 +81,14 @@
               </li>
             </ol>
           </div>
-          <!-- Modal Trigger -->
+          <!-- Modal form create/update trigger -->
           <?php if(!isset($_GET['playlist_name'])):?>
           <a class="waves-effect waves-light btn modal-trigger" href="#speichern">Playlist speichern</a>
           <?php else:?>
           <a class="waves-effect waves-light btn modal-trigger" href="#speichern">Playlist aktualisieren</a>
           <?php endif;?>
 
-          <!-- Modal Structure -->
+          <!-- Modal form for create/update playlist Structure -->
           <div id="speichern" class="modal">
             <div class="modal-content">
               <?php if(!isset($_GET['playlist_name'])):?>
@@ -120,7 +120,7 @@
             </div>
           </div>
 
-          <!-- Modal Structure -->
+          <!-- Modal form for delete playlist -->
           <div id="delete_form" class="modal">
             <div class="modal-content">
               <div class="row">
@@ -143,7 +143,7 @@
             </div>
           </div>
 
-          <!-- Modal Structure -->
+          <!-- Modal check form create/update playlist -->
           <div id="check_form" class="modal">
             <div class="modal-content">
               <p id="check_form_text"></p>
@@ -153,7 +153,7 @@
             </div>
           </div>
 
-          <!-- Modal Structure -->
+          <!-- Modal success -->
           <div id="success_modal" class="modal">
             <div class="modal-content">
               <p id="success_modal_text"></p>
@@ -176,10 +176,10 @@
         </div>
       </div>
       <div class="valign-wrapper">
-        <!-- Modal Trigger -->
+        <!-- Modal playlist trigger -->
        <a class="waves-effect waves-light btn modal-trigger" href="#modal1" style="margin-right:10px;">Playlists anzeigen</a>
 
-       <!-- Modal Structure -->
+       <!-- Modal playlist -->
        <div id="modal1" class="modal bottom-sheet">
          <div class="modal-content">
            <div class="container">

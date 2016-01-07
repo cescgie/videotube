@@ -117,6 +117,9 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
       $('.item-title').css("color","");
       $('.item-'+index).css("background","#1171A2");
       $('.item-'+index).css("color","#fff");
+
+      //updateViewerAnzahl
+      service.updateViewerAnzahl(upcoming[index].id);
     }
     $rootScope.$apply();
   }
@@ -261,6 +264,22 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
       }
     });
   }
+
+  this.updateViewerAnzahl = function (id){
+    console.log('updateViewerAnzahl '+id);
+    var action = 'update_viewer';
+    $.ajax({
+      type: "GET",
+      url: "ajax/operatePlaylist.php",
+      data: { id : id,
+              action: action},
+      dataType: "html",
+      success: function(response){
+          console.log("updateViewerAnzahl success");
+          console.log(response);
+      }
+    });
+  }
 }]);
 
 app.controller('VideosController', function ($scope, $http, $log, VideosService, $rootScope, filterFilter) {
@@ -330,6 +349,7 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
       VideosService.archiveVideo(id, title);
 
       var yidcurrentLaunch = id;
+
       console.log("currentLaunch : "+yidcurrentLaunch);
       //VideosService.deleteVideo($scope.upcoming, id);
       $('.item-title').css("background","");
@@ -343,6 +363,9 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
       if ($(window).width() < 600) {
           $('#col_results').hide();
       }
+
+      //updateViewerAnzahl
+      VideosService.updateViewerAnzahl(id);
     };
 
     $scope.queue = function (id, title) {
