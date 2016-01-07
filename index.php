@@ -1,5 +1,6 @@
 <?php if(isset($_GET['playlist_name'])){
   $key=$_GET['playlist_name'];
+  $key=strtolower($key);
 }else{
   $key=0;
 }?>
@@ -47,8 +48,7 @@
       </nav>
       <div class="progress center-align">
          <div id="progressing" class=""></div>
-     </div>
-      <p class="center-align">{{ youtube.state }}</p>
+      </div>
       <div class="row">
         <div id="col_results" class="col s12 l6 m6">
           <div id="results"></div>
@@ -81,12 +81,64 @@
               </li>
             </ol>
           </div>
+          <!-- Modal Trigger -->
+          <?php if(!isset($_GET['playlist_name'])):?>
+          <a class="waves-effect waves-light btn modal-trigger" href="#speichern">Playlist speichern</a>
+          <?php else:?>
+          <a class="waves-effect waves-light btn modal-trigger" href="#speichern">Playlist aktualisieren</a>
+          <?php endif;?>
 
-          <?php if(isset($_GET['playlist_name'])){?>
-            <a class="waves-effect waves-light btn" href="javascript:save('<?php echo $key;?>')">Playlist aktualisieren</a><br><br>
-          <?php }else{?>
-            <a class="waves-effect waves-light btn" href="javascript:save('<?php echo $key;?>')">Playlist speichern</a><br><br>
-          <?php }?>
+          <!-- Modal Structure -->
+          <div id="speichern" class="modal">
+            <div class="modal-content">
+              <?php if(!isset($_GET['playlist_name'])):?>
+                <p>Geben Sie einen Name und ein Kennwort für die neue Playlist</p>
+              <?php else:?>
+                <p>Playlist aktualisieren</p>
+              <?php endif;?><br>
+              <div class="row">
+                <form id="form_playlist" class="col s12">
+                  <div class="row">
+                    <div class="input-field col l6 m6 s12">
+                      <input id="name" type="text" class="validate" value="<?php if(isset($_GET['playlist_name'])){echo ucfirst($key);} ?>">
+                      <label for="name"><p>Name</p></label>
+                    </div>
+                    <div class="input-field col l6 m6 s12">
+                      <input id="password" type="password" class="validate">
+                      <label for="password"><p>Password</p></label>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <?php if(!isset($_GET['playlist_name'])):?>
+              <a id="config_playlist" href="javascript:void(0)" class="modal-action modal-close waves-effect waves-green btn-flat">Speichern</a>
+              <?php else:?>
+              <a id="config_playlist" href="javascript:void(0)" class="modal-action modal-close waves-effect waves-green btn-flat">Aktualisieren</a>
+              <?php endif;?>
+            </div>
+          </div>
+
+          <!-- Modal Structure -->
+          <div id="check_form" class="modal">
+            <div class="modal-content">
+              <p id="check_form_text"></p>
+            </div>
+            <div class="modal-footer">
+              <a href="javascript:void(0)" class=" modal-action modal-close waves-effect waves-green btn-flat">Zurrück</a>
+            </div>
+          </div>
+
+          <!-- Modal Structure -->
+          <div id="success_modal" class="modal">
+            <div class="modal-content">
+              <p id="success_modal_text"></p>
+            </div>
+            <div class="modal-footer">
+              <a href="javascript:void(0)" class=" modal-action modal-close waves-effect waves-green btn-flat">Schließen</a>
+            </div>
+          </div>
         </div>
       </div>
       <div class="valign-wrapper">
@@ -110,7 +162,7 @@
                     </thead>
                     <tbody>
                       <tr data-ng-repeat="playlist in listplaylist">
-                        <td><a href="index.php?playlist_name={{ playlist.name }}">{{ playlist.name }}</a></td>
+                        <td><a href="index.php?playlist_name={{ playlist.name }}">{{ playlist.name | uppercase}}</a></td>
                         <td><a class="remove_playlist" data-ng-click='confirm_delete(playlist.name,playlist.id)'>x</a></td>
                       </tr>
                     </tbody>

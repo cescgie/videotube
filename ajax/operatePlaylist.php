@@ -1,13 +1,16 @@
 <?php
 require_once('../libs/Storage.php');
+require_once('../libs/password.php');
 
 $db = new Storage();
+$password = new Password();
 
 if(isset($_GET['action'])){
   if($_GET['action'] == 'create'){
     $_GET['daten'] = urldecode(stripslashes($_GET['daten']));
     $daten['lists'] = $_GET['daten'];
-    $daten['name'] = $_GET['name'];
+    $daten['name'] = strtolower($_GET['name']);
+    $daten['password'] = $password->hash($_GET['password']);
     $daten['created_at'] = date("Y-m-d H:i:s");
     $db->insert('playlist',$daten);
   }elseif($_GET['action'] == 'delete') {
@@ -27,6 +30,15 @@ if(isset($_GET['action'])){
     * if exists result is 1 else is 0
     */
     print_r($result[0]['checked']);
+  }elseif($_GET['action'] == 'check_password') {
+    $name = $_GET['name'];
+    $pass = $_GET['password'];
+    $result = $db->select("SELECT password FROM playlist WHERE name='$name' ");
+    if($password->validate($pass,$result[0]['password'])){
+      echo 1;
+    }else{
+      echo 0;
+    }
   }
 }
 ?>
