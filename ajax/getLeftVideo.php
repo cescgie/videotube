@@ -15,7 +15,7 @@ foreach ($result as $keys => $value) {
   echo
    '<div id="leftVideo'.$i.'" more_id="'.$i.'" key="'.$key.'" class="video" onclick="video_click('.$i.')" video_yid="'.$value["yid"].'" video_title="'.$value["title"].'">
     <img class="video-image" src="'.$value['thumbnail'].'">
-    <p class="video-title">'.$value['title'].' ('.$value['viewers'].' Views)</p>
+    <p class="video-title">'.$value['title'].' (<i class="material-icons" style="position:relative;bottom:-0.2em;font-size:1.2em;">visibility</i> '.$value['viewers'].' Views)</p>
     <p class="video-author">'.$value['author'].'</p>
     <p class="video-description">'.$value['description'].'</p>
     </div>
