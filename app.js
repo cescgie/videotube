@@ -413,29 +413,4 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
         console.log("error");
       });
     }
-
-    function removePlaylist(name,id){
-      console.log("Remove playlist "+name);
-      $http.get('ajax/operatePlaylist.php', {
-        params: {
-          playlist_id: id,
-          action:'delete'
-        }
-      })
-      .success( function (data) {
-        console.log(data);
-        angular.element($("#myctrl")).scope().getListPlaylist();
-      })
-      .error( function () {
-        console.log("error");
-      });
-    }
-
-    $scope.confirm_delete = function(name,id){
-      if (confirm("Are you sure to delete this playlist?") == true) {
-        removePlaylist(name,id);
-      } else {
-        console.log("cancel");
-      }
-    }
 });

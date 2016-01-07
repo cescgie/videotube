@@ -172,15 +172,83 @@ $(document).on('click','#config_playlist',function(){
 /*
 * Modal for check form
 */
-$(document).on('click','#check_form',function(){
+$(document).on('click','#check_form_zurrueck',function(){
   $('#speichern').openModal();
 });
+
+/*
+* Modal for check password
+*/
+$(document).on('click','#check_pass_zurrueck',function(){
+  $('#delete_form').openModal();
+});
+
+/*
+* Modal for delete form
+*/
+$(document).on('click','#delete_button',function(){
+  var playlist_name= $(this).attr('playlist_name');
+  var playlist_id= $(this).attr('playlist_id');
+  $('#delete_form_text').text('Geben Sie das richtige Passwort für Playlist "'+ucwords(playlist_name)+'"');
+  $('#playlist_name').val(playlist_name);
+  $('#playlist_id').val(playlist_id);
+  $('#delete_form').openModal();
+});
+
+/*
+* Delete confirmation
+*/
+$(document).on('click','#delete_check',function(){
+  var playlist_name= $('form#form_remove #playlist_name').val();
+  var playlist_id= $('form#form_remove #playlist_id').val();
+  var password = $('form#form_remove #password').val();
+  if (password!='' && password !=null) {
+    var action = 'check_password';
+    $.ajax({
+      type: "GET",
+      url: "ajax/operatePlaylist.php",
+      data: { name : playlist_name,
+              password : password,
+              action: action},
+      dataType: "html",
+      success: function(response){
+          if(response!=1){
+            $('#check_pass_form_text').text('Password falsch!');
+            $('#check_pass_form').openModal();
+          }else{
+            var new_action = 'delete';
+            $.ajax({
+              type: "GET",
+              url: "ajax/operatePlaylist.php",
+              data: { playlist_id : playlist_id,
+                      action: new_action},
+              dataType: "html",
+              success: function(response){
+                  angular.element($("#myctrl")).scope().getListPlaylist();
+                  $('#success_modal_text').text('Playlist "'+playlist_name+'" entfernt!');
+                  $('#success_modal').openModal();
+              },
+              error: function (request, status, error) {
+                  alert(request.responseText);
+              }
+            });
+          }
+      },
+      error: function (request, status, error) {
+          alert(request.responseText);
+      }
+    });
+  }else{
+    $('#check_pass_form_text').text('Bitte alle Felder ausfüllen!');
+    $('#check_pass_form').openModal();
+  }
+});
+
 
 /*
 * Function for operate playlist
 */
   function operatePlaylist(playlist,playlist_name,password,action){
-    console.log(playlist);
     $.ajax({
       type: "GET",
       url: "ajax/operatePlaylist.php",
@@ -229,3 +297,9 @@ $(document).on('click','#check_form',function(){
          }
       });
   }
+
+  function ucwords (str) {
+    return (str + '').replace(/^([a-z])|\s+([a-z])/g, function ($1) {
+        return $1.toUpperCase();
+    });
+}

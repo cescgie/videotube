@@ -121,12 +121,35 @@
           </div>
 
           <!-- Modal Structure -->
+          <div id="delete_form" class="modal">
+            <div class="modal-content">
+              <div class="row">
+                <form id="form_remove" class="col s12">
+                  <p id="delete_form_text"></p>
+                  <div class="row">
+                    <div class="input-field col l6 m6 s12">
+                      <input id="password" type="password" class="validate">
+                      <label for="password"><p>Password</p></label>
+                      <input type="hidden" name="playlist_name" id="playlist_name">
+                      <input type="hidden" name="playlist_id" id="playlist_id">
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <a id="delete_check" href="javascript:void(0)" class="modal-close waves-effect waves-green btn-flat">Entfernen</a>
+              <a href="javascript:void(0)" class="modal-close waves-effect waves-green btn-flat">Abbrechen</a>
+            </div>
+          </div>
+
+          <!-- Modal Structure -->
           <div id="check_form" class="modal">
             <div class="modal-content">
               <p id="check_form_text"></p>
             </div>
             <div class="modal-footer">
-              <a href="javascript:void(0)" class=" modal-action modal-close waves-effect waves-green btn-flat">Zurrück</a>
+              <a id="check_form_zurrueck" href="javascript:void(0)" class=" modal-action modal-close waves-effect waves-green btn-flat">Zurrück</a>
             </div>
           </div>
 
@@ -139,6 +162,17 @@
               <a href="javascript:void(0)" class=" modal-action modal-close waves-effect waves-green btn-flat">Schließen</a>
             </div>
           </div>
+
+          <!-- Modal Structure -->
+          <div id="check_pass_form" class="modal">
+            <div class="modal-content">
+              <p id="check_pass_form_text"></p>
+            </div>
+            <div class="modal-footer">
+              <a id="check_pass_zurrueck" href="javascript:void(0)" class=" modal-action modal-close waves-effect waves-green btn-flat">Zurrück</a>
+            </div>
+          </div>
+
         </div>
       </div>
       <div class="valign-wrapper">
@@ -157,13 +191,14 @@
                     <thead>
                       <tr>
                         <th data-field="name">Name</th>
-                        <th data-field="option">Option</th>
+                        <th class="right" data-field="option">Option</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr data-ng-repeat="playlist in listplaylist">
                         <td><a href="index.php?playlist_name={{ playlist.name }}">{{ playlist.name | uppercase}}</a></td>
-                        <td><a class="remove_playlist" data-ng-click='confirm_delete(playlist.name,playlist.id)'>x</a></td>
+                        <!--<td><a class="remove_playlist waves-effect waves-light btn modal-trigger right" data-ng-click='confirm_delete(playlist.name,playlist.id)'>Delete</a></td>-->
+                        <td><a id="delete_button" playlist_id="{{ playlist.id }}" playlist_name="{{ playlist.name }}" class="waves-effect waves-light btn modal-trigger right">Delete</a></td>
                       </tr>
                     </tbody>
                   </table>
