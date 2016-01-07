@@ -155,3 +155,32 @@
       }
     });
   }
+
+  /*
+  * Function for load more video lists on the left 
+  */
+
+  function loadMore(){
+    var lastIndex = $('.video:last').attr('more_id');
+    var key = $('.video:last').attr('key');
+    console.log('load : '+lastIndex);
+    console.log('key : '+key);
+    $.ajax({
+         type: "POST",
+         url : "ajax/getLoadMore.php",
+         data: {
+                 last_id: lastIndex,
+                 key:key
+               },
+         beforeSend: function(){
+           $('#mehr-videos-button').css("display","none");
+           $('#mehr-videos-spin').css('display','block');
+         },
+         success: function(data){
+           console.log('success');
+           $('#results').append(data);
+           $('#mehr-videos-button').css("display","block");
+           $('#mehr-videos-spin').css('display','none');
+         }
+      });
+  }

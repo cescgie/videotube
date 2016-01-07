@@ -10,11 +10,11 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, 
   background: white;
 }
 .video-image{
-   width:120px;
-   height: 100px;
+   width:100px;
+   height: 80px;
    float:left;
    margin-right: 5px;
-   margin-top: 8px;
+   margin-top: 5px;
    border: 2px solid #000;
 }
 .video-author{
@@ -92,6 +92,27 @@ iframe#placeholder{
   font-size: 1em;
 }
 
+#search_icon{
+  cursor: pointer;
+}
+
+.progress{
+  background-color: #ffebee !important;
+}
+.indeterminate{
+  background-color: #ef9a9a !important;
+}
+
+.btn, .btn-large{
+  background-color: #ee6e73 !important;
+}
+
+/*
+*
+* Media max-width : 600px; max-width : 993px; max-width : 1024px;
+*
+*/
+
 @media only screen and (max-width : 600px) {
   #player, #playlist{
     height:100%;
@@ -133,9 +154,6 @@ iframe#placeholder{
   .video-description{
     display: none;
   }
-  #playlist li{
-    font-size: 0.7em;
-  }
 }
 @media only screen and (min-width : 600px) and (max-width : 993px){
   #player, #playlist{
@@ -148,7 +166,7 @@ iframe#placeholder{
     max-width: 450px;
   }
   #results{
-    height: 400px;
+    max-height: 750px;
   }
   p{
     font-size: 0.8em;
@@ -156,29 +174,44 @@ iframe#placeholder{
   p#current{
     font-size: 0.9em;
   }
-  #playlist li{
+  .video-image{
+     width:60px;
+     height: 50px;
+     float:left;
+     margin-top: 5px;
+     margin-right: 5px;
+     border: 2px solid #000;
+  }
+  .video-author{
+    color: #df1f1f;
     font-size: 0.8em;
+    padding: 3px 0;
   }
 }
 @media only screen and (min-width : 993px) and (max-width : 1024px){
   #player, #playlist{
     height:100%;
     width: 100%;
-    max-height: 400px;
   }
   iframe#placeholder{
     width:100%;
     max-width: 550px;
     max-height: 400px;
   }
-}
-.progress{
-  background-color: #ffebee !important;
-}
-.indeterminate{
-  background-color: #ef9a9a !important;
-}
-
-.btn, .btn-large{
-  background-color: #ee6e73 !important;
+  #results{
+    max-height: 900px;
+  }
+  .video-image{
+     width:60px;
+     height: 50px;
+     float:left;
+     margin-top: 5px;
+     margin-right: 5px;
+     border: 2px solid #000;
+  }
+  .video-author{
+    color: #df1f1f;
+    font-size: 0.8em;
+    padding: 3px 0;
+  }
 }
