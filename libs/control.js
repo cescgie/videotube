@@ -1,7 +1,10 @@
 /*
-* trigger modal
+* on ready function
 */
   $(document).ready(function(){
+    /*
+  	* trigger modal
+  	*/
     $('.modal-trigger').leanModal();
     /*
     * prevent spaces in input name
@@ -15,6 +18,12 @@
         this.value = this.value.replace(/\s/g, "");
       }
     });
+    /*
+    * Warn user before leave or close the page
+    */
+    window.onbeforeunload = function(){
+      return 'Sie haben noch nicht die aktuelle Playlist gespeichert!';
+    };
   });
 /*
 * close icon on search
