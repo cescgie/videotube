@@ -42,6 +42,7 @@
           <i id="playNavigation" class="small material-icons" style="display:none;">play_arrow</i>
           <i id="pauseNavigation" class="small material-icons" style="display:none;">pause</i>
           <i id="nextNavigation" class="small material-icons">skip_next</i>
+          <i id="replayNavigation" class="small material-icons">replay</i>
           <i id="repeatOneNavigation" class="small material-icons" state="0">repeat_one</i>
           <i id="repeatNavigation" class="small material-icons" state="0">repeat</i>
         </div>
@@ -250,7 +251,9 @@
       $(document).on('click','#repeatOneNavigation',function(){
         angular.element($("#myctrl")).scope().repeatOneVideoNav();
       });
-
+      $(document).on('click','#replayNavigation',function(){
+        angular.element($("#myctrl")).scope().replayNav();
+      });
     </script>
   </body>
 </html>

@@ -585,4 +585,9 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
       }
     }
 
+    $scope.replayNav = function(){
+      //update upcoming
+      upcoming = VideosService.getCurrentUpcoming();
+      $scope.launch(upcoming[0]['id'],upcoming[0]['title']);
+    }
 });

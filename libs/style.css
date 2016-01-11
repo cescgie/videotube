@@ -107,7 +107,9 @@ iframe#placeholder{
   background-color: #ee6e73 !important;
 }
 
-#playFirstNavigation,#playNavigation,#pauseNavigation,#prevNavigation,#nextNavigation,#repeatNavigation,#repeatOneNavigation{
+#playFirstNavigation,#playNavigation,#pauseNavigation,
+#prevNavigation,#nextNavigation,#repeatNavigation,
+#repeatOneNavigation,#replayNavigation{
   cursor:pointer;
 }
 /*
