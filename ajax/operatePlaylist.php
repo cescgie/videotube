@@ -46,6 +46,13 @@ if(isset($_GET['action'])){
     $viewer['viewers'] = $viewers[0]['viewers']+1;
     $db->update('yapi',$viewer,'yid="'.$id.'"');
     echo $viewers[0]['viewers'];
+  }elseif ($_GET['action'] == 'update_empf_videos') {
+    $new_empf_id = $_GET['new_empf_id'];
+    $old_empf_id = $_GET['old_empf_id'];
+    $suggest_old['suggest'] = 0;
+    $db->update('yapi',$suggest_old,'yid="'.$old_empf_id.'"');
+    $suggest_new['suggest'] = 1;
+    $db->update('yapi',$suggest_new,'yid="'.$new_empf_id.'"');
   }
 }
 ?>
