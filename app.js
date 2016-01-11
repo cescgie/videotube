@@ -87,10 +87,15 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
       youtube.state = 'playing';
       console.log('playing');
       $('#progressing').addClass('indeterminate');
+      $('#playFirstNavigation').hide();
+      $('#playNavigation').hide();
+      $('#pauseNavigation').show();
     } else if (event.data == YT.PlayerState.PAUSED) {
       youtube.state = 'paused';
       console.log('paused');
       $('#progressing').removeClass('indeterminate');
+      $('#pauseNavigation').hide();
+      $('#playNavigation').show();
     } else if (event.data == YT.PlayerState.ENDED) {
       youtube.state = 'ended';
       $('#progressing').removeClass('indeterminate');
@@ -156,7 +161,7 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
   };
 
   this.launchPlayer = function (id, title) {
-    youtube.player.loadVideoById(id);
+    youtube.player.loadVideoById({videoId:id,startSeconds:0});
     youtube.videoId = id;
     youtube.videoTitle = title;
     return youtube;
@@ -280,6 +285,15 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
       }
     });
   }
+
+  this.pauseVideo = function(){
+    youtube.player.pauseVideo();
+  }
+
+  this.playVideo = function(){
+    youtube.player.playVideo();
+  }
+
 }]);
 
 app.controller('VideosController', function ($scope, $http, $log, VideosService, $rootScope, filterFilter) {
@@ -436,4 +450,82 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
         console.log("error");
       });
     }
+
+    $scope.playNav = function(){
+      var currentPlayed = VideosService.getHistory();
+      console.log(currentPlayed);
+      if (currentPlayed!='' && currentPlayed!=null ) {
+        console.log('ada currentPlayed');
+        $scope.launch(currentPlayed[0]['id'],currentPlayed[0]['title']);
+      }else{
+        console.log('no currentPlayed');
+        var upcoming = VideosService.getCurrentUpcoming();
+        $scope.launch(upcoming[0]['id'],upcoming[0]['title']);
+      }
+    }
+
+    $scope.pauseVideoNav = function(){
+      VideosService.pauseVideo();
+    }
+
+    $scope.playVideoNav = function(){
+      VideosService.playVideo();
+    }
+
+    $scope.prevVideoNav = function(){
+      console.log('prev');
+      var history = VideosService.getHistory();
+      if(history.length == 0){
+        var current = VideosService.getCurrentUpcoming();
+        var yidcurrentLaunch = current[0].id;
+        console.log("currentLaunch from onYoutubeStateChange : "+yidcurrentLaunch);
+      }else{
+        var yidcurrentLaunch = history[0].id;
+        console.log("currentLaunch from onYoutubeStateChange : "+yidcurrentLaunch);
+      }
+
+      //update upcoming
+      upcoming = VideosService.getCurrentUpcoming();
+      //get specific object from yidcurrentLaunch
+      var playdex = filterFilter(upcoming , {id: yidcurrentLaunch});
+      //get idx from yidcurrentlaunch
+      console.log("getCurrentIdx : "+playdex[0].idx);
+      //next video
+      var index = (playdex[0].idx)-1;
+      if(playdex[0].idx==0){
+        index=upcoming.length-1;
+      }
+      console.log("previous video index : "+index);
+      var playdex2 = filterFilter(upcoming , {idx: index});
+      $scope.launch(playdex2[0]['id'],playdex2[0]['title']);
+    }
+
+    $scope.nextVideoNav = function(){
+      console.log('next');
+      var history = VideosService.getHistory();
+      if(history.length == 0){
+        var current = VideosService.getCurrentUpcoming();
+        var yidcurrentLaunch = current[0].id;
+        console.log("currentLaunch from onYoutubeStateChange : "+yidcurrentLaunch);
+      }else{
+        var yidcurrentLaunch = history[0].id;
+        console.log("currentLaunch from onYoutubeStateChange : "+yidcurrentLaunch);
+      }
+
+      //update upcoming
+      upcoming = VideosService.getCurrentUpcoming();
+      //get specific object from yidcurrentLaunch
+      var playdex = filterFilter(upcoming , {id: yidcurrentLaunch});
+      //get idx from yidcurrentlaunch
+      console.log("getCurrentIdx : "+playdex[0].idx);
+      //next video
+      var index = (playdex[0].idx)+1;
+      if(index==upcoming.length){
+        index=0;
+      }
+      console.log("next video index : "+index);
+      var playdex2 = filterFilter(upcoming , {idx: index});
+      $scope.launch(playdex2[0]['id'],playdex2[0]['title']);
+    }
+
 });

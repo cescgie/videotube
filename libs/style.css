@@ -107,6 +107,10 @@ iframe#placeholder{
   background-color: #ee6e73 !important;
 }
 
+#playFirstNavigation,#playNavigation,#pauseNavigation,#prevNavigation,#nextNavigation{
+  cursor:pointer;
+}
+
 /*
 *
 * Media max-width : 600px; max-width : 993px; max-width : 1024px;

@@ -33,7 +33,16 @@
     <script type="text/javascript" src="app.js"></script>
   </head>
   <body id="myctrl" data-ng-controller="VideosController">
-      <h1 class="center-align"><a href="index.php" style="color:black;">Video<strong style="color:#ee6e73">Tube</strong></a></h1>
+      <div class="center-align">
+        <h1><a href="index.php" style="color:black;">Video<strong style="color:#ee6e73">Tube</strong></a></h1>
+        <div class="player-navigation">
+          <i id="prevNavigation" class="small material-icons">skip_previous</i>
+          <i id="playFirstNavigation" class="small material-icons">play_arrow</i>
+          <i id="playNavigation" class="small material-icons" style="display:none;">play_arrow</i>
+          <i id="pauseNavigation" class="small material-icons" style="display:none;">pause</i>
+          <i id="nextNavigation" class="small material-icons">skip_next</i>
+        </div>
+      </div>
       </nav>
       <nav>
         <div class="nav-wrapper">
@@ -210,5 +219,28 @@
        </div>
       </div>
     <script type="text/javascript" src="libs/control.js"></script>
+    <script type="text/javascript">
+      $(document).on('click','#playFirstNavigation',function(){
+        angular.element($("#myctrl")).scope().playNav();
+        $('#playFirstNavigation').hide();
+        $('#pauseNavigation').show();
+      });
+      $(document).on('click','#pauseNavigation',function(){
+        angular.element($("#myctrl")).scope().pauseVideoNav();
+        $('#pauseNavigation').hide();
+        $('#playNavigation').show();
+      });
+      $(document).on('click','#playNavigation',function(){
+        angular.element($("#myctrl")).scope().playVideoNav();
+        $('#playNavigation').hide();
+        $('#pauseNavigation').show();
+      });
+      $(document).on('click','#prevNavigation',function(){
+        angular.element($("#myctrl")).scope().prevVideoNav();
+      });
+      $(document).on('click','#nextNavigation',function(){
+        angular.element($("#myctrl")).scope().nextVideoNav();
+      });
+    </script>
   </body>
 </html>
