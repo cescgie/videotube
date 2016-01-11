@@ -35,12 +35,15 @@
   <body id="myctrl" data-ng-controller="VideosController">
       <div class="center-align">
         <h1><a href="index.php" style="color:black;">Video<strong style="color:#ee6e73">Tube</strong></a></h1>
+        <p id="current_playing_title"></p>
         <div class="player-navigation">
           <i id="prevNavigation" class="small material-icons">skip_previous</i>
           <i id="playFirstNavigation" class="small material-icons">play_arrow</i>
           <i id="playNavigation" class="small material-icons" style="display:none;">play_arrow</i>
           <i id="pauseNavigation" class="small material-icons" style="display:none;">pause</i>
           <i id="nextNavigation" class="small material-icons">skip_next</i>
+          <i id="repeatOneNavigation" class="small material-icons" state="0">repeat_one</i>
+          <i id="repeatNavigation" class="small material-icons" state="0">repeat</i>
         </div>
       </div>
       </nav>
@@ -241,6 +244,13 @@
       $(document).on('click','#nextNavigation',function(){
         angular.element($("#myctrl")).scope().nextVideoNav();
       });
+      $(document).on('click','#repeatNavigation',function(){
+        angular.element($("#myctrl")).scope().repeatVideoNav();
+      });
+      $(document).on('click','#repeatOneNavigation',function(){
+        angular.element($("#myctrl")).scope().repeatOneVideoNav();
+      });
+
     </script>
   </body>
 </html>

@@ -98,6 +98,8 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
       $('#playNavigation').show();
     } else if (event.data == YT.PlayerState.ENDED) {
       youtube.state = 'ended';
+      $('#pauseNavigation').hide();
+      $('#playFirstNavigation').show();
       $('#progressing').removeClass('indeterminate');
       //get youtube id currentLaunch
       var yidcurrentLaunch = history[0].id;
@@ -108,8 +110,26 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
       var playdex = filterFilter(upcoming , {id: yidcurrentLaunch});
       //get idx from yidcurrentlaunch
       console.log("getCurrentIdx : "+playdex[0].idx);
+
       //next video
-      var index = (playdex[0].idx)+1;
+      var index;
+      //check if repeat one video aktiv
+      var state1 = $('#repeatOneNavigation').attr('state');
+      //if state 1, repeat one video aktiv
+      if(state1==1){
+        index = (playdex[0].idx);
+      }else{
+        index = (playdex[0].idx)+1;
+        if(index==upcoming.length){
+          //check if repeat playlist aktiv
+          var state2 = $('#repeatNavigation').attr('state');
+          //if state 1, playlist repeat aktiv
+          if(state2==1){
+            index=0;
+          }
+        }
+      }
+
       console.log("next video index : "+index);
       //add new class to currentLaunch for change background
       $('#item-title-'+upcoming[index].id).addClass("item-"+index);
@@ -380,6 +400,17 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
 
       //updateViewerAnzahl
       VideosService.updateViewerAnzahl(id);
+
+      //update title
+      $('#current_playing_title').text(title);
+
+      //update repeat one state
+      $('#repeatOneNavigation').attr('state',0);
+      $('#repeatOneNavigation').css('color','black');
+
+      //update repeat playlist state
+      $('#repeatNavigation').attr('state',0);
+      $('#repeatNavigation').css('color','black');
     };
 
     $scope.queue = function (id, title) {
@@ -526,6 +557,32 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
       console.log("next video index : "+index);
       var playdex2 = filterFilter(upcoming , {idx: index});
       $scope.launch(playdex2[0]['id'],playdex2[0]['title']);
+    }
+
+    $scope.repeatVideoNav = function(){
+      var state = $('#repeatNavigation').attr('state');
+      if(state==0){
+        console.log('repeat aktif');
+        $('#repeatNavigation').attr('state',1);
+        $('#repeatNavigation').css('color','#ee6e73');
+      }else{
+        console.log('repeat non aktif');
+        $('#repeatNavigation').attr('state',0);
+        $('#repeatNavigation').css('color','black');
+      }
+    }
+
+    $scope.repeatOneVideoNav = function(){
+      var state = $('#repeatOneNavigation').attr('state');
+      if(state==0){
+        console.log('repeat one aktif');
+        $('#repeatOneNavigation').attr('state',1);
+        $('#repeatOneNavigation').css('color','#ee6e73');
+      }else{
+        console.log('repeat one non aktif');
+        $('#repeatOneNavigation').attr('state',0);
+        $('#repeatOneNavigation').css('color','black');
+      }
     }
 
 });
