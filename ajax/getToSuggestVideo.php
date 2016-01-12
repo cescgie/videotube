@@ -18,14 +18,14 @@ foreach ($resultq as $key => $value) {
    '<div id="leftVideo'.$i.'" more_id="'.$i.'" key="'.$key.'" class="video" video_yid="'.$value["yid"].'" old_empf_id="'.$value["yid"].'" video_title="'.$value["title"].'">
     <img class="video-image" src="'.$value['thumbnail'].'">
     <p class="video-title">'.$value['title'].' (<i class="material-icons" style="position:relative;bottom:-0.2em;font-size:1.2em;">visibility</i> '.$value['viewers'].' Views) <span class="right" style="background-color:yellow;color:black">EMPFOHLENES VIDEO</span></p>
-    <p class="video-author">'.$value['author'].'<a class="waves-effect waves-light btn modal-trigger right" href="#suggest'.$i.'">Setzt als empfohlenes Video</a></p>
+    <p class="video-author">'.$value['author'].'</p>
     </div>
    ';
    echo '
    <!-- Modal check form create/update playlist -->
    <div id="suggest'.$i.'" class="modal">
      <div class="modal-content">
-       <p id="check_form_text">Setzt "'.$value['title'].'" als empfohlenes Video?</p>
+       <p id="check_form_text">Möchten Sie "'.$value['title'].'" als empfohlenes Video einsetzen?</p>
      </div>
      <div class="modal-footer">
        <a id="confirm_suggest" yid="'.$value["yid"].'" href="javascript:void(0)" class=" modal-action modal-close waves-effect waves-green btn-flat">Ja</a>
@@ -39,14 +39,14 @@ foreach ($result as $keys => $value) {
    '<div id="leftVideo'.$i.'" more_id="'.$i.'" key="'.$key.'" class="video" video_yid="'.$value["yid"].'" video_title="'.$value["title"].'">
     <img class="video-image" src="'.$value['thumbnail'].'">
     <p class="video-title">'.$value['title'].' (<i class="material-icons" style="position:relative;bottom:-0.2em;font-size:1.2em;">visibility</i> '.$value['viewers'].' Views)</p>
-    <p class="video-author">'.$value['author'].'<a class="waves-effect waves-light btn modal-trigger right" href="#suggest'.$i.'">Setzt als empfohlenes Video</a></p>
+    <p class="video-author">'.$value['author'].'<a class="waves-effect waves-light btn modal-trigger right" href="#suggest'.$i.'">Als empfohlenes Video einsetzen</a></p>
     </div>
    ';
    echo '
    <!-- Modal check form create/update playlist -->
    <div id="suggest'.$i.'" class="modal">
      <div class="modal-content">
-      <p id="check_form_text">Setzt "'.$value['title'].'" als empfohlenes Video?</p>
+      <p id="check_form_text">Möchten Sie "'.$value['title'].'" als empfohlenes Video einsetzen?</p>
      </div>
      <div class="modal-footer">
        <a id="confirm_suggest" yid="'.$value["yid"].'" href="javascript:void(0)" class=" modal-action modal-close waves-effect waves-green btn-flat">Ja</a>

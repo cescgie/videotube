@@ -314,6 +314,10 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
     youtube.player.playVideo();
   }
 
+  this.stopVideo = function(){
+    youtube.player.stopVideo();
+  }
+
 }]);
 
 app.controller('VideosController', function ($scope, $http, $log, VideosService, $rootScope, filterFilter) {
@@ -501,6 +505,11 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
 
     $scope.playVideoNav = function(){
       VideosService.playVideo();
+    }
+
+    $scope.stopVideoNav = function(){
+      console.log("stopVideoNav");
+      VideosService.stopVideo();
     }
 
     $scope.prevVideoNav = function(){

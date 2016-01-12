@@ -312,3 +312,51 @@ $(document).on('click','#delete_check',function(){
         return $1.toUpperCase();
     });
 }
+
+$(document).on('click','#playFirstNavigation',function(){
+  angular.element($("#myctrl")).scope().playNav();
+  $('#playFirstNavigation').hide();
+  $('#pauseNavigation').show();
+});
+
+$(document).on('click','#pauseNavigation',function(){
+  angular.element($("#myctrl")).scope().pauseVideoNav();
+  $('#pauseNavigation').hide();
+  $('#playNavigation').show();
+});
+
+$(document).on('click','#playNavigation',function(){
+  angular.element($("#myctrl")).scope().playVideoNav();
+  $('#playNavigation').hide();
+  $('#pauseNavigation').show();
+});
+
+$(document).on('click','#prevNavigation',function(){
+  angular.element($("#myctrl")).scope().prevVideoNav();
+});
+
+$(document).on('click','#nextNavigation',function(){
+  angular.element($("#myctrl")).scope().nextVideoNav();
+});
+
+$(document).on('click','#repeatNavigation',function(){
+  angular.element($("#myctrl")).scope().repeatVideoNav();
+});
+
+$(document).on('click','#repeatOneNavigation',function(){
+  angular.element($("#myctrl")).scope().repeatOneVideoNav();
+});
+
+$(document).on('click','#replayNavigation',function(){
+  angular.element($("#myctrl")).scope().replayNav();
+});
+
+$(document).ready(function(){
+ $('.tooltipped').tooltip({delay: 50});
+});
+
+$(document).on('click','.item-title',function(){
+  var yid = $(this).attr('yid');
+  var title = $(this).attr('title');
+  angular.element($("#myctrl")).scope().launch(yid,title);
+});

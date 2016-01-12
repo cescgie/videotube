@@ -88,7 +88,7 @@
               <li data-ng-repeat="video in upcoming">
                 <p class="item-dex"><p>
                 <p class="item-delete" data-ng-click="delete(video.id)">delete</p>
-                <p class="item-title" id="item-title-{{video.id}}" data-ng-click="launch(video.id, video.title)">{{video.title}}</p>
+                <p class="item-title" id="item-title-{{video.id}}" yid="{{video.id}}" title="{{video.title}}">{{video.title}}</p>
                 <input class="item-id" type="hidden" name="id" value="{{video.id}}">
                 <input class="item-idx-{{video.id}}" type="hidden" name="idx" idx="idx-{{video.id}}" value="{{$index + 1}}">
               </li>
@@ -223,40 +223,5 @@
        </div>
       </div>
     <script type="text/javascript" src="libs/control.js"></script>
-    <script type="text/javascript">
-      $(document).on('click','#playFirstNavigation',function(){
-        angular.element($("#myctrl")).scope().playNav();
-        $('#playFirstNavigation').hide();
-        $('#pauseNavigation').show();
-      });
-      $(document).on('click','#pauseNavigation',function(){
-        angular.element($("#myctrl")).scope().pauseVideoNav();
-        $('#pauseNavigation').hide();
-        $('#playNavigation').show();
-      });
-      $(document).on('click','#playNavigation',function(){
-        angular.element($("#myctrl")).scope().playVideoNav();
-        $('#playNavigation').hide();
-        $('#pauseNavigation').show();
-      });
-      $(document).on('click','#prevNavigation',function(){
-        angular.element($("#myctrl")).scope().prevVideoNav();
-      });
-      $(document).on('click','#nextNavigation',function(){
-        angular.element($("#myctrl")).scope().nextVideoNav();
-      });
-      $(document).on('click','#repeatNavigation',function(){
-        angular.element($("#myctrl")).scope().repeatVideoNav();
-      });
-      $(document).on('click','#repeatOneNavigation',function(){
-        angular.element($("#myctrl")).scope().repeatOneVideoNav();
-      });
-      $(document).on('click','#replayNavigation',function(){
-        angular.element($("#myctrl")).scope().replayNav();
-      });
-      $(document).ready(function(){
-       $('.tooltipped').tooltip({delay: 50});
-      });
-    </script>
   </body>
 </html>
