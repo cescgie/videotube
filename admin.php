@@ -16,17 +16,24 @@
   <body id="myctrladmin" data-ng-controller="VideosController">
     <div class="container">
       <h1>admin</h1>
-      <a class="modal-trigger-db waves-effect waves-light btn" href="#db_update_modal">Datenbank aktualisieren</a>  <span id="db_status"></span><br><br>
+      <a href="index.php"><-home</a><br><br>
+      <a class="modal-trigger-db waves-effect waves-light btn" href="#db_update_modal">Datenbank aktualisieren</a> <span id="status_db"></span><br><br>
       <!-- Modal Structure -->
       <div id="db_update_modal" class="modal">
          <div class="modal-content">
-           <p>Video in der Datenbank aktualisieren?</p>
+           <p>Möchten Sie die Datenbank aktualisieren?</p>
          </div>
          <div class="modal-footer">
            <a id="db_update" href="#" class=" modal-action modal-close waves-effect waves-green btn-flat">Ja</a>
          </div>
        </div>
 
+       <a id="most_viewed_video" class="waves-effect waves-light btn" href="#">Top 10 meist geschaute Videos</a><br><br>
+
+       <div class="most_viewed_video_div" style="display:none;">
+         <div class="most_viewed_list">
+         </div><br>
+       </div>
       <a id="empf_video" class="waves-effect waves-light btn" href="#">Empfohlenes Video aktualisieren</a><br><br>
       <div class="empf_video_div" style="display:none">
         <nav>
@@ -78,8 +85,7 @@
         dataType: "html",
         success: function(response){
             console.log("success");
-            console.log(response);
-            $('#db_status').text('aktualisiert!');
+            Materialize.toast('Datenbank aktualisiert!', 3000, 'rounded');
         }
       });
     });
@@ -91,6 +97,21 @@
 
     $(document).ready(function(){
       $('.modal-trigger-db').leanModal();
+    });
+
+    $(document).on('click','#most_viewed_video',function(){
+      console.log('most_viewed_video');
+      $(".most_viewed_video_div").toggle();
+      $.ajax({
+        type: "GET",
+        url: "ajax/getMostShown.php",
+        dataType: "html",
+        success: function(response){
+            console.log("success");
+
+		        $('.most_viewed_list').html(response);
+        }
+      });
     });
     </script>
   </body>

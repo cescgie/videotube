@@ -3,7 +3,7 @@ require_once('../libs/Storage.php');
 
 $db = new Storage();
 
-$data['getVideo'] = $db->select("SELECT meta_value FROM wp_postmeta WHERE meta_key = '_tern_wp_youtube_video' LIMIT 1000");
+$data['getVideo'] = $db->select("SELECT meta_id,meta_value FROM wp_postmeta WHERE meta_key = '_tern_wp_youtube_video' ORDER BY meta_id DESC LIMIT 5");
 
 if(!sizeof($data['getVideo'])){
   echo
@@ -36,9 +36,10 @@ if(!sizeof($data['getVideo'])){
 		        $daten['thumbnail'] = $parts3[1][0];
 		        $daten['description'] = $parts4[1][0];
             $daten['author'] = str_replace("http://www.youtube.com/user/","",$parts5[1][1]);
-            $db->insert('yapi',$daten);
+            //$db->insert('yapi',$daten);
 		      }
 		    }
+        echo 'yuhu';
 		  }
 	}
 }

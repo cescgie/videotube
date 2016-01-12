@@ -5,10 +5,10 @@ $db = new Storage();
 $q = '%';
 if(isset($_GET['q']) && $_GET['q'] != ''){
   $key = $_GET['q'];
-  $result = $db->select("SELECT * FROM yapi WHERE title IS NOT NULL AND title != '' AND BINARY LOWER(title) LIKE LOWER('%$key%') OR REPLACE(title, ' ', '') LIKE LOWER('%$key%')  AND suggest != 1 LIMIT 25");
+  $result = $db->select("SELECT * FROM yapi WHERE title IS NOT NULL AND title != '' AND BINARY LOWER(title) LIKE LOWER('%$key%') OR REPLACE(title, ' ', '') LIKE LOWER('%$key%')  AND suggest != 1 ORDER BY meta_id DESC LIMIT 25");
 }else{
   $key = '%';
-  $result = $db->select("SELECT * FROM yapi WHERE title IS NOT NULL AND title != ''  AND suggest != 1 ORDER BY id DESC LIMIT 25");
+  $result = $db->select("SELECT * FROM yapi WHERE title IS NOT NULL AND title != ''  AND suggest != 1 ORDER BY meta_id DESC LIMIT 25");
 }
 $resultq = $db->select("SELECT * FROM yapi WHERE title IS NOT NULL AND title != '' AND suggest = 1 LIMIT 1");
 $i = 1;

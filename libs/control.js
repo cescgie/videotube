@@ -21,9 +21,9 @@
     /*
     * Warn user before leave or close the page
     */
-    window.onbeforeunload = function(){
+    /*window.onbeforeunload = function(){
       return 'Sie haben noch nicht die aktuelle Playlist gespeichert!';
-    };
+    };*/
   });
 /*
 * close icon on search

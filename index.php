@@ -37,14 +37,14 @@
         <h1><a href="index.php" style="color:black;">Video<strong style="color:#ee6e73">Tube</strong></a></h1>
         <p id="current_playing_title"></p>
         <div class="player-navigation">
-          <i id="prevNavigation" class="small material-icons">skip_previous</i>
-          <i id="playFirstNavigation" class="small material-icons">play_arrow</i>
-          <i id="playNavigation" class="small material-icons" style="display:none;">play_arrow</i>
-          <i id="pauseNavigation" class="small material-icons" style="display:none;">pause</i>
-          <i id="nextNavigation" class="small material-icons">skip_next</i>
-          <i id="replayNavigation" class="small material-icons">replay</i>
-          <i id="repeatOneNavigation" class="small material-icons" state="0">repeat_one</i>
-          <i id="repeatNavigation" class="small material-icons" state="0">repeat</i>
+          <i id="prevNavigation" class="small material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="Previous">skip_previous</i>
+          <i id="playFirstNavigation" class="small material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="Play">play_arrow</i>
+          <i id="playNavigation" class="small material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="Play" style="display:none;">play_arrow</i>
+          <i id="pauseNavigation" class="small material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="Pause" style="display:none;">pause</i>
+          <i id="nextNavigation" class="small material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="Next">skip_next</i>
+          <i id="repeatOneNavigation" class="small material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="Repeat one song" state="0">repeat_one</i>
+          <i id="repeatNavigation" class="small material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="Repeat playlist" state="0">repeat</i>
+          <i id="replayNavigation" class="small material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="Back to first song">replay</i>
         </div>
       </div>
       </nav>
@@ -253,6 +253,9 @@
       });
       $(document).on('click','#replayNavigation',function(){
         angular.element($("#myctrl")).scope().replayNav();
+      });
+      $(document).ready(function(){
+       $('.tooltipped').tooltip({delay: 50});
       });
     </script>
   </body>
