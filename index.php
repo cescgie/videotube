@@ -87,8 +87,8 @@
             <ol id="upcoming" class="sortable" data-ng-show="playlist">
               <li data-ng-repeat="video in upcoming">
                 <p class="item-dex"><p>
-                <p class="item-delete" data-ng-click="delete(video.id)">delete</p>
-                <p class="item-title" id="item-title-{{video.id}}" yid="{{video.id}}" title="{{video.title}}">{{video.title}}</p>
+                <i class="small material-icons right item-delete" data-ng-click="delete(video.id)">delete</i>
+                <p class="item-title tooltipped" data-position="left" data-delay="50" data-tooltip="Abspielen"  id="item-title-{{video.id}}" yid="{{video.id}}" title="{{video.title}}">{{video.title}}</p>
                 <input class="item-id" type="hidden" name="id" value="{{video.id}}">
                 <input class="item-idx-{{video.id}}" type="hidden" name="idx" idx="idx-{{video.id}}" value="{{$index + 1}}">
               </li>
@@ -209,9 +209,8 @@
                     </thead>
                     <tbody>
                       <tr data-ng-repeat="playlist in listplaylist">
-                        <td><a href="index.php?playlist_name={{ playlist.name }}">{{ playlist.name | uppercase}}</a></td>
-                        <!--<td><a class="remove_playlist waves-effect waves-light btn modal-trigger right" data-ng-click='confirm_delete(playlist.name,playlist.id)'>Delete</a></td>-->
-                        <td><a id="delete_button" playlist_id="{{ playlist.id }}" playlist_name="{{ playlist.name }}" class="waves-effect waves-light btn modal-trigger right">Delete</a></td>
+                        <td><a href="index.php?playlist_name={{ playlist.name }}" class="tooltipped" data-position="right" data-delay="50" data-tooltip="Playlist öffnen">{{ playlist.name | uppercase}}</a></td>
+                        <td><a id="delete_button" playlist_id="{{ playlist.id }}" playlist_name="{{ playlist.name }}" class="modal-trigger right" ><i class="small material-icons right tooltipped" data-position="left" data-delay="50" data-tooltip="Playlist entfernen">delete</i></a></td>
                       </tr>
                     </tbody>
                   </table>

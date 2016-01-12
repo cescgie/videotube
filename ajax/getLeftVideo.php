@@ -15,7 +15,7 @@ $i = 1;
 foreach ($resultq as $key => $value) {
   # code...
   echo
-   '<div id="leftVideo'.$i.'" more_id="'.$i.'" key="'.$key.'" class="video" onclick="video_click('.$i.')" video_yid="'.$value["yid"].'" video_title="'.$value["title"].'">
+   '<div id="leftVideo'.$i.'" more_id="'.$i.'" key="'.$key.'" class="video tooltipped" data-position="top" data-delay="50" data-tooltip="in playlist hinzufügen" onclick="video_click('.$i.')" video_yid="'.$value["yid"].'" video_title="'.$value["title"].'">
     <img class="video-image" src="'.$value['thumbnail'].'">
     <p class="video-title">'.$value['title'].' (<i class="material-icons" style="position:relative;bottom:-0.2em;font-size:1.2em;">visibility</i> '.$value['viewers'].' Views) <span class="right" style="background-color:yellow;color:black">EMPFOHLENES VIDEO</span></p>
     <p class="video-author">'.$value['author'].'</p>
@@ -26,7 +26,7 @@ foreach ($resultq as $key => $value) {
 $i = 2;
 foreach ($result as $keys => $value) {
   echo
-   '<div id="leftVideo'.$i.'" more_id="'.$i.'" key="'.$key.'" class="video" onclick="video_click('.$i.')" video_yid="'.$value["yid"].'" video_title="'.$value["title"].'">
+   '<div id="leftVideo'.$i.'" more_id="'.$i.'" key="'.$key.'" class="video tooltipped" data-position="top" data-delay="50" data-tooltip="in playlist hinzufügen" onclick="video_click('.$i.')" video_yid="'.$value["yid"].'" video_title="'.$value["title"].'">
     <img class="video-image" src="'.$value['thumbnail'].'">
     <p class="video-title">'.$value['title'].' (<i class="material-icons" style="position:relative;bottom:-0.2em;font-size:1.2em;">visibility</i> '.$value['viewers'].' Views)</p>
     <p class="video-author">'.$value['author'].'</p>
@@ -66,4 +66,7 @@ foreach ($result as $keys => $value) {
           scope.upcoming = strfy;
      });
    }
+   $(document).ready(function(){
+    $('.tooltipped').tooltip({delay: 50});
+   });
  </script>

@@ -64,8 +64,8 @@ iframe#placeholder{
 
 .item-title{ margin-right: 80px; padding: 10px 20px;}
 .item-title:hover{ background: #1171A2; color: white;}
-.item-delete{ color: #ee6e73; float: right; text-align: center; padding: 10px 0; width: 80px;}
-.item-delete:hover{ background: #ee6e73; color: white;}
+.item-delete{ color: #ee6e73; float: center; text-align: center; padding: 0px 0; width: 80px;}
+.item-delete:hover{ color: white;}
 .item-play{ color: #ac0809; float: left; text-align: center; padding: 10px 0; width: 80px;}
 .item-play:hover{ background: #ac0809; color: white;}
 .item-dex{ color: #ac0809; float: left; text-align: center; padding: 10px 0; width: 40px;}
@@ -82,14 +82,20 @@ iframe#placeholder{
   color:red;
   font-size:15px;
 }
+
 .item-title:hover:before{
-  content: 'Abspielen : ';
+  content: '> ';
   position: relative;
   color: #ee6e73;
   bottom: auto;
   right: auto;
   top: auto;
   font-size: 1em;
+}
+
+#delete_button{
+  cursor: pointer;
+  color:#ee6e73;
 }
 
 #search_icon{
