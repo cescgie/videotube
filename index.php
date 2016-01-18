@@ -5,7 +5,7 @@
   $key=0;
 }?>
 <!DOCTYPE html>
-<html data-ng-app="JukeTubeApp">
+<html data-ng-app="App">
   <head>
     <meta charset="utf-8">
     <title>VideoTube</title>
@@ -37,14 +37,14 @@
         <h1><a href="index.php" style="color:black;">Video<strong style="color:#ee6e73">Tube</strong></a></h1>
         <p id="current_playing_title"></p>
         <div class="player-navigation">
-          <i id="prevNavigation" class="small material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="Previous">skip_previous</i>
-          <i id="playFirstNavigation" class="small material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="Play">play_arrow</i>
-          <i id="playNavigation" class="small material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="Play" style="display:none;">play_arrow</i>
-          <i id="pauseNavigation" class="small material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="Pause" style="display:none;">pause</i>
-          <i id="nextNavigation" class="small material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="Next">skip_next</i>
-          <i id="repeatOneNavigation" class="small material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="Repeat one song" state="0">repeat_one</i>
-          <i id="repeatNavigation" class="small material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="Repeat playlist" state="0">repeat</i>
-          <i id="replayNavigation" class="small material-icons tooltipped" data-position="bottom" data-delay="50" data-tooltip="Back to first song">replay</i>
+          <i id="prevNavigation" class="small material-icons">skip_previous</i>
+          <i id="playFirstNavigation" class="small material-icons">play_arrow</i>
+          <i id="playNavigation" class="small material-icons" style="display:none;">play_arrow</i>
+          <i id="pauseNavigation" class="small material-icons" style="display:none;">pause</i>
+          <i id="nextNavigation" class="small material-icons">skip_next</i>
+          <i id="repeatOneNavigation" class="small material-icons" state="0">repeat_one</i>
+          <i id="repeatNavigation" class="small material-icons" state="0">repeat</i>
+          <i id="replayNavigation" class="small material-icons">replay</i>
         </div>
       </div>
       </nav>
@@ -53,7 +53,7 @@
           <form>
             <div class="input-field">
               <input id="query" name="q" type="search" placeholder="Video suchen" data-ng-model="query" required>
-              <label for="search"><i id="search_icon" class="material-icons">search</i></label>
+              <label for="search"><i id="search_icon" class="material-icons">youtube_searched_for</i></label>
               <i id="close_result" class="material-icons">closes</i>
             </div>
           </form>
@@ -87,8 +87,8 @@
             <ol id="upcoming" class="sortable" data-ng-show="playlist">
               <li data-ng-repeat="video in upcoming">
                 <p class="item-dex"><p>
-                <i class="small material-icons right item-delete" data-ng-click="delete(video.id)">delete</i>
-                <p class="item-title tooltipped" data-position="left" data-delay="50" data-tooltip="Abspielen"  id="item-title-{{video.id}}" yid="{{video.id}}" title="{{video.title}}">{{video.title}}</p>
+                <i class="small material-icons right item-delete" data-ng-click="delete(video.id)">highlight_off</i>
+                <p class="item-title" id="item-title-{{video.id}}" yid="{{video.id}}" title="{{video.title}}">{{video.title}}</p>
                 <input class="item-id" type="hidden" name="id" value="{{video.id}}">
                 <input class="item-idx-{{video.id}}" type="hidden" name="idx" idx="idx-{{video.id}}" value="{{$index + 1}}">
               </li>
@@ -210,7 +210,7 @@
                     <tbody>
                       <tr data-ng-repeat="playlist in listplaylist">
                         <td><a href="index.php?playlist_name={{ playlist.name }}" class="tooltipped" data-position="right" data-delay="50" data-tooltip="Playlist öffnen">{{ playlist.name | uppercase}}</a></td>
-                        <td><a id="delete_button" playlist_id="{{ playlist.id }}" playlist_name="{{ playlist.name }}" class="modal-trigger right" ><i class="small material-icons right tooltipped" data-position="left" data-delay="50" data-tooltip="Playlist entfernen">delete</i></a></td>
+                        <td><a id="delete_button" playlist_id="{{ playlist.id }}" playlist_name="{{ playlist.name }}" class="modal-trigger right" ><i class="small material-icons right tooltipped" data-position="left" data-delay="50" data-tooltip="Playlist entfernen">highlight_off</i></a></td>
                       </tr>
                     </tbody>
                   </table>

@@ -1,4 +1,4 @@
-var app = angular.module('JukeTubeApp', []);
+var app = angular.module('App', []);
 
 app.run(function () {
   var tag = document.createElement('script');
@@ -381,8 +381,6 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
 
   $scope.launch = function (id, title) {
       //get current upcoming
-      //var data = getCurrentUpcoming();
-      //VideosService.updateUpcoming(data);
       VideosService.launchPlayer(id, title);
       VideosService.archiveVideo(id, title);
 

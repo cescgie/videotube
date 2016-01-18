@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-ng-app="JukeTubeApp">
+<html data-ng-app="App">
   <head>
     <meta charset="utf-8">
     <title>Admin</title>

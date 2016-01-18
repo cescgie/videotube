@@ -118,6 +118,12 @@ iframe#placeholder{
 #repeatOneNavigation,#replayNavigation{
   cursor:pointer;
 }
+
+#playFirstNavigation:hover,#playNavigation:hover,#pauseNavigation:hover,
+#prevNavigation:hover,#nextNavigation:hover,#repeatNavigation:hover,
+#repeatOneNavigation:hover,#replayNavigation:hover{
+  color:#ee6e73;
+}
 /*
 *
 * Media max-width : 600px; max-width : 993px; max-width : 1024px;
