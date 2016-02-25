@@ -87,7 +87,7 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
     var current_time = secondsToHms(youtube.player.getCurrentTime());
     $('#total_time').text(total_time);
     $('#current_time').text(current_time);
-    console.log('durasi : '+total_time);
+    console.log('durasi : '+hmsToSeconds(total_time));
     if (event.data == YT.PlayerState.PLAYING) {
       youtube.state = 'playing';
       console.log('playing');
@@ -160,6 +160,17 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
     var m = Math.floor(d % 3600 / 60);
     var s = Math.floor(d % 3600 % 60);
     return ((h > 0 ? h + ":" + (m < 10 ? "0" : "") : "") + m + ":" + (s < 10 ? "0" : "") + s);
+  }
+
+  function hmsToSeconds(str) {
+    var p = str.split(':'),
+        s = 0, m = 1;
+
+    while (p.length > 0) {
+        s += m * parseInt(p.pop(), 10);
+        m *= 60;
+    }
+    return s;
   }
 
   this.bindPlayer = function (elementId) {
