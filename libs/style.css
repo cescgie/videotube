@@ -1,4 +1,8 @@
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td{ font-style: normal; font-weight: normal; margin: 0; padding: 0;}
+body{
+  background-color: #000;
+}
+
 .video{
   cursor: pointer;
   min-height: 90px;
@@ -124,11 +128,29 @@ iframe#placeholder{
 #repeatOneNavigation:hover,#replayNavigation:hover{
   color:#ee6e73;
 }
+
+div.player-navigation {
+  height: 50px;
+  color:#fff;
+  background-color: #1976d2;
+  opacity: 0.6;
+  filter: alpha(opacity=60); /* For IE8 and earlier */
+}
+
+#button_player{
+  margin-top: 10px;
+}
+
+#current_playing_title{
+  margin-top:15px;
+}
+
 /*
 *
 * Media max-width : 600px; max-width : 993px; max-width : 1024px;
 *
 */
+
 
 @media only screen and (max-width : 600px) {
   #player, #playlist{

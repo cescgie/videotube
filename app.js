@@ -408,11 +408,11 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
 
       //update repeat one state
       $('#repeatOneNavigation').attr('state',0);
-      $('#repeatOneNavigation').css('color','black');
+      $('#repeatOneNavigation').css('color','#fff');
 
       //update repeat playlist state
       $('#repeatNavigation').attr('state',0);
-      $('#repeatNavigation').css('color','black');
+      $('#repeatNavigation').css('color','#fff');
     };
 
     $scope.queue = function (id, title) {
@@ -588,7 +588,7 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
       }else{
         console.log('repeat one non aktif');
         $('#repeatOneNavigation').attr('state',0);
-        $('#repeatOneNavigation').css('color','black');
+        $('#repeatOneNavigation').css('color','#fff');
       }
     }
 

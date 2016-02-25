@@ -31,39 +31,25 @@
       console.log("key : "+key);
     </script>
     <script type="text/javascript" src="app.js"></script>
+    <?php include_once('piwikpixel.php');?>
   </head>
   <body id="myctrl" data-ng-controller="VideosController">
-      <div class="center-align">
-        <h1><a href="index.php" style="color:black;">Video<strong style="color:#ee6e73">Tube</strong></a></h1>
-        <p id="current_playing_title"></p>
-        <div class="player-navigation">
-          <i id="prevNavigation" class="small material-icons">skip_previous</i>
-          <i id="playFirstNavigation" class="small material-icons">play_arrow</i>
-          <i id="playNavigation" class="small material-icons" style="display:none;">play_arrow</i>
-          <i id="pauseNavigation" class="small material-icons" style="display:none;">pause</i>
-          <i id="nextNavigation" class="small material-icons">skip_next</i>
-          <i id="repeatOneNavigation" class="small material-icons" state="0">repeat_one</i>
-          <i id="repeatNavigation" class="small material-icons" state="0">repeat</i>
-          <i id="replayNavigation" class="small material-icons">replay</i>
-        </div>
-      </div>
-      </nav>
-      <nav>
-        <div class="nav-wrapper">
-          <form>
-            <div class="input-field">
-              <input id="query" name="q" type="search" placeholder="Video suchen" data-ng-model="query" required>
-              <label for="search"><i id="search_icon" class="material-icons">youtube_searched_for</i></label>
-              <i id="close_result" class="material-icons">closes</i>
-            </div>
-          </form>
-        </div>
-      </nav>
       <div class="progress center-align">
          <div id="progressing" class=""></div>
       </div>
       <div class="row">
         <div id="col_results" class="col s12 l6 m6">
+          <nav>
+            <div class="nav-wrapper">
+              <form>
+                <div class="input-field">
+                  <input id="query" name="q" type="search" placeholder="Video suchen" data-ng-model="query" required>
+                  <label for="search"><i id="search_icon" class="material-icons">search</i></label>
+                  <i id="close_result" class="material-icons">closes</i>
+                </div>
+              </form>
+            </div>
+          </nav>
           <div id="results"></div>
           <a class="mehr-videos-button waves-effect waves-light btn" id="mehr-videos-button" href="javascript:loadMore();" style="display:none;">mehr Videos</a>
           <div id="mehr-videos-spin" class="preloader-wrapper small active center-align" style="display:none;">
@@ -209,7 +195,7 @@
                     </thead>
                     <tbody>
                       <tr data-ng-repeat="playlist in listplaylist">
-                        <td><a href="index.php?playlist_name={{ playlist.name }}" class="tooltipped" data-position="right" data-delay="50" data-tooltip="Playlist öffnen">{{ playlist.name | uppercase}}</a></td>
+                        <td><a href="?playlist_name={{ playlist.name }}" class="tooltipped" data-position="right" data-delay="50" data-tooltip="Playlist öffnen">{{ playlist.name | uppercase}}</a></td>
                         <td><a id="delete_button" playlist_id="{{ playlist.id }}" playlist_name="{{ playlist.name }}" class="modal-trigger right" ><i class="small material-icons right tooltipped" data-position="left" data-delay="50" data-tooltip="Playlist entfernen">highlight_off</i></a></td>
                       </tr>
                     </tbody>
@@ -220,6 +206,24 @@
            </div>
          </div>
        </div>
+      </div>
+
+      <div class="player-navigation">
+        <div class="row">
+          <div class="col l3">
+            <p id="current_playing_title"></p>
+          </div>
+          <div id="button_player" class="col l9">
+            <i id="prevNavigation" class="small material-icons">skip_previous</i>
+            <i id="playFirstNavigation" class="small material-icons">play_arrow</i>
+            <i id="playNavigation" class="small material-icons" style="display:none;">play_arrow</i>
+            <i id="pauseNavigation" class="small material-icons" style="display:none;">pause</i>
+            <i id="nextNavigation" class="small material-icons">skip_next</i>
+            <i id="repeatOneNavigation" class="small material-icons" state="0">repeat_one</i>
+            <i id="repeatNavigation" class="small material-icons" state="0">repeat</i>
+            <i id="replayNavigation" class="small material-icons">replay</i>
+          </div>
+        </div>
       </div>
     <script type="text/javascript" src="libs/control.js"></script>
   </body>
