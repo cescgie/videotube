@@ -1,7 +1,5 @@
-<IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteBase /
 
-RewriteRule ^playlist/([0-9a-zA-Z]+) playlist.php?name=$1 [NC,L]
-
-</IfModule>
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^playlist/([A-Za-z0-9-]+)/?$ index.php?playlist_name=$1 [NC,L]

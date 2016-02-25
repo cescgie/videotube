@@ -364,7 +364,7 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
   function init() {
       console.log('init');
       $scope.youtube = VideosService.getYoutube();
-      $scope.results = VideosService.getFirstLeftVideo();
+      //$scope.results = VideosService.getFirstLeftVideo();
       $scope.history = VideosService.getHistory();
       $scope.upcoming = VideosService.getUpcoming();
       $scope.playlist = true;

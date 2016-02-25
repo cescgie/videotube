@@ -360,3 +360,33 @@ $(document).on('click','.item-title',function(){
   var title = $(this).attr('title');
   angular.element($("#myctrl")).scope().launch(yid,title);
 });
+
+function video_click(i){
+    var video_yid = $("#leftVideo"+i).attr('video_yid');
+    var video_title = $("#leftVideo"+i).attr('video_title');
+    console.log(video_yid+' - '+video_title);
+    angular.element($("#myctrl")).scope().queue(video_yid,video_title);
+    var item = [];
+    $('#upcoming li p.item-title').each(function (i, e) {
+        item.push($(e).text());
+    });
+    var item2 = [];
+    $('#upcoming li input.item-id').each(function (i, e) {
+        item2.push($(e).val());
+    });
+    var strfy = [];
+    for (var i = 0; i < item.length; i++) {
+      var js = {id:item2[i],title:item[i]};
+      strfy.push(js);
+    }
+    strfy.push({"id":video_yid,"title":video_title});
+    //var playlist = JSON.stringify(strfy);
+    //console.log(playlist);
+    //$("#playlist").load("/ #playlist");
+    var scope = angular.element($("#upcoming")).scope();
+    scope.$apply(function(){
+         //$scope.youtube = VideosService.getYoutube();
+         //$scope.results = VideosService.getResults();
+         scope.upcoming = strfy;
+    });
+}
