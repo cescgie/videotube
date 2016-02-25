@@ -38,7 +38,7 @@
          <div id="progressing" class=""></div>
       </div>
       <div class="row">
-        <div id="col_results" class="col s12 l6 m6">
+        <div id="col_results" class="col s12 l3 m4">
           <nav>
             <div class="nav-wrapper">
               <form>
@@ -63,29 +63,67 @@
               </div>
             </div>
           </div>
+
+          <div class="new_playlist">
+            <!-- Modal trigger form create/update playlist -->
+            <?php if(!isset($_GET['playlist_name'])):?>
+            <a class="modal-trigger" href="#speichern">+ New playlist</a>
+            <?php else:?>
+            <a class="modal-trigger" href="#speichern"># Playlist aktualisieren</a>
+            <?php endif;?>
+          </div>
+
+          <div class="list_playlists">
+            <div class="row">
+              <div class="col s12 m12 l12">
+                <div id="playlisting">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th><p style="color:#fff">Beliebte Playlists<p></th>
+                      </tr>
+                    </thead>
+                   <tbody>
+                     <tr data-ng-repeat="playlist in listplaylist">
+                       <td style="padding:0px"><a href="?playlist_name={{ playlist.name }}">{{ playlist.name }}</a></td>
+                       <td style="padding:0px"><a id="delete_button" playlist_id="{{ playlist.id }}" playlist_name="{{ playlist.name }}" class="modal-trigger right" ><i class="small material-icons right">highlight_off</i></a></td>
+                     </tr>
+                   </tbody>
+                 </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="banner">
+            <img src="img/shattered.png" width="100%" alt="videotube" />
+          </div>
         </div>
-        <div id="col_player" class="col s12 l6 m6">
-          <div id="player">
-            <div id="placeholder" ></div>
+        <div id="col_player" class="col s12 l9 m8">
+          <div id="player" class="center-align">
+            <div id="placeholder"></div>
           </div>
-          <div id="playlist">
-            <p id="current" style="position:relative">{{ youtube.videoTitle }}</p>
-            <ol id="upcoming" class="sortable" data-ng-show="playlist">
-              <li data-ng-repeat="video in upcoming">
-                <p class="item-dex"><p>
-                <i class="small material-icons right item-delete" data-ng-click="delete(video.id)">highlight_off</i>
-                <p class="item-title" id="item-title-{{video.id}}" yid="{{video.id}}" title="{{video.title}}">{{video.title}}</p>
-                <input class="item-id" type="hidden" name="id" value="{{video.id}}">
-                <input class="item-idx-{{video.id}}" type="hidden" name="idx" idx="idx-{{video.id}}" value="{{$index + 1}}">
-              </li>
-            </ol>
+          <div class="row">
+            <div class="col l6">
+              <p style="color:#fff">Neue Videos</p>
+              <div id="new_videos"></div>
+            </div>
+            <div class="col l6">
+              <p style="color:#fff">Playlist</p>
+              <div id="playlist">
+                <!--<p id="current" style="position:relative">{{ youtube.videoTitle }}</p>-->
+                <ol id="upcoming" class="sortable" data-ng-show="playlist">
+                  <li data-ng-repeat="video in upcoming">
+                    <p class="item-dex"><p>
+                    <i class="small material-icons right item-delete" data-ng-click="delete(video.id)">highlight_off</i>
+                    <p class="item-title" id="item-title-{{video.id}}" yid="{{video.id}}" title="{{video.title}}">{{video.title}}</p>
+                    <input class="item-id" type="hidden" name="id" value="{{video.id}}">
+                    <input class="item-idx-{{video.id}}" type="hidden" name="idx" idx="idx-{{video.id}}" value="{{$index + 1}}">
+                  </li>
+                </ol>
+              </div>
+            </div>
           </div>
-          <!-- Modal form create/update trigger -->
-          <?php if(!isset($_GET['playlist_name'])):?>
-          <a class="waves-effect waves-light btn modal-trigger" href="#speichern">Playlist speichern</a>
-          <?php else:?>
-          <a class="waves-effect waves-light btn modal-trigger" href="#speichern">Playlist aktualisieren</a>
-          <?php endif;?>
 
           <!-- Modal form for create/update playlist Structure -->
           <div id="speichern" class="modal">
@@ -173,39 +211,6 @@
           </div>
 
         </div>
-      </div>
-      <div class="valign-wrapper">
-        <!-- Modal playlist trigger -->
-       <a class="waves-effect waves-light btn modal-trigger" href="#modal1" style="margin-right:10px;">Playlists anzeigen</a>
-
-       <!-- Modal playlist -->
-       <div id="modal1" class="modal bottom-sheet">
-         <div class="modal-content">
-           <div class="container">
-             <h4>Playlists</h4>
-             <div class="row">
-               <div class="col s12 m12 l12">
-                 <div id="playlisting">
-                   <table class="striped">
-                    <thead>
-                      <tr>
-                        <th data-field="name">Name</th>
-                        <th class="right" data-field="option">Option</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr data-ng-repeat="playlist in listplaylist">
-                        <td><a href="?playlist_name={{ playlist.name }}" class="tooltipped" data-position="right" data-delay="50" data-tooltip="Playlist öffnen">{{ playlist.name | uppercase}}</a></td>
-                        <td><a id="delete_button" playlist_id="{{ playlist.id }}" playlist_name="{{ playlist.name }}" class="modal-trigger right" ><i class="small material-icons right tooltipped" data-position="left" data-delay="50" data-tooltip="Playlist entfernen">highlight_off</i></a></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                 </div>
-               </div>
-             </div>
-           </div>
-         </div>
-       </div>
       </div>
 
       <div class="player-navigation">

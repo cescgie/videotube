@@ -377,6 +377,15 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
       .error( function () {
         console.log("error");
       });
+      //get list of neue videos
+      $http.get('ajax/getNeueVideos.php')
+      .success( function (data) {
+        console.log('success get neue videos');
+        $('#new_videos').html(data);
+      })
+      .error( function () {
+        console.log("error");
+      });
   }
 
   $scope.launch = function (id, title) {
