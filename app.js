@@ -83,6 +83,11 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
     $('#item-title-'+youtube.videoId).css("color","#fff");
   }
   function onYoutubeStateChange (event) {
+    var total_time = secondsToHms(youtube.player.getDuration());
+    var current_time = secondsToHms(youtube.player.getCurrentTime());
+    $('#total_time').text(total_time);
+    $('#current_time').text(current_time);
+    console.log('durasi : '+total_time);
     if (event.data == YT.PlayerState.PLAYING) {
       youtube.state = 'playing';
       console.log('playing');
@@ -147,6 +152,14 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
       service.updateViewerAnzahl(upcoming[index].id);
     }
     $rootScope.$apply();
+  }
+
+  function secondsToHms(d) {
+    var d = Number(d);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+    var s = Math.floor(d % 3600 % 60);
+    return ((h > 0 ? h + ":" + (m < 10 ? "0" : "") : "") + m + ":" + (s < 10 ? "0" : "") + s);
   }
 
   this.bindPlayer = function (elementId) {

@@ -223,6 +223,7 @@ if(isset($_GET['playlist'])){
               <form action="#">
                 <p class="range-field">
                   <input type="range" id="test5" min="0" max="100" />
+                  <span id="current_time"></span>:<span id="total_time"></span>
                 </p>
               </form>
             </div>
