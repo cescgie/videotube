@@ -32,6 +32,35 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
   var history = [];
   var currentidx;
 
+  var Clock = {
+    totalSeconds: 0,
+
+    start: function (totalSeconds) {
+      var self = this;
+      if (this.interval) clearInterval(this.interval);
+
+      this.interval = setInterval(function () {
+        totalSeconds += 1;
+
+        /*$("#hour").text(Math.floor(self.totalSeconds / 3600));
+        $("#min").text(Math.floor(self.totalSeconds / 60 % 60));
+        $("#sec").text(parseInt(self.totalSeconds % 60));*/
+        $('#current_time').text(secondsToHms(totalSeconds));
+        $('#slidertime').val(totalSeconds);
+      }, 1000);
+    },
+
+    pause: function () {
+      clearInterval(this.interval);
+      delete this.interval;
+    },
+
+    resume: function (currentseconds) {
+      if (!this.interval) this.start(currentseconds);
+    }
+
+  };
+
   function getplaylistupcome() {
     var playlist_name = key;
     return $.ajax({
@@ -83,13 +112,20 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
     $('#item-title-'+youtube.videoId).css("color","#fff");
   }
   function onYoutubeStateChange (event) {
-    var total_time = secondsToHms(youtube.player.getDuration());
-    var current_time = secondsToHms(youtube.player.getCurrentTime());
+    var getDuration = youtube.player.getDuration();
+    var getCurrentTime = youtube.player.getCurrentTime();
+    var total_time = secondsToHms(getDuration);
+    var current_time = secondsToHms(getCurrentTime);
+    $('#slidertime').val(getCurrentTime);
     $('#total_time').text(total_time);
     $('#current_time').text(current_time);
     console.log('durasi : '+hmsToSeconds(total_time));
+
+    $("#slidertime").attr({"max" : getDuration});
+
     if (event.data == YT.PlayerState.PLAYING) {
       youtube.state = 'playing';
+      Clock.start(getCurrentTime);
       console.log('playing');
       $('#progressing').addClass('indeterminate');
       $('#playFirstNavigation').hide();
@@ -97,12 +133,14 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
       $('#pauseNavigation').show();
     } else if (event.data == YT.PlayerState.PAUSED) {
       youtube.state = 'paused';
+      Clock.pause(getCurrentTime);
       console.log('paused');
       $('#progressing').removeClass('indeterminate');
       $('#pauseNavigation').hide();
       $('#playNavigation').show();
     } else if (event.data == YT.PlayerState.ENDED) {
       youtube.state = 'ended';
+      Clock.pause(getCurrentTime);
       $('#pauseNavigation').hide();
       $('#playFirstNavigation').show();
       $('#progressing').removeClass('indeterminate');
@@ -340,6 +378,10 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
 
   this.stopVideo = function(){
     youtube.player.stopVideo();
+  }
+
+  this.seekTo = function(seconds){
+    youtube.player.seekTo(seconds,true);
   }
 
 }]);
@@ -629,5 +671,9 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
       //update upcoming
       upcoming = VideosService.getCurrentUpcoming();
       $scope.launch(upcoming[0]['id'],upcoming[0]['title']);
+    }
+
+    $scope.seekVideo = function(seconds){
+      VideosService.seekTo(seconds);
     }
 });

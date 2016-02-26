@@ -24,7 +24,7 @@ if(isset($_GET['playlist'])){
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <!-- Compiled and minified JavaScript -->
-    <script src="<?=DIR?>libs/materialize/js/materialize.min.js"></script>
+    <script src="<?=DIR?>libs/materialize/js/materialize.js"></script>
     <!-- Angular -->
     <script type="text/javascript" src="<?=DIR?>libs/angular.min.js"></script>
     <script type="text/javascript">
@@ -41,12 +41,15 @@ if(isset($_GET['playlist'])){
       </div>-->
       <div class="row">
         <div id="col_results" class="col s12 l3 m4">
-          <form>
-            <div class="input-field search_form">
-              <input id="query" name="q" type="search" placeholder="Search" data-ng-model="query" required>
-              <i id="search_icon" class="material-icons">search</i>
-              <!--<i id="close_result" class="material-icons">closes</i>-->
+            <div class="nav-wrapper">
+              <form>
+                <div class="input-field search_form">
+                  <input id="query" name="q" type="search" placeholder="Search" data-ng-model="query" required>
+                  <i id="search_icon" class="material-icons">search</i>
+                  <!--<i id="close_result" class="material-icons">closes</i>-->
+                </div>
             </div>
+
           </form>
           <div class="div_result">
             <div id="results"></div>
@@ -216,18 +219,27 @@ if(isset($_GET['playlist'])){
       <footer style="position:fixed;bottom:10px;width:100%">
         <div class="player-navigation">
           <div class="row">
-            <div class="col l2">
+            <div class="col l3">
               <p class="limit_text" id="current_playing_title"></p>
             </div>
             <div class="col l6">
               <form action="#">
                 <p class="range-field">
-                  <input type="range" id="test5" min="0" max="100" />
-                  <span id="current_time"></span>:<span id="total_time"></span>
+                  <div class="row">
+                    <div class="col l1">
+                      <span id="current_time"></span>
+                    </div>
+                    <div class="col l10">
+                      <input type="range" id="slidertime" min="0" max="100" />
+                    </div>
+                    <div class="col l1">
+                      <span id="total_time"></span>
+                    </div>
+                  </div>
                 </p>
               </form>
             </div>
-            <div id="button_player" class="col l4">
+            <div id="button_player" class="col l3">
               <i id="prevNavigation" class="small material-icons">skip_previous</i>
               <i id="playFirstNavigation" class="small material-icons">play_arrow</i>
               <i id="playNavigation" class="small material-icons" style="display:none;">play_arrow</i>

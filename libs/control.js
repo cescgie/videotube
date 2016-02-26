@@ -24,6 +24,12 @@
     /*window.onbeforeunload = function(){
       return 'Sie haben noch nicht die aktuelle Playlist gespeichert!';
     };*/
+
+    /*
+    * Set slider value to 0
+    */
+    $('#slidertime').val(0);
+
   });
 /*
 * close icon on search
@@ -389,4 +395,21 @@ function video_click(i){
          //$scope.results = VideosService.getResults();
          scope.upcoming = strfy;
     });
+}
+
+/*
+* Player Slider
+*/
+$('#slidertime').on('change',function(){
+    var slidervalue = $('#slidertime').val();
+    var slidervaluetime = secondsToHms(slidervalue);
+    $('#current_time').text(slidervaluetime);
+    angular.element($("#myctrl")).scope().seekVideo(slidervalue);
+});
+function secondsToHms(d) {
+  var d = Number(d);
+  var h = Math.floor(d / 3600);
+  var m = Math.floor(d % 3600 / 60);
+  var s = Math.floor(d % 3600 % 60);
+  return ((h > 0 ? h + ":" + (m < 10 ? "0" : "") : "") + m + ":" + (s < 10 ? "0" : "") + s);
 }
