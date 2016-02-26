@@ -148,9 +148,7 @@ iframe#placeholder{
 div.player-navigation {
   height: 50px;
   color:#fff;
-  background-color: #1976d2;
-  opacity: 0.6;
-  filter: alpha(opacity=60); /* For IE8 and earlier */
+  background-color: rgb(17, 113, 162);
 }
 
 #button_player{
@@ -159,6 +157,7 @@ div.player-navigation {
 
 #current_playing_title{
   margin-top:15px;
+  font-size: 1em;
 }
 
 .new_playlist,#new_videos,#playlist{

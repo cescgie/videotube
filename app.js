@@ -481,6 +481,21 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
       //update title
       $('#current_playing_title').text(title);
 
+      //update image
+      $http.get('ajax/getCurrentPlayed.php', {
+        params: {
+          yid: id,
+        }
+      })
+      .success( function (data) {
+        var thumbnail = data[0]['thumbnail'];
+        console.log(thumbnail);
+        $('#current_playing_thumbnail').html('<img src="'+thumbnail+'" width="45px" height="45px">');
+      })
+      .error( function () {
+        console.log("error");
+      });
+
       //update repeat one state
       $('#repeatOneNavigation').attr('state',0);
       $('#repeatOneNavigation').css('color','#fff');

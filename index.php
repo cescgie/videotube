@@ -216,11 +216,18 @@ if(isset($_GET['playlist'])){
         </div>
       </div>
 
-      <footer style="position:fixed;bottom:10px;width:100%">
+      <footer style="position:fixed;bottom:-20px;width:100%">
         <div class="player-navigation">
           <div class="row">
             <div class="col l3">
-              <p class="limit_text" id="current_playing_title"></p>
+              <div class="row">
+                <div class="col l3">
+                  <div id="current_playing_thumbnail" class="vertical-align"></div>
+                </div>
+                <div class="col l9">
+                  <p class="limit_text" id="current_playing_title"></p>
+                </div>
+              </div>
             </div>
             <div class="col l6">
               <form action="#">
