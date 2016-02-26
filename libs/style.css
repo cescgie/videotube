@@ -82,7 +82,7 @@ iframe#placeholder{
 #playlist ol{ border-bottom: 1px solid #33363f; height: 500px; overflow-x: hidden;}
 #playlist li{ border-top: 1px solid #33363f; cursor: pointer;}
 
-.item-title{ margin-right: 80px; padding: 10px 20px;}
+.item-title{ margin-right: 80px; padding: 10px 20px; font-size: 0.8em;}
 .item-title:hover{ background: #1171A2; color: white;}
 .item-delete{ color: #ee6e73; float: center; text-align: center; padding: 0px 0; width: 80px;}
 .item-delete:hover{ color: white;}
@@ -191,6 +191,7 @@ thead, tbody { display: block; }
    -webkit-line-clamp: 2; /* number of lines to show */
    -webkit-box-orient: vertical;
 }
+
 .search_form{
   border-top-style: groove;
   border-color: #fff;
@@ -199,6 +200,14 @@ thead, tbody { display: block; }
   padding-left: 1em !important;
   width: calc(100% - 1rem) !important;
   color:#fff;
+}
+
+#total_time,#current_time{
+  vertical-align: text-bottom;
+  font-size: 0.8em;
+}
+#slidertime{
+  bottom: 7px;
 }
 /*
 * grenzung
