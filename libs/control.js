@@ -357,6 +357,14 @@ $(document).on('click','#replayNavigation',function(){
   angular.element($("#myctrl")).scope().replayNav();
 });
 
+$(document).on('click','#muteNavigation', function(){
+  angular.element($("#myctrl")).scope().muteVolume();
+});
+
+$(document).on('click','#unMuteNavigation', function(){
+  angular.element($("#myctrl")).scope().unmuteVolume();
+});
+
 $(document).ready(function(){
  $('.tooltipped').tooltip({delay: 50});
 });

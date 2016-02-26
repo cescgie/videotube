@@ -135,13 +135,15 @@ iframe#placeholder{
 
 #playFirstNavigation,#playNavigation,#pauseNavigation,
 #prevNavigation,#nextNavigation,#repeatNavigation,
-#repeatOneNavigation,#replayNavigation{
+#repeatOneNavigation,#replayNavigation,#muteNavigation,
+#unMuteNavigation{
   cursor:pointer;
 }
 
 #playFirstNavigation:hover,#playNavigation:hover,#pauseNavigation:hover,
 #prevNavigation:hover,#nextNavigation:hover,#repeatNavigation:hover,
-#repeatOneNavigation:hover,#replayNavigation:hover{
+#repeatOneNavigation:hover,#replayNavigation:hover,#unMuteNavigation:hover,
+#muteNavigation:hover{
   color:#ee6e73;
 }
 
@@ -157,7 +159,10 @@ div.player-navigation {
 
 #current_playing_title{
   margin-top:15px;
-  font-size: 1em;
+  font-size: 0.7em;
+}
+i.very-small{
+  font-size:1em;
 }
 
 .new_playlist,#new_videos,#playlist{

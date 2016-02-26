@@ -219,7 +219,7 @@ if(isset($_GET['playlist'])){
       <footer style="position:fixed;bottom:-20px;width:100%">
         <div class="player-navigation">
           <div class="row">
-            <div class="col l3">
+            <div class="col l2">
               <div class="row">
                 <div class="col l3">
                   <div id="current_playing_thumbnail" class="vertical-align"></div>
@@ -229,7 +229,7 @@ if(isset($_GET['playlist'])){
                 </div>
               </div>
             </div>
-            <div class="col l6">
+            <div class="col l8">
               <form action="#">
                 <p class="range-field">
                   <div class="row">
@@ -246,15 +246,32 @@ if(isset($_GET['playlist'])){
                 </p>
               </form>
             </div>
-            <div id="button_player" class="col l3">
-              <i id="prevNavigation" class="small material-icons">skip_previous</i>
-              <i id="playFirstNavigation" class="small material-icons">play_arrow</i>
-              <i id="playNavigation" class="small material-icons" style="display:none;">play_arrow</i>
-              <i id="pauseNavigation" class="small material-icons" style="display:none;">pause</i>
-              <i id="nextNavigation" class="small material-icons">skip_next</i>
-              <i id="repeatOneNavigation" class="small material-icons" state="0">repeat_one</i>
-              <i id="repeatNavigation" class="small material-icons" state="0">repeat</i>
-              <i id="replayNavigation" class="small material-icons">replay</i>
+            <div id="button_player" class="col l2">
+              <div class="row">
+                <div class="col l2">
+                  <i id="prevNavigation" class="very-small material-icons">skip_previous</i>
+                </div>
+                <div class="col l2">
+                  <i id="playFirstNavigation" class="very-small material-icons">play_arrow</i>
+                  <i id="playNavigation" class="very-small material-icons" style="display:none;">play_arrow</i>
+                  <i id="pauseNavigation" class="very-small material-icons" style="display:none;">pause</i>
+                </div>
+                <div class="col l2">
+                  <i id="nextNavigation" class="very-small material-icons">skip_next</i>
+                </div>
+                <div class="col l2">
+                  <i id="muteNavigation" class="very-small material-icons">volume_up</i>
+                  <i id="unMuteNavigation" class="very-small material-icons" style="display:none;">volume_off</i>
+                </div>
+                <div class="col l2">
+                  <i id="shuffleNavigation" class="very-small material-icons">shuffle</i>
+                </div>
+                <div class="col l2">
+                  <i id="replayNavigation" class="very-small material-icons">refresh</i>
+                </div>
+              </div>
+              <!--<i id="repeatOneNavigation" class="very-small material-icons" state="0">repeat_one</i>
+              <i id="repeatNavigation" class="very-small material-icons" state="0">repeat</i>-->
             </div>
           </div>
         </div>

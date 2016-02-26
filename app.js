@@ -384,6 +384,18 @@ app.service('VideosService', ['$window', '$rootScope', '$log', 'filterFilter', f
     youtube.player.seekTo(seconds,true);
   }
 
+  this.muteVol = function(){
+    if(youtube.player.isMuted()){
+      youtube.player.unMute();
+      $('#unMuteNavigation').hide();
+      $('#muteNavigation').show();
+    }else{
+      youtube.player.mute();
+      $('#muteNavigation').hide();
+      $('#unMuteNavigation').show();
+    }
+  }
+
 }]);
 
 app.controller('VideosController', function ($scope, $http, $log, VideosService, $rootScope, filterFilter) {
@@ -665,7 +677,7 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
       }else{
         console.log('repeat non aktif');
         $('#repeatNavigation').attr('state',0);
-        $('#repeatNavigation').css('color','black');
+        $('#repeatNavigation').css('color','#fff');
       }
     }
 
@@ -690,5 +702,13 @@ app.controller('VideosController', function ($scope, $http, $log, VideosService,
 
     $scope.seekVideo = function(seconds){
       VideosService.seekTo(seconds);
+    }
+
+    $scope.muteVolume = function(){
+      VideosService.muteVol();
+    }
+
+    $scope.unmuteVolume = function(){
+      VideosService.muteVol();
     }
 });
