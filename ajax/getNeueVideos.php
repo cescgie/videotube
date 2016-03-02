@@ -3,7 +3,7 @@ require_once('../libs/Storage.php');
 
 $db = new Storage();
 
-$result = $db->select("SELECT * FROM yapi WHERE title IS NOT NULL AND title != '' AND suggest != 1 ORDER BY meta_id DESC LIMIT 12");
+$result = $db->select("SELECT * FROM yapi WHERE title IS NOT NULL AND title != '' AND suggest != 1 AND new = 1 ORDER BY meta_id DESC LIMIT 12");
 $i = 2;
 ?>
 <div class="row">

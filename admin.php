@@ -15,104 +15,61 @@
   </head>
   <body id="myctrladmin" data-ng-controller="VideosController">
     <div class="container">
-      <h1>admin</h1>
-      <a href="index.php"><-home</a><br><br>
-      <a class="modal-trigger-db waves-effect waves-light btn" href="#db_update_modal">Datenbank aktualisieren</a> <span id="status_db"></span><br><br>
-      <!-- Modal Structure -->
-      <div id="db_update_modal" class="modal">
-         <div class="modal-content">
-           <p>Möchten Sie die Datenbank aktualisieren?</p>
-         </div>
-         <div class="modal-footer">
-           <a id="db_update" href="#" class=" modal-action modal-close waves-effect waves-green btn-flat">Ja</a>
-         </div>
-       </div>
 
-       <a id="most_viewed_video" class="waves-effect waves-light btn" href="#">Top 10 meist geschaute Videos</a><br><br>
+      <div class="row">
+        <div class="col s12">
+          <ul class="tabs">
+            <li class="tab col s3"><a class="active"  href="#div_neues_videos" id="id_neues_videos">Neues Video</a></li>
+            <li class="tab col s3"><a href="#div_most_viewed_video">Top 10 Videos</a></li>
+            <li class="tab col s3"><a href="#div_empf_video">Empfohlenes Video</a></li>
+            <li class="tab col s3"><a href="#div_db_update">Datenbank</a></li>
+          </ul>
+        </div>
+        <hr>
 
-       <div class="most_viewed_video_div" style="display:none;">
-         <div class="most_viewed_list">
-         </div><br>
-       </div>
-      <a id="empf_video" class="waves-effect waves-light btn" href="#">Empfohlenes Video aktualisieren</a><br><br>
-      <div class="empf_video_div" style="display:none">
-        <nav>
-          <div class="nav-wrapper">
-            <form>
-              <div class="input-field">
-                <input id="query" name="q" type="search" placeholder="Video suchen" data-ng-model="query" required>
-                <label for="search"><i id="search_icon" class="material-icons">search</i></label>
+        <div id="div_db_update" class="col s12">
+          <a class="modal-trigger-db waves-effect waves-light btn" href="#db_update_modal">Datenbank aktualisieren</a> <span id="status_db"></span><br><br>
+          <!-- Modal Structure -->
+          <div id="db_update_modal" class="modal">
+             <div class="modal-content">
+               <p>Möchten Sie die Datenbank aktualisieren?</p>
+             </div>
+             <div class="modal-footer">
+               <a id="db_update" href="#" class=" modal-action modal-close waves-effect waves-green btn-flat">Ja</a>
+             </div>
+           </div>
+        </div>
+
+        <div id="div_most_viewed_video" class="col s12">
+            <div class="most_viewed_list"></div>
+        </div>
+
+        <div id="div_empf_video" class="col s12">
+          <a id="empf_video" class="waves-effect waves-light btn" href="#">Empfohlenes Video aktualisieren</a><br><br>
+          <div class="empf_video_div" style="display:none">
+            <nav>
+              <div class="nav-wrapper">
+                <form>
+                  <div class="input-field">
+                    <input id="query" name="q" type="search" placeholder="Video suchen" data-ng-model="query" required>
+                  </div>
+                </form>
               </div>
-            </form>
-          </div>
-        </nav>
-        <div class="row">
-          <div id="col_results" class="col s12 l12 m12">
-            <div id="results"></div>
+            </nav>
+            <div class="row">
+              <div id="col_results" class="col s12 l12 m12">
+                <div id="results"></div>
+              </div>
+            </div>
           </div>
         </div>
+
+        <div id="div_neues_videos" class="col s12">
+          <div id="new_videos"></div>
+        </div>
+
       </div>
-
     </div><!-- Container -->
-    <script type="text/javascript">
-    $("form input").keypress(function (e) {
-      if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
-          $('button[type=submit] .default').click();
-          $('#col_results').show();
-          console.log($('#query').val());
-          $.ajax({    //create an ajax request to load_page.php
-            type: "GET",
-            url: "ajax/getToSuggestVideo.php",
-            data: {q:$('#query').val()},
-            dataType: "html",   //expect html to be returned
-            success: function(response){
-                $('#mehr-videos-button').css("display","block");
-                $('#results').html(response);
-                console.log("success");
-            }
-          });
-          return false;
-      } else {
-          return true;
-      }
-    });
-
-    $(document).on('click','#db_update',function(){
-      console.log('db_update');
-      $.ajax({
-        type: "GET",
-        url: "ajax/updateVideo.php",
-        dataType: "html",
-        success: function(response){
-            console.log("success");
-            Materialize.toast('Datenbank aktualisiert!', 3000, 'rounded');
-        }
-      });
-    });
-
-    $(document).on('click','#empf_video',function(){
-      console.log('empf_video');
-      $(".empf_video_div").toggle();
-    });
-
-    $(document).ready(function(){
-      $('.modal-trigger-db').leanModal();
-    });
-
-    $(document).on('click','#most_viewed_video',function(){
-      console.log('most_viewed_video');
-      $(".most_viewed_video_div").toggle();
-      $.ajax({
-        type: "GET",
-        url: "ajax/getMostShown.php",
-        dataType: "html",
-        success: function(response){
-            console.log("success");
-
-		        $('.most_viewed_list').html(response);
-        }
-      });
-    });
-    </script>
+    <script type="text/javascript" src="libs/admin.js"></script>
   </body>
 </html>

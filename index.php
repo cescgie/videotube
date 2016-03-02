@@ -1,5 +1,5 @@
 <?php
-define('DIR', 'http://videotube.127.0.0.1.xip.io/');
+define('DIR', 'http://localhost/videotube/');
 if(isset($_GET['playlist'])){
   $key=$_GET['playlist'];
   $key=strtolower($key);
