@@ -14,21 +14,20 @@
     <script src="libs/materialize/js/materialize.min.js"></script>
   </head>
   <body id="myctrladmin" data-ng-controller="VideosController">
-    <div class="container">
-
+    <div class="container"><hr>
+		<div class="right-align">
+          <a class="modal-trigger-db" href="#db_update_modal"><i class="material-icons">autorenew</i>Datenbank aktualisieren</a></div> <span id="status_db"></span>
       <div class="row">
         <div class="col s12">
           <ul class="tabs">
-            <li class="tab col s3"><a class="active"  href="#div_neues_videos" id="id_neues_videos">Neues Video</a></li>
+            <li class="tab col s3"><a class="active"  href="#div_neues_videos" id="id_neues_videos">Neue Videos</a></li>
             <li class="tab col s3"><a href="#div_most_viewed_video">Top 10 Videos</a></li>
             <li class="tab col s3"><a href="#div_empf_video">Empfohlenes Video</a></li>
-            <li class="tab col s3"><a href="#div_db_update">Datenbank</a></li>
           </ul>
         </div>
         <hr>
 
         <div id="div_db_update" class="col s12">
-          <a class="modal-trigger-db waves-effect waves-light btn" href="#db_update_modal">Datenbank aktualisieren</a> <span id="status_db"></span><br><br>
           <!-- Modal Structure -->
           <div id="db_update_modal" class="modal">
              <div class="modal-content">
