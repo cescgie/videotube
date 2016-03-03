@@ -48,9 +48,9 @@ if(isset($_GET['playlist'])){
                   <i id="search_icon" class="material-icons">search</i>
                   <!--<i id="close_result" class="material-icons">closes</i>-->
                 </div>
+              </form>
             </div>
 
-          </form>
           <div class="div_result">
             <div id="results"></div>
             <a class="mehr-videos-button waves-effect waves-light btn" id="mehr-videos-button" href="javascript:loadMore();" style="display:none;">mehr Videos</a>

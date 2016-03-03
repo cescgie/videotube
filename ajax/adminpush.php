@@ -2,14 +2,12 @@
 require_once('../libs/Storage.php');
 $db = new Storage();
 if(isset($_GET['action']) && $_GET['action']=='neues_video'){
-  $result = $db->select("SELECT * FROM yapi WHERE new = 1 AND title IS NOT NULL AND title != ''");
+  $result = $db->select("SELECT * FROM yapi WHERE new = 1 AND title IS NOT NULL AND title != '' ORDER BY meta_id DESC");
   $i = 1;
-  echo '<div class="row">';
   foreach ($result as $key => $value) {
     echo
-     '<div class="col s6 m3 l2">
-        <div class="card">
-          <div class="card-image">';
+     '<div class="row">
+          <div class="col l3 offset-l1">';
           if ($value['new_thumbnail']=='') {
           echo   '<img width="100px" height="100px" src="'.$value['thumbnail'].'">';
           } else {
@@ -17,18 +15,31 @@ if(isset($_GET['action']) && $_GET['action']=='neues_video'){
           }
           echo
           '</div>
-        </div>
-        <div class="card-content">
-          <p class="limit_text_admin">'.$value['title'].'</p>
-          <p class="limit_text_admin">'.$value['author'].'</p>
-        </div>
-        <div class="card-action">
-          <a class="modal-trigger" href="#edit'.$i.'">Edit</a>
-        </div>
+          <div class="col l8">
+            <p class="limit_text_admin">'.$value['title'].'</p>
+            <p class="limit_text_admin" style="color:#9e9e9e">'.$value['author'].'</p>
+            <a class="modal-trigger-edit" href="#edit'.$i.'">Edit</a>
+            <a href="javascript:remove_video('.$value["id"].')">Delete</a>
+          </div>
       </div>
      ';
 
      ?>
+      <script type="text/javascript">
+        function remove_video(id){
+          console.log(id);
+          $.ajax({
+            type: "GET",
+            url: "ajax/adminpush.php",
+            data: {action:'remove_new_video',
+                  id:id},
+            dataType: "html",
+            success: function(response){
+                location.reload();
+            }
+          });
+        }
+      </script>
      <!-- Modal check update -->
      <div id="edit<?=$i?>" class="modal">
         <div class="modal-content">
@@ -95,9 +106,8 @@ if(isset($_GET['action']) && $_GET['action']=='neues_video'){
       <?php
      $i++;
   }
-  echo '</div>';
+
 }elseif(isset($_GET['action']) && $_GET['action']=='edit_video'){
-  echo 'edit_video';
   $data['title'] = filter_var($_GET['title'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
   $data['author'] = filter_var($_GET['author'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
   $change_img = filter_var($_GET['change_img'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
@@ -106,6 +116,61 @@ if(isset($_GET['action']) && $_GET['action']=='neues_video'){
   }
   $id = $_GET['id'];
   $db->update('yapi',$data,'id="'.$id.'"');
+
+}elseif(isset($_GET['action']) && $_GET['action']=='list_video'){
+  $q = '%';
+  if(isset($_GET['q']) && $_GET['q'] != ''){
+    $key = $_GET['q'];
+    $result = $db->select("SELECT * FROM yapi WHERE title IS NOT NULL AND title != '' AND BINARY LOWER(title) LIKE LOWER('%$key%') OR REPLACE(title, ' ', '') LIKE LOWER('%$key%')  AND suggest != 1 ORDER by meta_id DESC LIMIT 25");
+  }else{
+    $key = '%';
+    $result = $db->select("SELECT * FROM yapi WHERE title IS NOT NULL AND title != '' AND suggest != 1 ORDER BY meta_id DESC LIMIT 25");
+  }
+  $i = 1;
+  foreach ($result as $keys => $value) :?>
+    <div class="row">
+        <div class="col l3 offset-l1">
+        <?php if ($value['new_thumbnail']=='') :?>
+          <img width="100px" height="100px" src="<?=$value['thumbnail']?>">
+        <?php else :?>
+          <img width="100px" height="100px" src="<?=$value['new_thumbnail']?>">
+        <?php endif;?>
+        </div>
+        <div class="col l8">
+          <p class="limit_text_admin"><?=$value['title']?></p>
+          <p class="limit_text_admin" style="color:#9e9e9e"><?=$value['author']?></p>
+          <a href="javascript:add_video(<?=$value['id']?>)">Add</a>
+        </div>
+    </div>
+    <!-- Modal Structure -->
+     <div id="add<?=$i?>" class="modal">
+         <div class="modal-content">
+           <p><?= $value['title']?></p>
+           <p>Add to list?</p>
+         </div>
+         <div class="modal-footer">
+           <a href="javascript:add_video(<?=$value['id']?>)" class=" modal-action modal-close waves-effect waves-green btn-flat">Ja</a>
+         </div>
+     </div>
+     <script type="text/javascript">
+       function add_video(id){
+         console.log(id);
+         $.ajax({
+           type: "GET",
+           url: "ajax/adminpush.php",
+           data: {action:'add_new_video',
+                 id:id},
+           dataType: "html",
+           success: function(response){
+               location.reload();
+           }
+         });
+       }
+     </script>
+   <?php
+  $i++;
+endforeach;
+
 }elseif(isset($_GET['action']) && $_GET['action']=='most_viewed_video'){
 
   $result = $db->select("SELECT * FROM yapi WHERE title IS NOT NULL AND title != '' ORDER BY viewers DESC LIMIT 10");
@@ -134,6 +199,14 @@ if(isset($_GET['action']) && $_GET['action']=='neues_video'){
       </div>
      ';
   }
+}elseif(isset($_GET['action']) && $_GET['action']=='remove_new_video'){
+  $id = $_GET['id'];
+  $data['new'] = 0;
+  $db->update('yapi',$data,'id="'.$id.'"');
+}elseif(isset($_GET['action']) && $_GET['action']=='add_new_video'){
+  $id = $_GET['id'];
+  $data['new'] = 1;
+  $db->update('yapi',$data,'id="'.$id.'"');
 }else{
   echo 'unidentified';
 }
@@ -142,7 +215,7 @@ if(isset($_GET['action']) && $_GET['action']=='neues_video'){
 <!-- new video -->
 <script type="text/javascript">
   $(document).ready(function(){
-    $('.modal-trigger').leanModal();
+    $('.modal-trigger-edit').leanModal();
   });
 
   function edit_video(i){

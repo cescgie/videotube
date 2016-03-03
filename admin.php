@@ -64,7 +64,25 @@
         </div>
 
         <div id="div_neues_videos" class="col s12">
-          <div id="new_videos"></div>
+          <div class="row">
+            <div class="col l6 list_videos">
+              <nav>
+                <div class="nav-wrapper">
+                  <form>
+                    <div class="input-field search_form">
+                      <input id="listvideos" name="q" type="search" placeholder="Search" data-ng-model="query" required>
+                      <i id="search_icon" class="material-icons">search</i>
+                      <!-- <i id="close_result" class="material-icons">closes</i> -->
+                    </div>
+                  </form>
+                </div>
+              </nav>
+              <div id="list_videos" class="div_list_videos"></div>
+            </div>
+            <div class="col l6">
+              <div id="new_videos" class="div_list_new_videos"></div>
+            </div>
+          </div>
         </div>
 
       </div>

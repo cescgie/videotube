@@ -42,17 +42,17 @@ $(document).ready(function(){
   $('.modal-trigger-db').leanModal();
   $(".button-collapse").sideNav();
   update_neues_video();
-  most_viewed_video();
+  most_viewed_videos();
+  //get_list_videos();
 });
 
-function most_viewed_video(){
+function most_viewed_videos(){
   $.ajax({
     type: "GET",
     url: "ajax/adminpush.php",
     data:{action:'most_viewed_video'},
     dataType: "html",
     success: function(response){
-        console.log("success");
         $('.most_viewed_list').html(response);
     }
   });
@@ -68,6 +68,37 @@ function update_neues_video(){
     }
   });
 }
-$(document).on('click','#id_neues_videos',function(){
-  update_neues_video();
+
+
+function get_list_videos(){
+  $.ajax({
+    type: "GET",
+    url: "ajax/getLeftVideo.php",
+    dataType: "html",
+    success: function(response){
+        $('#list_videos').html(response);
+    }
+  });
+}
+
+$("form input#listvideos").keypress(function (e) {
+  if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+      $('button[type=submit] .default').click();
+      $('#col_results').show();
+      console.log($('#listvideos').val());
+      $.ajax({    //create an ajax request to load_page.php
+        type: "GET",
+        url: "ajax/adminpush.php",
+        data: {action:'list_video',q:$('#listvideos').val()},
+        dataType: "html",   //expect html to be returned
+        success: function(response){
+            $('#mehr-videos-button').css("display","block");
+            $('#list_videos').html(response);
+            console.log("success");
+        }
+      });
+      return false;
+  } else {
+      return true;
+  }
 });
