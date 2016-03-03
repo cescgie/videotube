@@ -66,6 +66,7 @@
         <div id="div_neues_videos" class="col s12">
           <div class="row">
             <div class="col l6 list_videos">
+              <h5 class="center-align">Neue Video hinzufügen</h5>
               <nav>
                 <div class="nav-wrapper">
                   <form>
@@ -79,7 +80,8 @@
               </nav>
               <div id="list_videos" class="div_list_videos"></div>
             </div>
-            <div class="col l6">
+            <div class="col l6 list_videos">
+              <h5 class="center-align">Neue Videos</h5>
               <div id="new_videos" class="div_list_new_videos"></div>
             </div>
           </div>

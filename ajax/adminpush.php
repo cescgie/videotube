@@ -4,27 +4,22 @@ $db = new Storage();
 if(isset($_GET['action']) && $_GET['action']=='neues_video'){
   $result = $db->select("SELECT * FROM yapi WHERE new = 1 AND title IS NOT NULL AND title != '' ORDER BY meta_id DESC");
   $i = 1;
-  foreach ($result as $key => $value) {
-    echo
-     '<div class="row">
-          <div class="col l3 offset-l1">';
-          if ($value['new_thumbnail']=='') {
-          echo   '<img width="100px" height="100px" src="'.$value['thumbnail'].'">';
-          } else {
-          echo   '<img width="100px" height="100px" src="'.$value['new_thumbnail'].'">';
-          }
-          echo
-          '</div>
+  foreach ($result as $key => $value) :?>
+      <div class="row">
+          <div class="col l3 offset-l1">
+          <?php if ($value['new_thumbnail']=='') :?>
+              <img width="100px" height="100px" src="<?=$value['thumbnail']?>">
+          <?php else :?>
+              <img width="100px" height="100px" src="<?=$value['new_thumbnail']?>">
+          <?php endif;?>
+          </div>
           <div class="col l8">
-            <p class="limit_text_admin">'.$value['title'].'</p>
-            <p class="limit_text_admin" style="color:#9e9e9e">'.$value['author'].'</p>
-            <a class="modal-trigger-edit" href="#edit'.$i.'">Edit</a>
-            <a href="javascript:remove_video('.$value["id"].')">Delete</a>
+            <p class="limit_text_admin"><?=$value['title']?></p>
+            <p class="limit_text_admin" style="color:#9e9e9e"><?=$value['author']?></p>
+            <a class="modal-trigger-edit" href="#edit<?=$i?>">Edit</a>
+            <a href="javascript:remove_video(<?=$value["id"]?>)">Delete</a>
           </div>
       </div>
-     ';
-
-     ?>
       <script type="text/javascript">
         function remove_video(id){
           console.log(id);
@@ -105,7 +100,7 @@ if(isset($_GET['action']) && $_GET['action']=='neues_video'){
       </script>
       <?php
      $i++;
-  }
+  endforeach;
 
 }elseif(isset($_GET['action']) && $_GET['action']=='edit_video'){
   $data['title'] = filter_var($_GET['title'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
@@ -175,30 +170,26 @@ endforeach;
 
   $result = $db->select("SELECT * FROM yapi WHERE title IS NOT NULL AND title != '' ORDER BY viewers DESC LIMIT 10");
 
-  foreach ($result as $keys => $value) {
-    echo
-     '<div class="col s6 m3 l2">
+  foreach ($result as $keys => $value) :?>
+      <div class="col s6 m3 l2">
         <div class="card">
-          <div class="card-image">'
-          ;
-        	if($value['viewers']==0 || $value['viewers']==1){
-        	echo
-            '<p class="video-title"><i class="material-icons" style="position:relative;bottom:-0.2em;font-size:2em;">visibility</i> <span>'.$value['viewers'].' View</p>';
-        	}else{
-        	echo
-            '<p class="video-title"><i class="material-icons" style="position:relative;bottom:-0.2em;font-size:2em;">visibility</i> '.$value['viewers'].' Views</p>';
-        	}
-        echo
-          '<img width="100px" height="100px" src="'.$value['thumbnail'].'">
+          <div class="card-image">
+        	<?php if($value['viewers']==0 || $value['viewers']==1):?>
+        	   <p class="video-title"><i class="material-icons" style="position:relative;bottom:-0.2em;font-size:2em;">visibility</i> <span><?=$value['viewers']?> View</p>
+        	<?php else:?>
+        	   <p class="video-title"><i class="material-icons" style="position:relative;bottom:-0.2em;font-size:2em;">visibility</i> <?=$value['viewers']?> Views</p>
+          <?php endif;?>
+          <img width="100px" height="100px" src="<?=$value['thumbnail']?>">
           </div>
         </div>
         <div class="card-content">
-          <p class="limit_text_admin">'.$value['title'].'</p>
-          <p class="limit_text_admin">'.$value['author'].'</p>
+          <p class="limit_text_admin"><?=$value['title']?></p>
+          <p class="limit_text_admin"><?=$value['author']?></p>
         </div>
       </div>
-     ';
-  }
+<?php
+  endforeach;
+
 }elseif(isset($_GET['action']) && $_GET['action']=='remove_new_video'){
   $id = $_GET['id'];
   $data['new'] = 0;
