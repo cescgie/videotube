@@ -35,6 +35,7 @@ if(isset($_GET['action']) && $_GET['action']=='neues_video'){
           });
         }
       </script>
+
      <!-- Modal check update -->
      <div id="edit<?=$i?>" class="modal">
         <div class="modal-content">
@@ -101,7 +102,33 @@ if(isset($_GET['action']) && $_GET['action']=='neues_video'){
       <?php
      $i++;
   endforeach;
-
+?>
+<!-- new video -->
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.modal-trigger-edit').leanModal();
+  });
+  function edit_video(i){
+    var title = $('#title'+i).val();
+    var author = $('#author'+i).val();
+    var change_img = $('#change_img'+i).val();
+    var id = $('#id'+i).val();
+    $.ajax({
+      type: "GET",
+      url: "ajax/adminpush.php",
+      data: {action:'edit_video',
+            title:title,
+            author:author,
+            change_img:change_img,
+            id:id},
+      dataType: "html",
+      success: function(response){
+          console.log(response);
+      }
+    });
+  }
+</script>
+<?php
 }elseif(isset($_GET['action']) && $_GET['action']=='edit_video'){
   $data['title'] = filter_var($_GET['title'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
   $data['author'] = filter_var($_GET['author'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
@@ -202,30 +229,3 @@ endforeach;
   echo 'unidentified';
 }
 ?>
-
-<!-- new video -->
-<script type="text/javascript">
-  $(document).ready(function(){
-    $('.modal-trigger-edit').leanModal();
-  });
-
-  function edit_video(i){
-    var title = $('#title'+i).val();
-    var author = $('#author'+i).val();
-    var change_img = $('#change_img'+i).val();
-    var id = $('#id'+i).val();
-    $.ajax({
-      type: "GET",
-      url: "ajax/adminpush.php",
-      data: {action:'edit_video',
-            title:title,
-            author:author,
-            change_img:change_img,
-            id:id},
-      dataType: "html",
-      success: function(response){
-          console.log(response);
-      }
-    });
-  }
-</script>
